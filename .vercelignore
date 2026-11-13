@@ -6,3 +6,12 @@
 node_modules
 dist
 *.log
+
+# Local-only material that is not needed by the Vite build.
+migrate
+vibe_images
+ai-backup
+docs
+.andromity
+.claude
+.freebuff
