@@ -1,0 +1,1095 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "services": "Services",
+    "academicServices": "Services académiques et de recherche",
+    "digitalSolutions": "Plateformes éducatives, sites web, applications et systèmes",
+    "courses": "Cours",
+    "store": "Boutique",
+    "blog": "Blog",
+    "teachers": "Enseignants",
+    "policies": "Politiques",
+    "contact": "Contactez-nous",
+    "cart": "Panier",
+    "profile": "Profil",
+    "signIn": "Connexion",
+    "signOut": "Déconnexion",
+    "getStarted": "Commencer",
+    "menu": "Menu",
+    "coursesShort": "Cours",
+    "servicesShort": "Services",
+    "academicShort": "Académique",
+    "levelShort": "Test de niveau",
+    "storeShort": "Boutique",
+    "blogShort": "Articles",
+    "teachersShort": "Enseignants",
+    "levelAssessment": "Tests de niveau"
+  },
+  "header": {
+    "language": "Langue",
+    "chooseLanguage": "Choisir la langue",
+    "notifications": "Notifications",
+    "markAllRead": "Tout marquer comme lu",
+    "noNotifications": "Aucune notification pour le moment",
+    "deleteNotification": "Supprimer la notification",
+    "account": "Compte",
+    "dashboard": "Tableau de bord"
+  },
+  "hero": {
+    "title1": "Rawasikh",
+    "title2": "Services éducatifs",
+    "title3": "& développement des compétences",
+    "description": "Une entreprise égyptienne spécialisée dans l'éducation, la formation et le développement des compétences, offrant un système complet de services éducatifs, académiques, de traduction et de création de contenu.",
+    "getStarted": "Commencer",
+    "browseCourses": "Parcourir les cours",
+    "readMore": "En savoir plus",
+    "excellentEducation": "Éducation excellente",
+    "education": "Éducation",
+    "continuousLearning": "Apprentissage continu",
+    "learning": "Apprentissage",
+    "highQuality": "Haute qualité",
+    "quality": "Qualité"
+  },
+  "aboutSection": {
+    "badge": "À propos",
+    "title": "Découvrez",
+    "titleHighlight": " Rawasikh",
+    "heading": "Votre partenaire en éducation et développement",
+    "paragraph1": "Rawasikh est une entreprise égyptienne spécialisée dans l'éducation, la formation et le développement des compétences, offrant un système complet de services éducatifs, académiques, de traduction et de création de contenu.",
+    "paragraph2": "Nous opérons avec des standards de qualité élevés et des méthodologies solides, offrant des solutions éducatives innovantes pour les institutions et les individus.",
+    "learnMore": "En savoir plus"
+  },
+  "whyUs": {
+    "badge": "Pourquoi Rawasikh ?",
+    "title": "Votre partenaire de confiance",
+    "titleHighlight": " dans le parcours d'excellence",
+    "description": "Nous sommes fiers d'offrir des services éducatifs et de formation exceptionnels, soutenus par une équipe d'experts spécialisés",
+    "professionalTeam": "Équipe professionnelle",
+    "professionalTeamDesc": "Experts spécialisés dans l'éducation, la formation et la traduction",
+    "highQuality": "Haute qualité",
+    "highQualityDesc": "Nous nous engageons aux plus hauts standards de qualité dans tous nos services",
+    "onTime": "Livraison ponctuelle",
+    "onTimeDesc": "Nous assurons la livraison en temps voulu de tous les travaux",
+    "solidMethodology": "Méthodologie solide",
+    "solidMethodologyDesc": "Nous adoptons des méthodologies opérationnelles éprouvées et efficaces",
+    "learnMore": "En savoir plus sur nous"
+  },
+  "services": {
+    "badge": "Services",
+    "title": "Nous offrons une gamme complète de",
+    "titleHighlight": " services éducatifs",
+    "training": "Formation",
+    "trainingDesc": "Formation professionnelle et administrative, développement humain, développement de spécialistes, transformation numérique",
+    "trainingTags": [
+      "Formation professionnelle",
+      "Développement humain",
+      "Développement de spécialistes",
+      "Transformation numérique"
+    ],
+    "education": "Éducation",
+    "educationDesc": "Élaboration de programmes, création de contenu, conception de programmes, enseignement de l'arabe aux non-arabophones",
+    "educationTags": [
+      "Programmes",
+      "Création de contenu",
+      "Conception",
+      "Enseignement de l'arabe"
+    ],
+    "academic": "Services académiques",
+    "academicDesc": "Transcription de thèses, mise en forme, présentations, relecture et révision scientifique",
+    "academicTags": [
+      "Transcription",
+      "Mise en forme",
+      "Relecture",
+      "Révision scientifique"
+    ],
+    "translation": "Traduction",
+    "translationDesc": "Traduction académique, éducative, technique, de contenu et de publications avec les plus hauts standards",
+    "translationTags": [
+      "Traduction académique",
+      "Traduction éducative",
+      "Traduction technique",
+      "Traduction de contenu"
+    ],
+    "digitalSolutions": "Plateformes éducatives, sites web, applications et systèmes",
+    "digitalSolutionsDesc": "Conception et développement de plateformes éducatives (LMS), sites web modernes, applications mobiles (iOS & Android) et systèmes de gestion sur mesure",
+    "digitalSolutionsTags": [
+      "Plateformes éducatives (LMS)",
+      "Sites web",
+      "Applications mobiles",
+      "Systèmes de gestion (ERP/CRM)"
+    ],
+    "exploreService": "Découvrir le service",
+    "details": "Détails des services"
+  },
+  "coursesSection": {
+    "badge": "Cours",
+    "title": "Derniers",
+    "titleHighlight": " cours éducatifs",
+    "description": "Découvrez une collection diversifiée de cours éducatifs remarquables",
+    "featured": "En vedette",
+    "free": "Gratuit",
+    "available": "Disponible",
+    "comingSoon": "Cours à venir bientôt",
+    "viewAll": "Parcourir tous les cours",
+    "currency": "EGP"
+  },
+  "testimonials": {
+    "badge": "Témoignages",
+    "title": "Ce que disent",
+    "titleHighlight": " nos clients",
+    "description": "Nous sommes fiers de la confiance de nos clients et de leurs témoignages sur la qualité de nos services",
+    "items": [
+      {
+        "name": "Dr. Ahmed Mahmoud",
+        "role": "Professeur universitaire - Université du Caire",
+        "text": "J'ai travaillé avec Rawasikh sur la traduction de mes cours académiques et les résultats étaient impressionnants. Précision et respect total des délais. Je recommande vivement."
+      },
+      {
+        "name": "Mme Sarah Abdel Rahman",
+        "role": "Directrice de l'École Internationale Al-Amal",
+        "text": "Rawasikh nous a aidés à développer le programme d'arabe de manière professionnelle. L'équipe est très coopérative et a une expertise approfondie."
+      },
+      {
+        "name": "Ing. Khaled Ibrahim",
+        "role": "Responsable formation - Société Excellence",
+        "text": "Le programme de formation au leadership conçu par Rawasikh a été un véritable tournant dans notre organisation. Contenu riche et formateurs professionnels."
+      },
+      {
+        "name": "Dr. Fatima Hassan",
+        "role": "Doctorante",
+        "text": "Le service de révision scientifique de Rawasikh m'a fait gagner beaucoup de temps. Des retours précis et constructifs m'ont aidée à améliorer ma thèse."
+      },
+      {
+        "name": "M. Mohamed El Sayed",
+        "role": "Professeur de langue arabe",
+        "text": "J'ai grandement bénéficié des programmes de développement professionnel proposés par Rawasikh. J'utilise maintenant des stratégies modernes et efficaces."
+      },
+      {
+        "name": "Mme Noura Ali",
+        "role": "Responsable formation - Ministère de l'Éducation",
+        "text": "Rawasikh est un partenaire fiable et professionnel. Ils ont exécuté le programme avec une grande efficacité et des résultats dépassant nos attentes."
+      }
+    ]
+  },
+  "levelAssessment": {
+    "badge": "Connaissez votre niveau",
+    "title": "Tests d'évaluation de niveau",
+    "description": "Avant de commencer votre parcours éducatif avec nous, testez votre niveau dans différentes langues et compétences, et nous vous aiderons à choisir le cours parfait.",
+    "card1Title": "Déterminez votre niveau",
+    "card1Desc": "Tests précis pour mesurer votre niveau réel en langues et compétences",
+    "card2Title": "Résultats instantanés",
+    "card2Desc": "Correction automatique et résultats détaillés des points forts et faibles",
+    "card3Title": "Recommandation de cours",
+    "card3Desc": "Choisissez le cours adapté à votre niveau selon vos résultats",
+    "cta": "Commencer le test de niveau"
+  },
+  "blogSection": {
+    "badge": "Blog",
+    "title": "Derniers",
+    "titleHighlight": " articles",
+    "description": "Articles éducatifs et conseils professionnels des experts de Rawasikh",
+    "readTime": "lecture",
+    "readMore": "Lire la suite →"
+  },
+  "newsSection": {
+    "badge": "Dernières actualités et vidéos",
+    "title": "Les dernières nouveautés de",
+    "titleHighlight": " Rawasikh",
+    "description": "Suivez les dernières actualités, événements et vidéos de Rawasikh",
+    "video": "Vidéo",
+    "news": "Actualité",
+    "readMore": "En savoir plus",
+    "watch": "Regarder la vidéo",
+    "openExternal": "Ouvrir sur YouTube"
+  },
+  "cta": {
+    "title": "Contactez-nous",
+    "description": "Contactez-nous pour une consultation gratuite ou pour en savoir plus sur nos services",
+    "contactUs": "Contactez-nous",
+    "whatsapp": "WhatsApp"
+  },
+  "footer": {
+    "about": "Rawasikh est une entreprise égyptienne spécialisée dans l'éducation, la formation et le développement des compétences, offrant un système complet de services éducatifs et académiques.",
+    "quickLinks": "Liens rapides",
+    "ourServices": "Nos services",
+    "contactUs": "Contactez-nous",
+    "login": "Connexion",
+    "address": "Le Caire - Nasr City - Rue Al Tayaran - En face de l'hôpital d'assurance maladie",
+    "copyright": "© {{year}} Rawasikh pour les services éducatifs. Tous droits réservés. Registre commercial: 276953",
+    "privacyPolicy": "Politique de confidentialité"
+  },
+  "theme": {
+    "light": "Mode clair",
+    "dark": "Mode sombre",
+    "toggle": "Changer le thème"
+  },
+  "auth": {
+    "fullName": "Nom complet",
+    "email": "Email",
+    "password": "Mot de passe",
+    "phone": "Numéro de téléphone",
+    "whatsapp": "Numéro WhatsApp",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "loginTitle": "Connexion",
+    "registerTitle": "Créer un nouveau compte"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "noResults": "Aucun résultat trouvé",
+    "backToHome": "Retour à l'accueil",
+    "notFound": "Page non trouvée",
+    "notFoundMessage": "Oups ! La page que vous recherchez n'existe pas",
+    "back": "Retour"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "users": "Utilisateurs",
+    "students": "Étudiants",
+    "attendance": "Présence",
+    "grades": "Notes",
+    "myCourses": "Mes cours",
+    "sessions": "Sessions",
+    "mySessions": "Mes sessions",
+    "schools": "Écoles",
+    "quizzes": "Quiz",
+    "performance": "Performance",
+    "packages": "Forfaits",
+    "payments": "Paiements",
+    "accounting": "Comptabilité",
+    "courseRequests": "Demandes de cours",
+    "activityLogs": "Journal d'activité",
+    "blogPosts": "Articles de blog",
+    "products": "Produits",
+    "categories": "Catégories",
+    "settings": "Paramètres",
+    "homepage": "Page d'accueil"
+  },
+  "aboutPage": {
+    "badge": "À propos",
+    "title1": "Rawasikh",
+    "title2": "Services éducatifs",
+    "intro1": "Rawasikh est une société égyptienne à responsabilité limitée, fondée pour offrir des solutions éducatives et de formation approfondies qui aident à développer les capacités des individus et des institutions. Nous partons d'une vision claire basée sur la consolidation du savoir et le développement des compétences à travers un ensemble intégré de services combinant éducation, formation, soutien académique et traduction professionnelle.",
+    "intro2": "Chez Rawasikh, nous croyons que le développement commence par l'humain. Nous travaillons avec des méthodologies opérationnelles solides et des standards de qualité élevés pour garantir les meilleurs résultats, en nous appuyant sur des équipes professionnelles alliant expertise académique et compétences pratiques.",
+    "vision": "Notre Vision",
+    "visionText": "Être leader dans l'éducation, la formation et le développement des compétences, en bâtissant une présence fiable dans le monde arabe qui contribue à consolider le savoir, affiner les compétences et créer un impact de développement durable.",
+    "mission": "Notre Mission",
+    "missionText": "Offrir des services éducatifs et de formation intégrés avec les plus hauts standards de qualité, aidant les individus et les institutions à atteindre leurs objectifs.",
+    "whyUsBadge": "Pourquoi Rawasikh ?",
+    "whyUsTitle": "Votre partenaire de confiance",
+    "whyUsTitleHighlight": " dans le parcours d'excellence",
+    "whyUsDesc": "Nous sommes fiers d'offrir des services éducatifs et de formation exceptionnels, soutenus par une équipe d'experts spécialisés et des méthodologies éprouvées",
+    "whyUs": [
+      {
+        "title": "Équipe professionnelle",
+        "description": "Experts spécialisés en éducation, formation et traduction"
+      },
+      {
+        "title": "Haute qualité",
+        "description": "Nous nous engageons aux plus hauts standards de qualité dans tous nos services"
+      },
+      {
+        "title": "Livraison ponctuelle",
+        "description": "Nous assurons la livraison à temps de tous les travaux sans retard"
+      },
+      {
+        "title": "Méthodologie solide",
+        "description": "Nous adoptons des méthodologies opérationnelles éprouvées et efficaces"
+      }
+    ],
+    "audienceBadge": "Qui nous servons",
+    "audienceTitle": "Nos services sont conçus",
+    "audienceTitleHighlight": " pour tous",
+    "audienceDesc": "Nous offrons des solutions personnalisées pour répondre aux besoins des différents groupes et institutions",
+    "audiences": [
+      {
+        "title": "Particuliers",
+        "description": "Développez vos compétences personnelles et professionnelles"
+      },
+      {
+        "title": "Étudiants en master/doctorat",
+        "description": "Soutien académique complet"
+      },
+      {
+        "title": "Chercheurs",
+        "description": "Services de recherche spécialisés"
+      },
+      {
+        "title": "Enseignants",
+        "description": "Programmes de développement professionnel"
+      },
+      {
+        "title": "Institutions éducatives",
+        "description": "Solutions institutionnelles complètes"
+      },
+      {
+        "title": "Entreprises",
+        "description": "Formation et qualification du personnel"
+      }
+    ],
+    "portfolioBadge": "Réalisations",
+    "portfolioTitle": "Nos",
+    "portfolioTitleHighlight": " réalisations passées",
+    "portfolio": [
+      {
+        "title": "Développement du programme d'arabe",
+        "client": "Écoles internationales Al-Amal",
+        "description": "Développement d'un programme intégré d'arabe pour le primaire selon les derniers standards"
+      },
+      {
+        "title": "Programme de formation des enseignants",
+        "client": "Ministère de l'Éducation",
+        "description": "Formation de plus de 500 enseignants aux stratégies modernes d'enseignement et d'apprentissage actif"
+      },
+      {
+        "title": "Traduction des programmes universitaires",
+        "client": "Université du Caire",
+        "description": "Traduction précise et professionnelle de cours académiques de l'anglais vers l'arabe"
+      },
+      {
+        "title": "Programme de leadership",
+        "client": "Cabinet de conseil Excellence",
+        "description": "Conception et mise en œuvre d'un programme intégré pour le leadership managérial"
+      },
+      {
+        "title": "Préparation de matériel de formation",
+        "client": "Centre de développement humain",
+        "description": "Conception de 20 modules de formation en développement humain et compétences personnelles"
+      },
+      {
+        "title": "Révision de thèses",
+        "client": "Étudiants diplômés",
+        "description": "Révision et correction de plus de 100 thèses de master et doctorat"
+      }
+    ]
+  },
+  "servicesPage": {
+    "badge": "Services",
+    "title1": "Nous offrons une gamme complète de",
+    "title2": " services éducatifs",
+    "subtitle": "Services éducatifs et académiques conçus pour répondre à vos besoins et atteindre vos objectifs",
+    "items": [
+      {
+        "title": "Formation",
+        "tags": [
+          "Formation professionnelle",
+          "Développement humain",
+          "Développement de spécialistes",
+          "Transformation numérique"
+        ],
+        "details": "Nous proposons des programmes de formation spécialisés couvrant la formation professionnelle et administrative, le développement des ressources humaines, le développement de spécialistes dans divers secteurs, ainsi que des programmes de transformation numérique et compétences en communication."
+      },
+      {
+        "title": "Éducation",
+        "tags": [
+          "Élaboration de programmes",
+          "Création de contenu",
+          "Conception de programmes",
+          "Enseignement de l'arabe"
+        ],
+        "details": "Nous contribuons à bâtir un système éducatif intégré par l'élaboration de programmes scolaires, la création de contenu éducatif et la conception de programmes innovants, avec une spécialité dans l'enseignement de l'arabe aux non-arabophones."
+      },
+      {
+        "title": "Services académiques",
+        "tags": [
+          "Transcription de thèses",
+          "Mise en forme",
+          "Relecture",
+          "Révision scientifique"
+        ],
+        "details": "Nous soutenons les chercheurs et les étudiants de troisième cycle avec des services académiques complets : transcription et mise en forme de thèses, préparation de présentations, relecture linguistique et révision scientifique spécialisée."
+      },
+      {
+        "title": "Traduction",
+        "tags": [
+          "Traduction académique",
+          "Traduction éducative",
+          "Traduction technique",
+          "Traduction de contenu"
+        ],
+        "details": "Nous fournissons des services de traduction professionnels : traduction académique, éducative et technique, traduction de contenu et de publications, avec un engagement envers les plus hauts standards de précision et de qualité."
+      },
+      {
+        "title": "Plateformes éducatives, sites web, applications et systèmes",
+        "tags": [
+          "Plateformes éducatives (LMS)",
+          "Développement web",
+          "Applications mobiles (iOS & Android)",
+          "Systèmes institutionnels (ERP/CRM)"
+        ],
+        "details": "Nous proposons des solutions logicielles et numériques complètes : plateformes d'apprentissage en ligne (LMS) pour académies et formateurs, sites web institutionnels et e-commerce, applications mobiles (iOS & Android) et systèmes de gestion sur mesure alliant performance, sécurité et expérience utilisateur."
+      }
+    ]
+  },
+  "portfolioSection": {
+    "badge": "Nos réalisations",
+    "title": "Nos",
+    "titleHighlight": " réalisations précédentes",
+    "description": "Exemples de projets et travaux que nous avons réalisés avec succès pour nos clients dans les domaines de l'éducation, de la formation et des services académiques",
+    "viewAll": "Voir toutes les réalisations",
+    "loading": "Chargement...",
+    "empty": "Aucune réalisation à afficher pour le moment"
+  },
+  "academicServicesPage": {
+    "badge": "Services académiques et de recherche",
+    "title1": "Services académiques et de recherche",
+    "title2": " pour étudiants de master, doctorat et chercheurs",
+    "subtitle": "Nous accompagnons les étudiants en master et doctorat, les chercheurs et les auteurs avec des services professionnels de révision, de mise en forme et de support technique, dans le plein respect de l'intégrité scientifique.",
+    "heroCta": "Contactez-nous pour demander le service",
+    "heroSecondaryCta": "Découvrir les services",
+    "servicesSectionTitle": "Nos services académiques et de recherche",
+    "servicesSectionSubtitle": "Un ensemble complet de services conçus pour accompagner les chercheurs et les auteurs à chaque étape de la préparation de leur travail scientifique",
+    "services": [
+      { "title": "Mise en forme des mémoires et des livres", "description": "Nous vous aidons à présenter votre travail de façon organisée et professionnelle, facilitant la lecture et la révision tout en respectant les exigences académiques." },
+      { "title": "Mise en page technique des recherches et ouvrages", "description": "Nous améliorons l'aspect final de votre travail scientifique grâce à une mise en page cohérente qui reflète la qualité du contenu et le prépare à l'impression ou à la publication." },
+      { "title": "Révision et correction linguistique", "description": "Nous améliorons la qualité et la correction de votre texte en corrigeant les erreurs linguistiques et orthographiques et en affinant le style, tout en préservant le sens scientifique." },
+      { "title": "Indexation", "description": "Nous facilitons l'accès au contenu de votre recherche en préparant des index précis et organisés pour les sujets, versets, hadiths, noms et termes." },
+      { "title": "Référencement des sources et notes", "description": "Nous renforçons la rigueur scientifique de votre recherche en organisant les sources, références, notes de bas de page et citations selon la méthode requise." },
+      { "title": "Notices biographiques", "description": "Nous fournissons des notices biographiques documentées pour les personnalités citées dans la recherche ou l'ouvrage, complétant la documentation et leur présentation." },
+      { "title": "Référencement des hadiths et traditions prophétiques", "description": "Nous renforçons la documentation du volet hadith de votre recherche en retraçant les hadiths et traditions jusqu'à leurs sources, en précisant leur emplacement et leur degré d'authenticité selon les sources scientifiques reconnues." }
+    ],
+    "servicesCta": "Demander ce service",
+    "strengthsSectionTitle": "Pourquoi choisir Rawasikh ?",
+    "strengths": [
+      { "title": "Confidentialité totale", "description": "Nous protégeons la confidentialité de vos données et fichiers tout au long du processus." },
+      { "title": "Rigueur scientifique", "description": "Nous respectons les normes de précision et de méthodologie scientifique dans chaque service fourni." },
+      { "title": "Respect des délais", "description": "Nous livrons nos travaux dans les délais convenus, sans retard." },
+      { "title": "Possibilité de modifications", "description": "Nous offrons des révisions et modifications du travail selon l'accord conclu avec le client." }
+    ],
+    "faqSectionTitle": "Questions fréquentes",
+    "faq": [
+      { "q": "Quelle est la durée d'exécution du service ?", "a": "La durée varie selon l'ampleur du travail et le type de service demandé, et est déterminée précisément après examen de la demande et accord avec le client." },
+      { "q": "Comment puis-je envoyer mes fichiers ?", "a": "Vous pouvez envoyer vos fichiers directement via WhatsApp après nous avoir contactés et précisé le service souhaité." },
+      { "q": "Rédigez-vous la recherche à la place du chercheur ?", "a": "Non, nos services se concentrent sur le support technique, la révision, la mise en forme et la documentation, dans le plein respect de l'intégrité scientifique. Nous ne rédigeons pas la recherche à la place du chercheur." },
+      { "q": "Des modifications sont-elles possibles après la livraison ?", "a": "Oui, nous offrons la possibilité d'apporter des modifications après la livraison selon l'accord initial conclu avec le client." },
+      { "q": "Mes données et fichiers sont-ils confidentiels ?", "a": "Oui, nous nous engageons à préserver la confidentialité de tous les fichiers et données partagés par nos clients." }
+    ],
+    "disclaimerTitle": "Avis professionnel",
+    "disclaimerText": "Nos services se concentrent sur le support technique, la révision, la mise en forme et la documentation, dans le plein respect de l'intégrité scientifique. Ils n'incluent pas la rédaction de recherches ou de mémoires à la place du chercheur.",
+    "formSectionTitle": "Envoyez votre demande",
+    "formSectionSubtitle": "Choisissez le service dont vous avez besoin et laissez vos coordonnées, nous vous contacterons via WhatsApp dans les plus brefs délais",
+    "formName": "Nom complet",
+    "formNamePlaceholder": "Entrez votre nom",
+    "formPhone": "Téléphone / Numéro WhatsApp",
+    "formService": "Service demandé",
+    "formServicePlaceholder": "Choisissez un service",
+    "formNotes": "Détails supplémentaires sur votre demande",
+    "formNotesPlaceholder": "Décrivez votre travail scientifique et vos besoins...",
+    "formAttachmentsHint": "Vous pourrez joindre vos fichiers directement dans la conversation WhatsApp après l'envoi de la demande.",
+    "formSubmit": "Envoyer la demande via WhatsApp",
+    "formNameRequired": "Veuillez saisir votre nom",
+    "formPhoneRequired": "Veuillez saisir votre numéro de téléphone",
+    "formServiceRequired": "Veuillez choisir le service demandé",
+    "ctaFinalTitle": "Prêt à commencer ?",
+    "ctaFinalSubtitle": "Contactez-nous dès maintenant et nous vous aiderons à présenter votre travail scientifique de la meilleure façon",
+    "ctaFinalButton": "Contactez-nous pour demander le service",
+    "whatsappIntro": "Bonjour, je souhaite demander un service",
+    "whatsappNameLabel": "Nom",
+    "whatsappPhoneLabel": "Numéro de téléphone",
+    "whatsappNotesLabel": "Détails supplémentaires",
+    "seoTitle": "Services académiques et de recherche | Rawasikh",
+    "seoDescription": "Mise en forme de mémoires, mise en page technique, révision linguistique, indexation, documentation des références, notices biographiques et référencement de hadiths pour étudiants de master, doctorat et chercheurs.",
+    "seoKeywords": "services académiques, services de recherche, mise en forme de mémoires, révision linguistique, indexation, documentation des références, référencement de hadiths, notices biographiques, services master et doctorat"
+  },
+  "digitalSolutionsPage": {
+    "badge": "Solutions numériques et développement logiciel",
+    "title1": "Création de plateformes éducatives,",
+    "title2": "sites web, applications et systèmes",
+    "subtitle": "Nous transformons votre vision éducative et institutionnelle en réalité numérique : conception et développement de plateformes e-learning (LMS), sites web modernes, applications mobiles (iOS & Android) et systèmes de gestion sur mesure.",
+    "heroCta": "Démarrer votre projet",
+    "heroSecondaryCta": "Découvrir nos solutions",
+    "heroBadges": [
+      "Architecture évolutive et moderne",
+      "Passerelles de paiement et classes virtuelles",
+      "Support technique et maintenance continue"
+    ],
+    "servicesSectionTitle": "Nos solutions de développement logiciel et transformation numérique",
+    "servicesSectionSubtitle": "Une gamme complète de services techniques conçus pour bâtir votre présence numérique et gérer votre établissement efficacement",
+    "services": [
+      {
+        "title": "Plateformes éducatives et académies (LMS)",
+        "description": "Création de plateformes e-learning complètes pour écoles, académies, centres de formation et formateurs : cours enregistrés, diffusion en direct, banques de questions, tests de niveau et certificats automatiques.",
+        "tags": ["Cours en direct et enregistrés", "Banques de questions et quiz", "Certificats automatiques", "Suivi des étudiants"]
+      },
+      {
+        "title": "Conception et développement de sites web",
+        "description": "Création de sites vitrines d'entreprise, boutiques e-commerce, portails médias et blogs modernes, entièrement responsives, ultra-rapides et optimisés pour le référencement (SEO).",
+        "tags": ["Design responsive", "Optimisation SEO", "Haute performance", "Panneau d'administration"]
+      },
+      {
+        "title": "Applications mobiles (iOS & Android)",
+        "description": "Développement d'applications mobiles pour plateformes éducatives, services et boutiques sur iOS et Android avec notifications instantanées, protection vidéo et expérience fluide.",
+        "tags": ["iOS et Android", "Protection des vidéos", "Notifications push", "Publication sur les stores"]
+      },
+      {
+        "title": "Systèmes de gestion et ERP/CRM",
+        "description": "Analyse et développement de systèmes administratifs, comptables et scolaires sur mesure (ERP, CRM, gestion des écoles, élèves, enseignants, présences, abonnements et rapports).",
+        "tags": ["Gestion scolaire", "Rapports financiers", "Rôles et permissions", "Automatisation"]
+      },
+      {
+        "title": "Design UI/UX et identité numérique",
+        "description": "Conception d'interfaces modernes et intuitives basées sur l'étude du parcours utilisateur et de votre identité visuelle, avec des prototypes interactifs.",
+        "tags": ["Parcours utilisateur", "Prototypes interactifs", "Identité cohérente", "Standards UX"]
+      },
+      {
+        "title": "Hébergement cloud, intégrations API et support",
+        "description": "Gestion des serveurs cloud, intégration des passerelles de paiement (Vodafone Cash, InstaPay, Visa/MasterCard, Fawry), connexion Zoom et WhatsApp, sécurité et maintenance.",
+        "tags": ["Passerelles de paiement", "Intégration Zoom & WhatsApp", "Cloud sécurisé", "Support et maintenance"]
+      }
+    ],
+    "servicesCta": "Demander cette solution",
+    "processSectionTitle": "Notre méthodologie de travail",
+    "processSectionSubtitle": "Un processus d'ingénierie structuré en quatre étapes pour transformer votre idée en produit numérique fiable",
+    "process": [
+      {
+        "title": "Analyse et planification",
+        "description": "Étude des besoins, des objectifs, du cahier des charges technique et de la feuille de route."
+      },
+      {
+        "title": "Conception UI/UX",
+        "description": "Maquettes interactives et validation de l'identité visuelle avant le développement."
+      },
+      {
+        "title": "Développement et intégration",
+        "description": "Programmation avec les technologies modernes et connexion aux bases de données et paiements."
+      },
+      {
+        "title": "Tests, lancement et support",
+        "description": "Audit de qualité et sécurité, mise en ligne, formation de votre équipe et support continu."
+      }
+    ],
+    "strengthsSectionTitle": "Pourquoi choisir Rawasikh pour votre projet technique ?",
+    "strengths": [
+      {
+        "title": "Sécurité renforcée",
+        "description": "Chiffrement des données et protection avancée des vidéos éducatives contre le téléchargement non autorisé."
+      },
+      {
+        "title": "Évolutivité garantie",
+        "description": "Architecture moderne capable d'accueillir des milliers d'utilisateurs simultanés."
+      },
+      {
+        "title": "Respect des délais",
+        "description": "Calendrier clair avec des jalons précis garantissant le lancement à la date convenue."
+      },
+      {
+        "title": "Expertise EdTech",
+        "description": "Alliance unique de l'expertise pédagogique et de l'excellence en ingénierie logicielle."
+      }
+    ],
+    "faqSectionTitle": "Questions fréquentes",
+    "faq": [
+      {
+        "q": "Quel est le délai de création d'une plateforme éducative, d'un site ou d'une application ?",
+        "a": "Le délai dépend de l'envergure du projet : de 2 à 4 semaines pour les sites vitrines et plateformes standards, et selon un calendrier détaillé pour les systèmes et applications sur mesure."
+      },
+      {
+        "q": "Peut-on intégrer des moyens de paiement en ligne et des classes virtuelles ?",
+        "a": "Oui, nous intégrons toutes les solutions de paiement locales et internationales (Vodafone Cash, InstaPay, Fawry, Visa/MasterCard) ainsi que Zoom, Google Meet et WhatsApp."
+      },
+      {
+        "q": "Les vidéos et contenus éducatifs sont-ils protégés contre le téléchargement ?",
+        "a": "Absolument. Nous utilisons des systèmes de chiffrement vidéo, un filigrane dynamique au nom de l'étudiant et la limitation du partage de compte."
+      },
+      {
+        "q": "Disposerai-je d'un panneau de contrôle complet ?",
+        "a": "Oui, chaque projet inclut un tableau de bord intuitif (arabe/anglais) pour gérer contenus, étudiants, enseignants, ventes et rapports sans compétence technique."
+      },
+      {
+        "q": "Offrez-vous un support technique après la livraison ?",
+        "a": "Oui, nous assurons une période de garantie et de support gratuit avec formation de votre équipe, ainsi que des forfaits de maintenance continue."
+      }
+    ],
+    "disclaimerTitle": "Garantie de qualité et de propriété technique",
+    "disclaimerText": "Rawasikh s'engage à livrer des projets logiciels selon les plus hauts standards de qualité et de sécurité, avec une documentation complète, une formation et un support technique fiable.",
+    "formSectionTitle": "Demandez une consultation gratuite ou un devis",
+    "formSectionSubtitle": "Choisissez le type de projet souhaité et laissez vos coordonnées, notre équipe technique vous contactera via WhatsApp rapidement",
+    "formName": "Nom complet / Établissement",
+    "formNamePlaceholder": "Entrez votre nom ou celui de votre établissement",
+    "formPhone": "Téléphone / Numéro WhatsApp",
+    "formService": "Type de projet souhaité",
+    "formServicePlaceholder": "Choisissez le type de projet",
+    "formNotes": "Présentation de votre projet et besoins",
+    "formNotesPlaceholder": "Décrivez l'idée du projet, le public cible ou les fonctionnalités souhaitées...",
+    "formAttachmentsHint": "Vous pourrez partager tout document ou modèle de référence directement sur WhatsApp après l'envoi.",
+    "formSubmit": "Envoyer la demande via WhatsApp",
+    "formNameRequired": "Veuillez saisir votre nom",
+    "formPhoneRequired": "Veuillez saisir votre numéro de téléphone",
+    "formServiceRequired": "Veuillez choisir le type de projet",
+    "ctaFinalTitle": "Prêt à lancer votre plateforme ou système numérique ?",
+    "ctaFinalSubtitle": "Contactez-nous dès aujourd'hui et confiez la réalisation de votre plateforme ou application à notre équipe d'ingénieurs",
+    "ctaFinalButton": "Contactez-nous sur WhatsApp",
+    "whatsappIntro": "Bonjour, je souhaite demander un devis pour le service",
+    "whatsappNameLabel": "Nom / Établissement",
+    "whatsappPhoneLabel": "Numéro de téléphone",
+    "whatsappNotesLabel": "Détails du projet",
+    "seoTitle": "Création de plateformes éducatives, sites web, applications et systèmes | Rawasikh",
+    "seoDescription": "Conception et développement de plateformes éducatives (LMS), sites web, applications mobiles (iOS & Android) et systèmes ERP/CRM par Rawasikh.",
+    "seoKeywords": "création plateforme éducative, développement LMS, création site web, application mobile, système gestion scolaire, ERP, Rawasikh"
+  },
+  "contactPage": {
+    "title": "Contactez-nous",
+    "subtitle": "Contactez-nous pour une consultation gratuite ou pour en savoir plus sur nos services",
+    "phone": "Téléphone",
+    "email": "Email",
+    "address": "Adresse",
+    "addressValue": "Le Caire - Nasr City - Rue El Tayaran - en face de l'hôpital de l'assurance maladie",
+    "whatsapp": "WhatsApp",
+    "followUs": "Suivez-nous sur les réseaux sociaux",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "tiktok": "TikTok",
+    "youtube": "YouTube",
+    "ctaWhatsapp": "Contactez-nous sur WhatsApp",
+    "snapchat": "Snapchat"
+  },
+  "policiesPage": {
+    "badge": "Politiques",
+    "title1": "Politiques",
+    "title2": "Rawasikh",
+    "subtitle": "Nous nous engageons aux plus hauts standards de transparence et de professionnalisme",
+    "privacy": {
+      "title": "Premièrement : Politique de confidentialité",
+      "intro": "Rawasikh respecte la vie privée de ses utilisateurs et s'engage à protéger toutes les données et informations personnelles collectées lors de l'utilisation du site web ou de nos services éducatifs et de formation.",
+      "collectTitle": "Informations que nous collectons",
+      "collect": [
+        "Données personnelles fournies volontairement par l'utilisateur (nom, email, numéro de téléphone).",
+        "Données d'inscription aux cours ou services.",
+        "Toute information partagée lors de la communication avec nous."
+      ],
+      "useTitle": "Utilisation des informations",
+      "useIntro": "Les données sont utilisées pour :",
+      "use": [
+        "Fournir efficacement des services éducatifs et de formation.",
+        "Améliorer la qualité du contenu et des services.",
+        "Communiquer avec les utilisateurs concernant les services ou les mises à jour.",
+        "Se conformer aux exigences légales et réglementaires."
+      ],
+      "protectTitle": "Protection des données",
+      "protect": "Nous nous engageons à prendre toutes les mesures techniques et organisationnelles nécessaires pour protéger les données contre tout accès, modification ou divulgation non autorisé.",
+      "shareTitle": "Partage des informations",
+      "share": "Rawasikh ne partage pas de données personnelles avec un tiers, sauf dans la limite de la loi ou en cas de nécessité pour fournir le service, sans compromettre la confidentialité des données."
+    },
+    "terms": {
+      "title": "Deuxièmement : Conditions générales",
+      "intro": "En utilisant le site ou les services Rawasikh, vous acceptez les conditions suivantes :",
+      "items": [
+        "Tous les services fournis sont à des fins éducatives et de formation uniquement.",
+        "L'utilisateur s'engage à utiliser le contenu de manière légale et à ne pas en abuser.",
+        "Rawasikh se réserve le droit de modifier ou mettre à jour les services ou le contenu à tout moment sans préavis.",
+        "Rawasikh a le droit de suspendre ou de fermer tout compte utilisateur en cas de violation des conditions."
+      ]
+    },
+    "payment": {
+      "title": "Troisièmement : Politique de paiement et de remboursement",
+      "paySubtitle": "Politique de paiement",
+      "pay": [
+        "Les frais de cours ou services sont payés via les méthodes de paiement approuvées par l'entreprise.",
+        "Tous les prix annoncés sont définitifs sauf indication contraire."
+      ],
+      "refundSubtitle": "Politique de remboursement",
+      "refund": [
+        "Les remboursements peuvent être demandés selon les termes de chaque service ou programme.",
+        "Aucun remboursement n'est effectué après le début du service ou l'accès au contenu, sauf dans des cas exceptionnels approuvés par la direction.",
+        "Les demandes de remboursement sont examinées individuellement dans un délai déterminé."
+      ]
+    },
+    "disclaimer": {
+      "title": "Quatrièmement : Avis de non-responsabilité",
+      "items": [
+        "Le contenu éducatif et de formation fourni par Rawasikh vise à développer les connaissances et les compétences, et ne remplace pas les consultations professionnelles ou juridiques spécialisées.",
+        "L'entreprise n'assume aucune responsabilité pour toute mauvaise utilisation du contenu.",
+        "Les résultats éducatifs varient d'une personne à l'autre en fonction de l'effort et de l'engagement personnel."
+      ]
+    },
+    "ip": {
+      "title": "Cinquièmement : Droits de propriété intellectuelle",
+      "items": [
+        "Tout le contenu publié sur le site Rawasikh, y compris les textes, matériels éducatifs, conceptions, vidéos et traductions, est protégé par les lois sur la propriété intellectuelle.",
+        "Il est interdit de copier, republier ou distribuer tout contenu sans autorisation écrite préalable de l'entreprise.",
+        "Toute violation des droits de propriété intellectuelle expose le contrevenant à des poursuites judiciaires."
+      ]
+    }
+  },
+  "policiesPageTeacher": {
+    "badge": "Politiques des formateurs",
+    "title1": "Politiques de Rawasikh pour",
+    "title2": "les formateurs",
+    "subtitle": "Conditions et obligations des formateurs et intervenants collaborant avec Rawasikh",
+    "privacy": {
+      "title": "1. Politique de confidentialité des formateurs",
+      "intro": "Rawasikh s'engage à protéger les données personnelles et professionnelles des formateurs qui collaborent avec elle, et à ne pas les utiliser au-delà du cadre de la relation contractuelle entre les deux parties.",
+      "collectTitle": "Informations que nous collectons",
+      "collect": [
+        "Données personnelles et professionnelles (nom, coordonnées, CV, qualifications).",
+        "Compte bancaire ou moyen de paiement approuvé pour le versement des rémunérations.",
+        "Historique de performance et évaluations des cours et sessions."
+      ],
+      "useTitle": "Utilisation des informations",
+      "useIntro": "Les données du formateur sont utilisées pour :",
+      "use": [
+        "La coordination administrative et contractuelle relative aux cours et sessions.",
+        "Le versement des rémunérations dans les délais prévus.",
+        "L'évaluation de la qualité des prestations et l'amélioration du service éducatif.",
+        "La communication concernant les plannings et mises à jour."
+      ],
+      "protectTitle": "Protection des données",
+      "protect": "Rawasikh s'engage à prendre les mesures techniques et organisationnelles nécessaires pour protéger les données des formateurs contre tout accès ou utilisation non autorisés.",
+      "shareTitle": "Partage des informations",
+      "share": "Rawasikh ne partage pas les données des formateurs avec un tiers, sauf en cas d'obligation légale, avec le consentement du formateur, ou pour l'exécution d'obligations contractuelles."
+    },
+    "terms": {
+      "title": "2. Termes et conditions pour les formateurs",
+      "intro": "En rejoignant Rawasikh en tant que formateur ou intervenant, vous acceptez de respecter les conditions suivantes :",
+      "items": [
+        "Respecter le calendrier convenu pour la prestation des cours ou sessions.",
+        "Maintenir la qualité, l'intégrité et l'actualité du contenu pédagogique.",
+        "Respecter la déontologie de l'enseignement et une conduite professionnelle envers les étudiants et l'administration.",
+        "Ne pas utiliser la plateforme Rawasikh ni les données de ses étudiants à des fins hors du cadre de collaboration convenu.",
+        "Rawasikh se réserve le droit de mettre fin à la collaboration en cas de non-respect de l'une de ces conditions."
+      ]
+    },
+    "payment": {
+      "title": "3. Politique de rémunération",
+      "paySubtitle": "Calcul des rémunérations",
+      "pay": [
+        "La rémunération du formateur est calculée selon l'accord conclu entre les deux parties (pourcentage, montant fixe, ou par heure/étudiant).",
+        "Les rémunérations sont versées aux dates convenues après finalisation des procédures administratives."
+      ],
+      "refundSubtitle": "Modification ou annulation",
+      "refund": [
+        "En cas d'annulation ou de report d'une session par le formateur sans justification acceptable, Rawasikh se réserve le droit de revoir la rémunération correspondante.",
+        "Tout litige relatif aux rémunérations est résolu par contact direct avec le service financier dans un délai déterminé."
+      ]
+    },
+    "disclaimer": {
+      "title": "4. Clause de non-responsabilité",
+      "items": [
+        "Le formateur est responsable de l'exactitude du contenu pédagogique qu'il présente.",
+        "Rawasikh décline toute responsabilité pour les déclarations ou opinions personnelles exprimées par le formateur en dehors du contenu pédagogique approuvé.",
+        "Rawasikh s'engage à fournir un environnement d'enseignement adapté, sans garantir de résultats pédagogiques spécifiques pour les étudiants."
+      ]
+    },
+    "ip": {
+      "title": "5. Droits de propriété intellectuelle",
+      "items": [
+        "Les supports pédagogiques préparés spécifiquement pour la plateforme Rawasikh (dans le cadre d'un accord contractuel) sont considérés comme la propriété intellectuelle de Rawasikh, sauf accord écrit contraire.",
+        "Le formateur peut utiliser son expertise et ses connaissances générales en dehors du contenu préparé spécifiquement pour la plateforme.",
+        "La publication ou la distribution de tout contenu spécifique à la plateforme en dehors de Rawasikh est interdite sans autorisation écrite préalable.",
+        "À la fin de la collaboration, Rawasikh conserve l'intégralité des droits sur le contenu préparé en son nom."
+      ]
+    }
+  },
+  "coursesPage": {
+    "title": "Explorez nos cours",
+    "subtitle": "Apprenez des meilleurs instructeurs et acquérez de nouvelles compétences avec nos cours exceptionnels",
+    "searchPlaceholder": "Rechercher un cours...",
+    "all": "Tous",
+    "featured": "En vedette",
+    "instructor": "Instructeur",
+    "available": "Disponible",
+    "free": "Gratuit",
+    "currency": "EGP",
+    "viewDetails": "Voir les détails",
+    "noResults": "Aucun cours disponible",
+    "tryOther": "Essayez d'autres mots-clés",
+    "comingSoon": "Cours à venir bientôt",
+    "categories": {
+      "الصحة النفسية": "Santé mentale",
+      "البرمجة وتطوير الويب": "Programmation et développement web",
+      "التصوير والتصميم": "Photographie et design",
+      "التسويق الرقمي والمبيعات": "Marketing numérique et ventes",
+      "الذكاء الاصطناعى والتقنيات المستقبلية": "IA et technologies futures",
+      "اللغات والتمكين اللغوي": "Langues et autonomisation linguistique"
+    }
+  },
+  "courseContent": {
+    "items": {
+      "digitalArabicTeacher": {
+        "title": "Cours de professeur d'arabe numérique",
+        "description": "Un cours pour les professeurs d'arabe numérique à l'ère de l'IA. Durée totale : 20 heures de formation réparties en 5 unités."
+      },
+      "trainerPreparation": {
+        "title": "Cours de préparation des formateurs",
+        "description": "Cours accrédité par l'Institut national de la qualité au Caire, couvrant les compétences du formateur d'excellence et l'utilisation efficace des méthodes de formation."
+      }
+    }
+  },
+  "storePage": {
+    "title": "Boutique",
+    "subtitle": "Parcourez nos produits éducatifs et obtenez ce dont vous avez besoin",
+    "searchPlaceholder": "Rechercher un produit...",
+    "all": "Tous",
+    "available": "Disponible",
+    "pieces": "pièces",
+    "currency": "EGP",
+    "addToCart": "Ajouter au panier",
+    "addedToCart": "Produit ajouté au panier",
+    "noResults": "Aucun produit disponible",
+    "tryOther": "Essayez d'autres mots-clés",
+    "comingSoon": "Produits à venir bientôt"
+  },
+  "teachersPage": {
+    "title": "Nos enseignants distingués",
+    "subtitle": "Découvrez notre élite d'enseignants dans diverses spécialisations",
+    "searchPlaceholder": "Rechercher un enseignant...",
+    "noResults": "Aucun enseignant trouvé",
+    "noMatch": "Aucun enseignant trouvé avec ce nom",
+    "noTeachers": "Aucun enseignant ajouté pour le moment"
+  },
+  "blogPage": {
+    "badge": "Blog Rawasikh",
+    "title1": "Derniers",
+    "title2": "Articles",
+    "subtitle": "Articles éducatifs et conseils professionnels des experts Rawasikh",
+    "selectCategory": "Choisir une catégorie",
+    "all": "Tous",
+    "readMore": "Lire la suite",
+    "noResultsCategory": "Aucun article dans cette catégorie",
+    "noResults": "Aucun article pour le moment"
+  },
+  "cartPage": {
+    "empty": "Panier vide",
+    "emptyDesc": "Vous n'avez encore ajouté aucun produit",
+    "browseStore": "Parcourir la boutique",
+    "continueShopping": "Continuer mes achats",
+    "title": "Panier d'achat",
+    "course": "Cours",
+    "courseItem": "Cours éducatif",
+    "currency": "EGP",
+    "summary": "Résumé de la commande",
+    "itemsCount": "Nombre d'articles",
+    "total": "Total",
+    "checkout": "Finaliser la commande"
+  },
+  "authPage": {
+    "systemTitle": "Plateforme intégrée",
+    "systemDesc": "Pour gérer le processus éducatif",
+    "tabLogin": "Connexion",
+    "tabRegister": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Entrez le nom complet",
+    "phone": "Numéro de téléphone (facultatif)",
+    "whatsapp": "Numéro WhatsApp",
+    "loading": "Chargement...",
+    "loginBtn": "Se connecter",
+    "registerBtn": "Créer un nouveau compte",
+    "teacherNote": "Pour obtenir un compte enseignant, veuillez contacter l'administrateur",
+    "backHome": "Retour à l'accueil",
+    "errorTitle": "Erreur",
+    "loginFailed": "Échec de la connexion",
+    "invalidCreds": "Email ou mot de passe invalide",
+    "emailNotConfirmed": "Veuillez d'abord confirmer votre email",
+    "welcome": "Bienvenue",
+    "loginSuccess": "Connecté avec succès",
+    "registerFailed": "Échec de la création du compte",
+    "alreadyRegistered": "Cet email est déjà enregistré",
+    "invalidEmail": "Email invalide ou déjà enregistré, essayez un autre",
+    "weakPassword": "Mot de passe trop faible, utilisez un mot de passe plus fort",
+    "registerSuccess": "Compte créé avec succès",
+    "registerSuccessDesc": "Veuillez confirmer votre email puis vous connecter",
+    "dataError": "Erreur de données",
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe"
+  },
+  "courseDetails": {
+    "loginRequired": "Veuillez vous connecter d'abord",
+    "levelAddedToCart": "Niveau ajouté au panier",
+    "purchaseSuccess": "Vous êtes inscrit au cours avec succès !",
+    "purchasePendingSuccess": "Demande d'achat envoyée ! Le cours sera activé après confirmation du paiement",
+    "alreadySubscribed": "Vous êtes déjà inscrit à ce cours",
+    "purchaseError": "Une erreur est survenue lors de l'achat",
+    "courseAddedToCart": "Cours ajouté au panier",
+    "notFoundTitle": "Cours introuvable",
+    "notFoundDescription": "Ce cours n'est pas disponible ou a été supprimé",
+    "backToCourses": "Retour aux cours",
+    "featuredCourse": "Cours en vedette",
+    "lessonCount": "{{count}} leçons",
+    "durationLabel": "{{hours}} heures {{minutes}} minutes",
+    "instructorSpecialist": "Instructeur spécialisé",
+    "levelsAvailable": "Niveaux disponibles",
+    "chooseLevel": "Achetez le niveau qui vous convient",
+    "assessmentRequiredTitle": "⚠️ Test de niveau requis d'abord",
+    "assessmentRequiredDescription": "Vous devez d'abord vous inscrire à l'un des niveaux avant de passer le test de niveau",
+    "loginForAssessment": "Veuillez vous connecter d'abord pour passer le test de niveau",
+    "startAssessment": "Commencer le test",
+    "signInToStartAssessment": "Connectez-vous pour commencer le test",
+    "assessmentResult": "Résultat du test : {{score}}%",
+    "recommendedLevel": "Niveau recommandé : {{level}}",
+    "recommended": "Recommandé",
+    "noLessonsInLevel": "Aucune leçon n'est encore disponible dans ce niveau",
+    "startLearning": "Commencer l'apprentissage",
+    "pendingReview": "En cours d'examen",
+    "unavailableWrongLevel": "Indisponible - ce n'est pas votre niveau",
+    "buyLevel": "Acheter ce niveau",
+    "noLevels": "Aucun niveau n'a encore été ajouté",
+    "subscribed": "Vous êtes inscrit à ce cours",
+    "continueLearning": "Continuer l'apprentissage",
+    "requestPending": "Votre demande est en cours d'examen",
+    "activationAfterAdminConfirm": "Le cours sera activé après confirmation du virement par l'administration",
+    "processing": "Traitement...",
+    "subscribeFree": "S'inscrire gratuitement",
+    "buyNow": "Acheter maintenant",
+    "addToCart": "Ajouter au panier",
+    "fullAccessAfterPayment": "Accès complet au contenu du cours après confirmation du paiement",
+    "courseIncludes": "Le cours comprend :",
+    "lifetimeAccess": "Accès à vie",
+    "completionCertificate": "Certificat de fin",
+    "technicalSupport": "Support technique",
+    "courseContent": "Contenu du cours",
+    "requiresSubscription": "Inscription requise",
+    "lessonsCountParen": "({{count}} leçons)",
+    "free": "Gratuit",
+    "minuteCount": "{{count}} minutes",
+    "noLevelContent": "Aucun contenu pour ce niveau pour le moment",
+    "contentComingSoon": "Le contenu du cours sera bientôt ajouté",
+    "zoomSessionsTitle": "Sessions Zoom en direct",
+    "zoomLoginRequired": "Connectez-vous et inscrivez-vous au cours pour voir les liens des sessions.",
+    "zoomAccessRestricted": "Les liens Zoom sont disponibles uniquement pour les étudiants inscrits à ce cours.",
+    "zoomLoadError": "Impossible de charger les liens Zoom pour le moment. Essayez de recharger la page.",
+    "zoomEmpty": "Aucune session Zoom n'est programmée pour ce cours pour le moment. Revenez plus tard.",
+    "linkedToLesson": "Lié à une leçon",
+    "finalExamTitle": "Examen final",
+    "finalExamLockedProgress": "Se débloque une fois toutes les leçons du cours terminées ({{completed}}/{{total}})",
+    "finalExamPassedLabel": "Examen réussi ✓",
+    "finalExamPassingScore": "Score de réussite : {{score}}%",
+    "reviewResult": "Voir le résultat",
+    "startExam": "Commencer l'examen"
+  },
+  "checkoutWallet": {
+    "receiveTitle": "Numéro de portefeuille pour recevoir le transfert",
+    "copy": "Copier",
+    "copied": "Numéro copié",
+    "instructions": "Transférez le montant au numéro ci-dessus (Vodafone Cash / InstaPay), puis téléchargez le reçu.",
+    "products": "Produits",
+    "quantity": "Quantité",
+    "pendingTitle": "Commande reçue",
+    "pendingInstructions": "Veuillez transférer le montant au numéro de portefeuille suivant (Vodafone Cash / Etisalat Cash / Orange Money):",
+    "pendingReview": "Après le transfert, envoyez le reçu via WhatsApp. Votre commande sera activée après examen."
+  },
+  "courseReviews": {
+    "heading": "Avis des étudiants sur ce cours",
+    "ratingSummary": "{{avg}} sur 5 ({{count}} avis)",
+    "adminScreenshotsTitle": "Captures d'écran des retours d'étudiants (Admin uniquement)",
+    "addImage": "Ajouter une image",
+    "feedbackAlt": "Retour",
+    "studentFeedbackAlt": "Retour d'étudiant",
+    "editMyReview": "Modifier votre avis",
+    "shareYourReview": "Partagez votre avis sur ce cours",
+    "reviewPlaceholder": "Écrivez votre avis sur le cours (facultatif)",
+    "updateReview": "Mettre à jour l'avis",
+    "submitReview": "Envoyer l'avis",
+    "deleteMyReview": "Supprimer mon avis",
+    "loadingReviews": "Chargement des avis...",
+    "noReviewsYet": "Aucun avis pour le moment. Soyez le premier à partager votre opinion !",
+    "defaultReviewerName": "Étudiant",
+    "selectRatingTitle": "Choisissez une note",
+    "selectRatingDesc": "Veuillez d'abord choisir un nombre d'étoiles",
+    "thankYouTitle": "Merci",
+    "thankYouDesc": "Votre avis a été enregistré avec succès",
+    "errorTitle": "Erreur",
+    "confirmDeleteReview": "Supprimer votre avis ?",
+    "confirmDeleteScreenshot": "Supprimer cette image ?",
+    "uploadDialogTitle": "Ajouter une image de retour",
+    "imageLabel": "Image *",
+    "captionLabel": "Légende (facultatif)",
+    "captionPlaceholder": "ex. : avis d'une étudiante sur le cours",
+    "cancel": "Annuler",
+    "upload": "Envoyer",
+    "uploadedTitle": "Ajouté",
+    "uploadedDesc": "L'image de retour a été téléchargée",
+    "confirmDeleteAnyReview": "Supprimer cet avis définitivement ?",
+    "deleteThisReview": "Supprimer cet avis",
+    "reviewDeletedTitle": "Supprimé",
+    "reviewDeletedDesc": "L'avis a été supprimé avec succès"
+  },
+  "lessonPage": {
+    "breadcrumbCourses": "Cours",
+    "notFoundTitle": "Leçon introuvable",
+    "backToCourse": "Retour au cours",
+    "lockedTitle": "Cette leçon est verrouillée",
+    "lockedDescription": "Vous devez acheter le cours pour accéder à cette leçon",
+    "buyCourse": "Acheter le cours",
+    "browseCourses": "Parcourir les cours",
+    "zoomTitle": "Sessions Zoom pour cette leçon",
+    "zoomLoginRequired": "Connectez-vous pour voir les liens de session.",
+    "zoomError": "Impossible de charger les liens Zoom, ou vous n'êtes pas inscrit(e) à cette leçon.",
+    "zoomEmpty": "Aucune session Zoom programmée pour cette leçon pour le moment.",
+    "minutesShort": "min",
+    "freeLesson": "Leçon gratuite",
+    "markComplete": "Cliquez ici pour marquer la leçon comme terminée",
+    "completed": "Leçon terminée",
+    "completedToast": "Leçon marquée comme terminée",
+    "uncompletedToast": "Leçon marquée comme non terminée",
+    "pdfTitle": "Fichier de la leçon (PDF)",
+    "openNewWindow": "Ouvrir dans une nouvelle fenêtre",
+    "download": "Télécharger",
+    "gdriveNotice": "Si vous voyez un message \"You need access\", assurez-vous que le fichier est partagé sur Google Drive avec l'option \"Anyone with the link\" pour qu'il s'affiche dans la plateforme sans demander d'autorisation.",
+    "quizRequiredTitle": "Vous devez réussir le quiz pour continuer",
+    "quizRequiredDescription": "Vous ne pourrez pas passer à la leçon suivante avant de réussir le quiz \"{{quiz}}\" avec au moins {{score}}%",
+    "startQuiz": "Commencer le quiz",
+    "prevLesson": "Leçon précédente",
+    "nextLesson": "Leçon suivante",
+    "solveQuizFirst": "Résolvez d'abord le quiz",
+    "courseContent": "Contenu du cours",
+    "progress": "Progression",
+    "progressCount": "{{completed}} / {{total}} leçons ({{percent}}%)",
+    "free": "Gratuit",
+    "quizPassed": "Quiz réussi ✓",
+    "quizLabel": "Quiz : {{title}}",
+    "afterLesson": "Après la leçon \"{{lesson}}\" — score de réussite : {{score}}%",
+    "passingScore": "Score de réussite : {{score}}%",
+    "finalExamLabel": "Examen final : {{title}}",
+    "finalExamLocked": "Se débloque après avoir terminé toutes les leçons du cours",
+    "lockedByQuizTitle": "Cette leçon est temporairement verrouillée",
+    "lockedByQuizDescription": "Vous devez d'abord réussir le quiz \"{{quiz}}\" avec au moins {{score}}% pour accéder à cette leçon (requis après \"{{lesson}}\")",
+    "lockedByQuizDescriptionNoLesson": "Vous devez d'abord réussir le quiz \"{{quiz}}\" avec au moins {{score}}% pour accéder à cette leçon",
+    "goToQuiz": "Aller au quiz"
+  },
+  "quizPage": {
+    "loginRequiredTitle": "Veuillez vous connecter",
+    "signIn": "Se connecter",
+    "alreadyPassedTitle": "Vous avez déjà réussi !",
+    "alreadyPassedDescription": "Vous avez déjà réussi ce quiz auparavant",
+    "scoreLabel": "Score : {{score}} / {{total}}",
+    "backToCourse": "Retour au cours",
+    "passedTitle": "Félicitations, vous avez réussi !",
+    "failedTitle": "Vous n'avez pas réussi",
+    "yourScore": "Votre score : {{score}} sur {{total}} ({{percent}}%)",
+    "requiredScore": "Score de réussite requis : {{score}}%",
+    "continueCourse": "Continuer le cours",
+    "retry": "Réessayer",
+    "noQuestionsTitle": "Aucune question trouvée",
+    "back": "Retour",
+    "questionCount": "Question {{current}} sur {{total}}",
+    "point": "point",
+    "points": "points",
+    "true": "Vrai",
+    "false": "Faux",
+    "answerPlaceholder": "Écrivez votre réponse ici...",
+    "previous": "Précédent",
+    "submitting": "Envoi en cours...",
+    "submitAnswers": "Soumettre les réponses",
+    "next": "Suivant",
+    "answeredQuestions": "Questions répondues :",
+    "passedToast": "Félicitations ! Vous avez réussi le quiz",
+    "failedToast": "Malheureusement, vous n'avez pas atteint le score de réussite, réessayez",
+    "submitErrorToast": "Une erreur s'est produite lors de la soumission du quiz"
+  },
+  "blogPostPage": {
+    "backToBlog": "Retour au blog",
+    "articleNotFound": "Article introuvable",
+    "writtenBy": "Écrit par"
+  }
+}

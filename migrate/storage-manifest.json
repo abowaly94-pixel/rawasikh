@@ -1,0 +1,545 @@
+[
+  {
+    "bucket": "site-assets",
+    "files": 38,
+    "bytes": 35129608,
+    "error": null,
+    "listing": [
+      {
+        "path": "blog/1780972339000-69pdjm.png",
+        "size": 63558,
+        "mime": "image/png"
+      },
+      {
+        "path": "blog/1780973034251-dizliq.png",
+        "size": 63558,
+        "mime": "image/png"
+      },
+      {
+        "path": "blog/1781602895524-u3ddn6.png",
+        "size": 2635768,
+        "mime": "image/png"
+      },
+      {
+        "path": "blog/1781948020033-pac5bf.png",
+        "size": 2051546,
+        "mime": "image/png"
+      },
+      {
+        "path": "blog/1781948028977-xy5kb6.png",
+        "size": 2051546,
+        "mime": "image/png"
+      },
+      {
+        "path": "blog/1783589198226-l86g2p.png",
+        "size": 2780010,
+        "mime": "image/png"
+      },
+      {
+        "path": "blog/1783589498697-qmudga.png",
+        "size": 2089139,
+        "mime": "image/png"
+      },
+      {
+        "path": "certificates/1787785777438-dibae4.jpg",
+        "size": 92304,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "certificates/1788094305625-5j03ij.jpeg",
+        "size": 208688,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "certificates/1788100070836-7pb4p4.jpeg",
+        "size": 1412173,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "certificates/1788284738463-506hxa.jpeg",
+        "size": 1412173,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "certificates/1788454477457-ex21kc.jpeg",
+        "size": 1412173,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "certificates/1789646365532-pfmbvu.jpeg",
+        "size": 108185,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "certificates/1789646469668-x90tdt.jpeg",
+        "size": 108185,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "course-videos/1783473461492_Atenci_n_al_cliente.mp4",
+        "size": 257242,
+        "mime": "video/mp4"
+      },
+      {
+        "path": "course-videos/1783473502329_Webika..mp4",
+        "size": 155227,
+        "mime": "video/mp4"
+      },
+      {
+        "path": "course-videos/1783511384756_Atenci_n_al_cliente.mp4",
+        "size": 257242,
+        "mime": "video/mp4"
+      },
+      {
+        "path": "course-videos/1783585095312__________________________________________________________________-____________360p__h264_.mp4",
+        "size": 830887,
+        "mime": "video/mp4"
+      },
+      {
+        "path": "course-videos/1784154243468_Business_2_WordPress_Theme___Xtra_WordPress_Theme.mp4",
+        "size": 543592,
+        "mime": "video/mp4"
+      },
+      {
+        "path": "course-videos/1784154288287_Business_2_WordPress_Theme___Xtra_WordPress_Theme__2_.mp4",
+        "size": 760721,
+        "mime": "video/mp4"
+      },
+      {
+        "path": "course-videos/1784154744730_Business_2_WordPress_Theme___Xtra_WordPress_Theme__2_.mp4",
+        "size": 760721,
+        "mime": "video/mp4"
+      },
+      {
+        "path": "course-videos/1784154798958_Business_2_WordPress_Theme___Xtra_WordPress_Theme__2_.mp4",
+        "size": 760721,
+        "mime": "video/mp4"
+      },
+      {
+        "path": "hero-image-1776224874906.jpg",
+        "size": 15953,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "hero-image-1776224900390.jpg",
+        "size": 55026,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "hero-image-1776224946935.png",
+        "size": 189763,
+        "mime": "image/png"
+      },
+      {
+        "path": "hero-image-1776365107366.webp",
+        "size": 309440,
+        "mime": "image/webp"
+      },
+      {
+        "path": "hero-image-1776365131235.webp",
+        "size": 375166,
+        "mime": "image/webp"
+      },
+      {
+        "path": "hero-image-1776365813656.png",
+        "size": 2464468,
+        "mime": "image/png"
+      },
+      {
+        "path": "hero-image-1776369813184.png",
+        "size": 2517868,
+        "mime": "image/png"
+      },
+      {
+        "path": "news/1780731771255-ftldwuv0gn9.jpeg",
+        "size": 2672705,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "news/1780736598726-cs8gd9j0esg.jpeg",
+        "size": 2672705,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "news/1780736608134-iwbkd9xtv7c.jpeg",
+        "size": 2478420,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "news/1780736754101-xsaj27wdgz.jpg",
+        "size": 233090,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "news/1780819747222-vzyoxpyzpkc.jpg",
+        "size": 316883,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "og/blog/1f1206e2-eca3-4335-90c6-6439872b9f24-latest.html",
+        "size": 3444,
+        "mime": "text/html"
+      },
+      {
+        "path": "og/blog/daee86dc-ef27-4fbc-b280-d14c5b8749a8-blob178353.html",
+        "size": 3011,
+        "mime": "text/html"
+      },
+      {
+        "path": "og/blog/daee86dc-ef27-4fbc-b280-d14c5b8749a8-edgewebp178353.html",
+        "size": 3289,
+        "mime": "text/html"
+      },
+      {
+        "path": "og/blog/daee86dc-ef27-4fbc-b280-d14c5b8749a8-final178353.html",
+        "size": 3018,
+        "mime": "text/html; charset=utf-8"
+      }
+    ]
+  },
+  {
+    "bucket": "lesson-thumbnails",
+    "files": 53,
+    "bytes": 67277227,
+    "error": null,
+    "listing": [
+      {
+        "path": "1776900655357_download (8).jpg",
+        "size": 69261,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1777337423086_Tot Web Size.jpg.jpeg",
+        "size": 943696,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1777577241623_WhatsApp Image 2026-04-30 at 10.26.41 PM.jpeg",
+        "size": 263253,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1778116523920_WhatsApp Image 2026-05-07 at 4.11.40 AM.jpeg",
+        "size": 263117,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1778120053339_1.jpg.jpeg",
+        "size": 3786618,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1781074787271_Untitled.jpg",
+        "size": 125596,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1781606632153_2.jpg.jpeg",
+        "size": 3828154,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1781680216830_Gemini_Generated_Image_22ygkm22ygkm22yg.png",
+        "size": 1530864,
+        "mime": "image/png"
+      },
+      {
+        "path": "1781680370304_Gemini_Generated_Image_bzlxefbzlxefbzlx.png",
+        "size": 1552765,
+        "mime": "image/png"
+      },
+      {
+        "path": "1781680615335_Gemini_Generated_Image_xtwg8extwg8extwg.png",
+        "size": 1692498,
+        "mime": "image/png"
+      },
+      {
+        "path": "1781680691768_Gemini_Generated_Image_4p5zo94p5zo94p5z.png",
+        "size": 1825754,
+        "mime": "image/png"
+      },
+      {
+        "path": "1781680696578_Gemini_Generated_Image_4p5zo94p5zo94p5z.png",
+        "size": 1825754,
+        "mime": "image/png"
+      },
+      {
+        "path": "1781950251163_Gemini_Generated_Image_d1mf6ad1mf6ad1mf.png",
+        "size": 2038611,
+        "mime": "image/png"
+      },
+      {
+        "path": "1781950314395_Gemini_Generated_Image_y572ngy572ngy572.png",
+        "size": 2051324,
+        "mime": "image/png"
+      },
+      {
+        "path": "1781950687630_Gemini_Generated_Image_qq54qnqq54qnqq54.png",
+        "size": 2098613,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782203664298_1777337423086_Tot Web Size.jpg.jpeg",
+        "size": 943696,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1782203669711_Gemini_Generated_Image_hkaaw3hkaaw3hkaa.png",
+        "size": 2179870,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782203835837_Gemini_Generated_Image_hkaaw3hkaaw3hkaa(1).png",
+        "size": 2399540,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782203906569_Gemini_Generated_Image_hkaaw3hkaaw3hkaa22.png",
+        "size": 1420993,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718432050_Gemini_Generated_Image_17d4qz17d4qz17d4.png",
+        "size": 1936813,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718553329_Gemini_Generated_Image_artdb2artdb2artd.png",
+        "size": 1950186,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718632969_Gemini_Generated_Image_ut0a4jut0a4jut0a.png",
+        "size": 2041492,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718640952_Gemini_Generated_Image_artdb2artdb2artd.png",
+        "size": 1950186,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718648020_Gemini_Generated_Image_ut0a4jut0a4jut0a.png",
+        "size": 2041492,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718666453_Gemini_Generated_Image_ut0a4jut0a4jut0a.png",
+        "size": 2041492,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718731367_Gemini_Generated_Image_ifjdf9ifjdf9ifjd.png",
+        "size": 2095052,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718796868_Gemini_Generated_Image_r7kir1r7kir1r7ki.png",
+        "size": 2192223,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718874850_Gemini_Generated_Image_r7kir1r7kir1r7ki222.png",
+        "size": 904038,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718888761_Gemini_Generated_Image_r7kir1r7kir1r7ki222.png",
+        "size": 904038,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782718939412_Gemini_Generated_Image_p116ebp116ebp116.png",
+        "size": 2312729,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782719251756_Gemini_Generated_Image_bftrggbftrggbftr.png",
+        "size": 1723072,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782719256360_Gemini_Generated_Image_bftrggbftrggbftr.png",
+        "size": 1723072,
+        "mime": "image/png"
+      },
+      {
+        "path": "1782719418684_Gemini_Generated_Image_z9vgxcz9vgxcz9vg.png",
+        "size": 1822367,
+        "mime": "image/png"
+      },
+      {
+        "path": "1783884844902_1002254870.jpg",
+        "size": 120176,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1783885201865_1002255138.jpg",
+        "size": 280272,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1783885381796_1002255140.jpg",
+        "size": 334885,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1783885883303_1002255140.jpg",
+        "size": 334885,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1783885929622_1002255178.jpg",
+        "size": 236332,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1783886439442_1002255205.jpg",
+        "size": 234747,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1783886495615_1002255196.jpg",
+        "size": 112364,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1783887317019_1002255229.jpg",
+        "size": 201857,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1784154204214_6fde86139622fdb26d338b35356ebb04.jpg",
+        "size": 53869,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1784154685316-u6pjil-34.png",
+        "size": 704581,
+        "mime": "image/png"
+      },
+      {
+        "path": "1784154792599-efl46i-34.png",
+        "size": 704581,
+        "mime": "image/png"
+      },
+      {
+        "path": "1787173425662-q3v2ae-1002333432.jpg",
+        "size": 211579,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1787173467290-a55j4s-1002329631.jpg",
+        "size": 929534,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1787173498850-sbkp02-1002329628.jpg",
+        "size": 1172921,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1787173619523-o9s2vg-1002329879.jpg",
+        "size": 765109,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1787174116173-z8yfz4-1002329464.jpg",
+        "size": 615331,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1787430569867-wwqyxl-1002340102.jpg",
+        "size": 1169787,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1787767066936-y4ipqm-1002344513.png",
+        "size": 1557556,
+        "mime": "image/png"
+      },
+      {
+        "path": "1788640964982-arl3ts-1002350748.jpg",
+        "size": 245546,
+        "mime": "image/jpeg"
+      },
+      {
+        "path": "1790087201240-9wxu7u-1002405274.jpg",
+        "size": 813086,
+        "mime": "image/jpeg"
+      }
+    ]
+  },
+  {
+    "bucket": "lesson-pdfs",
+    "files": 10,
+    "bytes": 16796741,
+    "error": null,
+    "listing": [
+      {
+        "path": "1c668e88-e989-4c1a-9392-d8aa87ba9f75/1781690121402_flsfh-altnsyq-alakadymy-wahmyth-alalmyh.pdf",
+        "size": 2549012,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "1c668e88-e989-4c1a-9392-d8aa87ba9f75/1781690387823_flsfh-altnsyq-alakadymy-wahmyth-alalmyh.pdf",
+        "size": 2549012,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "1c668e88-e989-4c1a-9392-d8aa87ba9f75/1782026981796_flsfh-altnsyq-alakadymy-wahmyth-alalmyh-1.pdf",
+        "size": 2605720,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "cfc86416-6b13-4ca4-9a9b-4e512f7691ed/1784217860989__.pdf",
+        "size": 1224902,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "d64f9b16-3351-48b1-895c-734f87a45112/1792421385601__-_-_-_-_.pdf",
+        "size": 1563308,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "d64f9b16-3351-48b1-895c-734f87a45112/1793516663397__-_-.pdf",
+        "size": 766758,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "d64f9b16-3351-48b1-895c-734f87a45112/1793516847368__.pdf",
+        "size": 480200,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "e1dbbcf2-989d-4849-8621-8697243b2140/1784152707560_Final Print Price List 2024 for WEB (1).pdf",
+        "size": 4495570,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "e1dbbcf2-989d-4849-8621-8697243b2140/1784152787401_Green Tosca Modern Geometric Web Hosting Service Presentation.pdf",
+        "size": 28904,
+        "mime": "application/pdf"
+      },
+      {
+        "path": "e1dbbcf2-989d-4849-8621-8697243b2140/1784153708786__.pdf",
+        "size": 533355,
+        "mime": "application/pdf"
+      }
+    ]
+  },
+  {
+    "bucket": "payment-screenshots",
+    "files": 0,
+    "bytes": 0,
+    "error": null,
+    "listing": []
+  },
+  {
+    "bucket": "task-submissions",
+    "files": 0,
+    "bytes": 0,
+    "error": null,
+    "listing": []
+  }
+]

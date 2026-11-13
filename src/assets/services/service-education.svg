@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-labelledby="t2">
+  <title id="t2">تعليم: كتاب مفتوح كبير تفسر له أشعة، وقبعة تخرّج وكرة أرضية ومكتبة صغيرة وبطاقات مناهج</title>
+  <defs>
+    <linearGradient id="e-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FDFAF4"/>
+      <stop offset=".58" stop-color="#F8F2E6"/>
+      <stop offset="1" stop-color="#EEE2CB"/>
+    </linearGradient>
+    <linearGradient id="e-sand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8F2E4"/>
+      <stop offset="1" stop-color="#E0CFAF"/>
+    </linearGradient>
+    <linearGradient id="e-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EBCD91"/>
+      <stop offset="1" stop-color="#B8862C"/>
+    </linearGradient>
+    <linearGradient id="e-navy" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#33568F"/>
+      <stop offset=".55" stop-color="#183365"/>
+      <stop offset="1" stop-color="#0D1E40"/>
+    </linearGradient>
+    <linearGradient id="e-blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6187E2"/>
+      <stop offset="1" stop-color="#1F45AD"/>
+    </linearGradient>
+    <linearGradient id="e-page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EFE4CE"/>
+    </linearGradient>
+    <radialGradient id="e-glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#2B5BC4" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#2B5BC4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="e-lat" width="56" height="56" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#0B1B33" stroke-width="1" opacity=".05">
+        <path d="M28 4 52 28 28 52 4 28Z"/>
+        <path d="M0 28h56M28 0v56"/>
+      </g>
+    </pattern>
+    <filter id="e-sh" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#0B1B33" flood-opacity=".16"/>
+    </filter>
+    <filter id="e-shs" x="-45%" y="-45%" width="190%" height="190%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#0B1B33" flood-opacity=".13"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="480" fill="url(#e-bg)"/>
+  <rect width="1200" height="480" fill="url(#e-lat)"/>
+  <ellipse cx="600" cy="170" rx="450" ry="250" fill="url(#e-glow)"/>
+
+  <!-- stage -->
+  <path d="M410 404V300a190 190 0 0 1 380 0v104Z" fill="url(#e-sand)" opacity=".9" filter="url(#e-sh)"/>
+  <path d="M410 404V300a190 190 0 0 1 380 0v104" fill="none" stroke="url(#e-gold)" stroke-width="2.5" opacity=".55"/>
+  <path d="M940 404v-44a72 72 0 0 1 144 0v44Z" fill="url(#e-sand)" opacity=".5"/>
+
+  <path d="M96 404h1008" stroke="#B8862C" stroke-width="2" opacity=".28"/>
+  <ellipse cx="600" cy="410" rx="240" ry="14" fill="#0B1B33" opacity=".08"/>
+
+  <!-- brand chevrons, quiet watermark -->
+  <g fill="none" stroke="#0B1B33" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M92 182l58 56-58 56" stroke-width="13" opacity=".055"/>
+    <path d="M166 182l58 56-58 56" stroke-width="13" opacity=".04"/>
+  </g>
+
+  <!-- rays the book radiates -->
+  <g stroke="url(#e-gold)" stroke-width="5" stroke-linecap="round">
+    <path d="M600 284v-32" opacity=".85"/>
+    <path d="M546 290l-28-26" opacity=".55"/>
+    <path d="M654 290l28-26" opacity=".55"/>
+  </g>
+
+  <!-- focal: the open book, large -->
+  <g filter="url(#e-sh)">
+    <!-- covers -->
+    <path d="M418 320c62-34 124-34 182-8 58-26 120-26 182 8v46c-62-34-124-34-182-8-58-26-120-26-182 8Z" fill="url(#e-navy)"/>
+    <!-- pages -->
+    <path d="M430 316c58-30 116-30 170-6 54-24 112-24 170 6v44c-58-30-116-30-170-6-54-24-112-24-170 6Z" fill="url(#e-page)"/>
+    <path d="M600 310v50" stroke="#C4B093" stroke-width="3.5"/>
+    <g stroke="#C4B093" stroke-width="4" stroke-linecap="round" opacity=".75">
+      <path d="M462 336c30-12 62-14 92-6"/>
+      <path d="M462 356c30-12 62-14 92-6"/>
+      <path d="M738 336c-30-12-62-14-92-6"/>
+      <path d="M738 356c-30-12-62-14-92-6"/>
+    </g>
+    <!-- ribbon bookmark from the spine -->
+    <path d="M572 313v32l9-8 9 8v-32Z" fill="url(#e-navy)"/>
+  </g>
+
+  <!-- graduation cap above the book -->
+  <g filter="url(#e-shs)">
+    <path d="M556 214h88v28c0 11-20 19-44 19s-44-8-44-19Z" fill="url(#e-navy)"/>
+    <path d="M600 146 730 192 600 238 470 192Z" fill="url(#e-navy)"/>
+    <path d="M600 146 730 192 600 238Z" fill="#0B1B33" opacity=".26"/>
+    <path d="M722 196v44" stroke="url(#e-gold)" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="722" cy="246" r="8" fill="url(#e-gold)"/>
+  </g>
+
+  <!-- curriculum flashcards drifting in -->
+  <g filter="url(#e-shs)">
+    <rect x="298" y="206" width="68" height="46" rx="8" fill="#FFFDF7" stroke="url(#e-gold)" stroke-width="2.5"/>
+    <g stroke="#9AA6BC" stroke-width="5" stroke-linecap="round" opacity=".85">
+      <path d="M310 224h44"/><path d="M310 236h28"/>
+    </g>
+  </g>
+  <g filter="url(#e-shs)">
+    <rect x="252" y="280" width="56" height="38" rx="7" fill="url(#e-page)" stroke="#DCCBAE" stroke-width="2.5"/>
+    <g stroke="#9AA6BC" stroke-width="5" stroke-linecap="round" opacity=".8">
+      <path d="M262 294h36"/><path d="M262 304h22"/>
+    </g>
+  </g>
+
+  <!-- supporting: the world the book opens -->
+  <g filter="url(#e-shs)">
+    <circle cx="894" cy="330" r="58" fill="url(#e-blue)"/>
+    <ellipse cx="894" cy="330" rx="22" ry="58" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity=".4"/>
+    <ellipse cx="894" cy="330" rx="44" ry="58" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity=".25"/>
+    <path d="M838 330h116" stroke="#FFFFFF" stroke-width="2.5" opacity=".4"/>
+    <path d="M866 390h56" stroke="url(#e-gold)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M894 388v-6" stroke="url(#e-gold)" stroke-width="5"/>
+    <!-- orbit the globe travels -->
+    <ellipse cx="894" cy="330" rx="88" ry="30" transform="rotate(-16 894 330)" fill="none" stroke="url(#e-gold)" stroke-width="2.5" stroke-dasharray="5 9" stroke-linecap="round" opacity=".6"/>
+    <circle cx="812" cy="306" r="5" fill="url(#e-gold)"/>
+  </g>
+
+  <!-- small library and a resting pencil -->
+  <g filter="url(#e-shs)">
+    <rect x="318" y="388" width="100" height="15" rx="5" fill="url(#e-navy)"/>
+    <rect x="326" y="391" width="12" height="9" rx="2" fill="url(#e-gold)" opacity=".9"/>
+    <rect x="332" y="373" width="84" height="15" rx="5" fill="#2C4E85"/>
+    <rect x="344" y="358" width="62" height="15" rx="5" fill="url(#e-gold)"/>
+    <rect x="350" y="361" width="10" height="9" rx="2" fill="#0D1E40" opacity=".5"/>
+  </g>
+  <g filter="url(#e-shs)">
+    <rect x="444" y="392" width="74" height="12" rx="6" fill="#FFFDF7" stroke="#DCCBAE" stroke-width="2"/>
+    <rect x="444" y="392" width="11" height="12" rx="5" fill="url(#e-gold)"/>
+    <path d="M518 392l18 6-18 6Z" fill="url(#e-navy)"/>
+    <ellipse cx="484" cy="408" rx="36" ry="4" fill="#0B1B33" opacity=".06"/>
+  </g>
+
+  <g fill="#C79A3F">
+    <path d="M360 240l6 17 17 6-17 6-6 17-6-17-17-6 17-6Z" opacity=".42"/>
+    <path d="M1030 220l5 14 14 5-14 5-5 14-5-14-14-5 14-5Z" opacity=".34"/>
+  </g>
+</svg>

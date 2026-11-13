@@ -1,0 +1,47 @@
+# Rawasikh — robots.txt
+# https://rawasikheg.com
+
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /school/
+Disallow: /auth
+Disallow: /reset-password
+Disallow: /backup
+Disallow: /cart
+Disallow: /checkout
+Disallow: /payment/
+Disallow: /certificate/
+Disallow: /quiz/
+Disallow: /assessment-invite/
+
+# Private API surface
+Disallow: /rest/
+Disallow: /storage/
+
+Sitemap: https://rawasikheg.com/sitemap.xml
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Social preview crawlers
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2

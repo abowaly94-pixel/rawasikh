@@ -1,0 +1,1044 @@
+/* Self-hosted Tajawal (Arabic + Latin subsets, weights 300-900). */
+@import "./fonts.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   RAWASIKH DESIGN SYSTEM
+   Concept: "متجذّر" — deep roots. Warm paper surfaces, deep ink navy, the
+   existing brand royal blue kept as the primary, and a gilded accent that
+   echoes Arabic calligraphy gilding and academic seals.
+   All colors are HSL triplets so Tailwind's hsl(var(--token)) wraps them.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    /* Surfaces */
+    --background: 0 0% 100%;
+    --foreground: 216 64% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 216 64% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 216 64% 12%;
+
+    /* Brand */
+    --primary: 224 70% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 42 32% 92%;
+    --secondary-foreground: 216 64% 12%;
+
+    --muted: 45 26% 95%;
+    --muted-foreground: 221 14% 41%;
+
+    --accent: 39 62% 45%;
+    --accent-foreground: 216 64% 12%;
+
+    --destructive: 356 72% 47%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 41 24% 87%;
+    --input: 41 24% 87%;
+    --ring: 224 70% 40%;
+
+    --radius: 1rem;
+
+    /* Extended brand scale */
+    --ink: 216 64% 12%;
+    --ink-2: 217 56% 19%;
+    --brand-deep: 224 70% 29%;
+    --brand-soft: 224 64% 96%;
+    --gold: 39 62% 45%;
+    --gold-strong: 38 70% 29%;
+    --gold-soft: 40 56% 91%;
+    --paper: 48 38% 98%;
+    --sand: 41 40% 92%;
+
+    /* Sidebar (dashboard) */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 216 64% 12%;
+    --sidebar-primary: 224 70% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 45 26% 95%;
+    --sidebar-accent-foreground: 216 64% 12%;
+    --sidebar-border: 41 24% 87%;
+    --sidebar-ring: 224 70% 40%;
+
+    /* Charts */
+    --chart-1: 224 70% 40%;
+    --chart-2: 39 62% 45%;
+    --chart-3: 199 70% 42%;
+    --chart-4: 160 45% 38%;
+    --chart-5: 280 45% 52%;
+
+    --sidebar: 0 0% 100%;
+
+    /* Type */
+    --font-sans: "Tajawal", "Inter", ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --font-display: "Tajawal", ui-sans-serif, system-ui, sans-serif;
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
+
+    /* Elevation — quiet, warm-neutral, never black */
+    --shadow-2xs: 0 1px 2px 0 hsl(216 40% 12% / 0.04);
+    --shadow-xs: 0 1px 2px 0 hsl(216 40% 12% / 0.05);
+    --shadow-sm: 0 1px 2px 0 hsl(216 40% 12% / 0.06),
+      0 1px 3px -1px hsl(216 40% 12% / 0.05);
+    --shadow: 0 2px 6px -2px hsl(216 40% 12% / 0.09),
+      0 1px 2px 0 hsl(216 40% 12% / 0.05);
+    --shadow-md: 0 6px 16px -8px hsl(216 40% 12% / 0.16),
+      0 2px 6px -3px hsl(216 40% 12% / 0.07);
+    --shadow-lg: 0 18px 40px -22px hsl(216 45% 12% / 0.28),
+      0 6px 14px -10px hsl(216 45% 12% / 0.12);
+    --shadow-xl: 0 28px 60px -28px hsl(216 45% 12% / 0.32),
+      0 10px 22px -14px hsl(216 45% 12% / 0.14);
+    --shadow-2xl: 0 40px 80px -32px hsl(216 45% 12% / 0.38);
+
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+
+    /* Motion */
+    --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Reference-accurate eases (from the bold-xp motion language). */
+    --ease-bezier: cubic-bezier(0.33, 1, 0.68, 1);
+    --ease-transition: cubic-bezier(0.76, 0, 0.24, 1);
+    --ease-text-reveal: cubic-bezier(0.65, 0, 0.35, 1);
+    /*
+     * Shared "settle" ease — a long, confident deceleration. Every reveal and
+     * hover transition draws from it so the whole site moves as one system.
+     */
+    --ease-settle: cubic-bezier(0.22, 0.8, 0.2, 1);
+  }
+
+  .dark {
+    --background: 217 53% 8%;
+    --foreground: 214 42% 95%;
+
+    --card: 215 49% 12%;
+    --card-foreground: 214 42% 95%;
+
+    --popover: 215 49% 13%;
+    --popover-foreground: 214 42% 95%;
+
+    --primary: 226 82% 68%;
+    --primary-foreground: 217 53% 8%;
+
+    --secondary: 216 45% 16%;
+    --secondary-foreground: 214 42% 95%;
+
+    --muted: 216 45% 16%;
+    --muted-foreground: 218 19% 67%;
+
+    --accent: 39 66% 55%;
+    --accent-foreground: 217 53% 8%;
+
+    --destructive: 356 70% 58%;
+    --destructive-foreground: 217 53% 8%;
+
+    --border: 216 37% 21%;
+    --input: 216 37% 21%;
+    --ring: 226 82% 68%;
+
+    --ink: 216 64% 12%;
+    --ink-2: 215 40% 18%;
+    --brand-deep: 226 60% 30%;
+    --brand-soft: 216 45% 17%;
+    --gold: 39 66% 55%;
+    --gold-strong: 39 70% 68%;
+    --gold-soft: 39 35% 20%;
+    --paper: 217 53% 8%;
+    --sand: 216 45% 16%;
+
+    --sidebar-background: 215 49% 10%;
+    --sidebar-foreground: 214 42% 95%;
+    --sidebar-primary: 226 82% 68%;
+    --sidebar-primary-foreground: 217 53% 8%;
+    --sidebar-accent: 216 45% 16%;
+    --sidebar-accent-foreground: 214 42% 95%;
+    --sidebar-border: 216 37% 21%;
+    --sidebar-ring: 226 82% 68%;
+
+    --chart-1: 226 82% 68%;
+    --chart-2: 39 66% 55%;
+    --chart-3: 199 65% 55%;
+    --chart-4: 160 45% 50%;
+    --chart-5: 280 55% 65%;
+
+    --sidebar: 215 49% 12%;
+
+    --shadow-2xs: 0 1px 2px 0 hsl(0 0% 0% / 0.3);
+    --shadow-xs: 0 1px 2px 0 hsl(0 0% 0% / 0.35);
+    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.4);
+    --shadow: 0 2px 6px -2px hsl(0 0% 0% / 0.45);
+    --shadow-md: 0 6px 16px -8px hsl(0 0% 0% / 0.5);
+    --shadow-lg: 0 18px 40px -22px hsl(0 0% 0% / 0.6);
+    --shadow-xl: 0 28px 60px -28px hsl(0 0% 0% / 0.65);
+    --shadow-2xl: 0 40px 80px -32px hsl(0 0% 0% / 0.7);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  /* Direction is owned by the <html dir> attribute that I18nAutoTranslator
+     keeps in sync with the active language. Nothing may force it. */
+  html {
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+
+  /* Lenis adds these classes while inertial scrolling is active. The height
+     reset is required for its wheel interception; the iframe rule from the
+     package stylesheet is intentionally not copied because it disables the
+     video embeds on this site. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  html.lenis {
+    scroll-behavior: auto;
+  }
+
+  html.lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  /* Mirror the rest of lenis.css (intentionally not imported): elements
+     Lenis must not hijack ([data-lenis-prevent]) are self-contained scroll
+     regions — the wheel stops at their ends instead of chaining to the
+     page behind them. */
+  [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  html[dir="rtl"] {
+    direction: rtl;
+  }
+
+  html[dir="ltr"] {
+    direction: ltr;
+  }
+
+  body {
+    direction: inherit;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "kern" 1;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+    /* Slight, moderate word gap across the whole site (Tajawal space is narrow). */
+    word-spacing: 0.05em;
+  }
+
+  /* Arabic letters join — any letter-spacing (positive or negative) breaks
+     joining and glues words together. Force 0 in RTL everywhere. */
+  html[dir="rtl"] body,
+  html[dir="rtl"] h1,
+  html[dir="rtl"] h2,
+  html[dir="rtl"] h3,
+  html[dir="rtl"] h4,
+  html[dir="rtl"] p,
+  html[dir="rtl"] span,
+  html[dir="rtl"] a,
+  html[dir="rtl"] button,
+  html[dir="rtl"] li,
+  html[dir="rtl"] td,
+  html[dir="rtl"] label {
+    letter-spacing: 0 !important;
+  }
+
+  /* Tailwind tracking-* utilities must not break Arabic joining either. */
+  html[dir="rtl"] .tracking-tight,
+  html[dir="rtl"] .tracking-tighter,
+  html[dir="rtl"] .tracking-normal,
+  html[dir="rtl"] .tracking-wide,
+  html[dir="rtl"] .tracking-wider,
+  html[dir="rtl"] .tracking-widest {
+    letter-spacing: 0 !important;
+  }
+
+  /* Arabic needs more vertical room than Latin defaults */
+  body,
+  p,
+  li,
+  td,
+  label,
+  input,
+  textarea,
+  button {
+    line-height: 1.75;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-foreground;
+    line-height: 1.35;
+    letter-spacing: 0;
+    word-spacing: 0.06em;
+    text-wrap: balance;
+  }
+
+  h5,
+  h6 {
+    @apply font-sans text-foreground font-bold;
+    line-height: 1.45;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: hsl(var(--gold) / 0.28);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Consistent, quiet scrollbars on Windows/Linux instead of the OS default. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.35) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  /* Keep numerals legible and aligned inside Arabic copy */
+  .nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* UX: minimum touch targets for mobile, better form focus, reduced motion */
+  @media (pointer: coarse) {
+    button,
+    [role="button"],
+    a,
+    input,
+    select,
+    textarea {
+      min-height: 44px;
+    }
+    input,
+    select,
+    textarea {
+      font-size: 16px !important; /* prevent iOS zoom on focus */
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-color: hsl(var(--ring)) !important;
+  }
+
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  /* --- Layout ------------------------------------------------------------ */
+  .shell {
+    @apply mx-auto w-full max-w-[1280px] px-5 sm:px-6 lg:px-8;
+  }
+
+  .section-y {
+    @apply py-12 md:py-16;
+  }
+
+  /* --- Brand motifs ------------------------------------------------------ */
+  /* Woven geometric trellis (dark strokes) for light surfaces */
+  .pattern-lattice {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%230B1B33' stroke-width='1'%3E%3Cpath d='M28 4 52 28 28 52 4 28Z'/%3E%3Cpath d='M0 28h56M28 0v56'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 56px 56px;
+  }
+
+  /* Same trellis in light strokes, for ink surfaces */
+  .pattern-lattice-light {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='1'%3E%3Cpath d='M28 4 52 28 28 52 4 28Z'/%3E%3Cpath d='M0 28h56M28 0v56'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 56px 56px;
+  }
+
+  /* The "root rule": short gilded bar under a section title. Rendered as a
+     block so `mx-auto` centres it reliably in centred headings and it sits at
+     the reading edge in start-aligned ones. */
+  .rule-gold {
+    @apply block h-[3px] w-12 rounded-full;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--gold)) 0%,
+      hsl(var(--gold) / 0.35) 100%
+    );
+    transition: width 0.45s var(--ease-out-soft);
+  }
+
+  html[dir="rtl"] .rule-gold {
+    background: linear-gradient(
+      270deg,
+      hsl(var(--gold)) 0%,
+      hsl(var(--gold) / 0.35) 100%
+    );
+  }
+
+  /* --- Cards & interactive surfaces ------------------------------------- */
+  .surface-card {
+    @apply rounded-2xl border border-border bg-card;
+    box-shadow: var(--shadow-xs);
+    transition:
+      transform 0.4s var(--ease-out-soft),
+      box-shadow 0.4s var(--ease-out-soft),
+      border-color 0.3s ease;
+  }
+
+  .surface-card:hover {
+    @apply border-primary/25;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Ink panel used for emphasised bands */
+  .panel-ink {
+    @apply relative overflow-hidden rounded-3xl;
+    background: radial-gradient(
+      120% 100% at 100% 0%,
+      hsl(var(--ink-2)) 0%,
+      hsl(var(--ink)) 55%
+    );
+    color: hsl(0 0% 100%);
+  }
+
+  /* --- Chips ------------------------------------------------------------- */
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-border
+      bg-card px-4 py-2 text-sm font-medium text-foreground/85;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .chip:hover {
+    @apply border-primary/35 text-primary;
+    transform: translateY(-1px);
+  }
+
+  .chip[data-active="true"] {
+    @apply border-transparent bg-primary text-primary-foreground;
+    box-shadow: 0 8px 18px -12px hsl(var(--primary) / 0.9);
+  }
+
+  /* Hide scrollbar on horizontal rails while keeping them scrollable */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Filter chip rail: thin visible scrollbar so the overflow is discoverable */
+  .chips-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.35) transparent;
+  }
+  .chips-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+  .chips-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .chips-scroll::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.35);
+    border-radius: 999px;
+  }
+
+  /* Sidebar nav: thin, discoverable scrollbar on the dark ink surface.
+     `scrollbar-gutter: stable` keeps the layout from shifting when the
+     scrollbar appears/disappears, and overscroll containment (also set
+     via [data-lenis-prevent]) stops the wheel chaining to the page. */
+  .sidebar-scroll {
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--gold) / 0.4) transparent;
+  }
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sidebar-scroll::-webkit-scrollbar-thumb {
+    background: hsl(var(--gold) / 0.4);
+    border-radius: 999px;
+  }
+  .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--gold) / 0.65);
+  }
+}
+
+@layer utilities {
+  /* Scroll-reveal (see components/site/Reveal.tsx).
+     Movement uses the modern individual `translate` / `scale` properties, not
+     `transform`, so a reveal never overwrites an element's own transform. */
+  .reveal {
+    opacity: 0;
+    translate: 0 22px;
+    transition:
+      opacity 0.85s var(--ease-settle),
+      translate 0.85s var(--ease-settle),
+      scale 0.85s var(--ease-settle);
+    will-change: opacity, translate, scale;
+  }
+
+  .reveal[data-reveal="in"] {
+    opacity: 1;
+    translate: none;
+    scale: none;
+  }
+
+  .reveal[data-variant="fade"] {
+    translate: none;
+  }
+
+  .reveal[data-variant="scale"] {
+    translate: none;
+    scale: 0.972;
+  }
+
+  /* Taller, softer rise for hero-scale blocks. */
+  .reveal[data-variant="rise"] {
+    translate: 0 56px;
+    scale: 0.97;
+    transition-duration: 1.15s;
+  }
+
+  /* Confident pop for badges and small chips. */
+  .reveal[data-variant="pop"] {
+    translate: 0 16px;
+    scale: 0.82;
+  }
+
+  /* Directional entrances for split layouts (hero, media/text pairs). */
+  .reveal[data-variant="left"] {
+    translate: -30px 0;
+  }
+
+  .reveal[data-variant="right"] {
+    translate: 30px 0;
+  }
+
+  /* In RTL the reading order flips, so the directional entrances mirror too. */
+  html[dir="rtl"] .reveal[data-variant="left"] {
+    translate: 30px 0;
+  }
+
+  html[dir="rtl"] .reveal[data-variant="right"] {
+    translate: -30px 0;
+  }
+
+  /* The gold rule draws itself when its section enters the viewport. */
+  .reveal .rule-gold {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition:
+      width 0.45s var(--ease-out-soft),
+      transform 0.7s var(--ease-out-soft) 0.08s;
+  }
+
+  html[dir="rtl"] .reveal .rule-gold {
+    transform-origin: right;
+  }
+
+  /* In centred headings the rule grows outward from the middle. */
+  .reveal .text-center .rule-gold,
+  html[dir="rtl"] .reveal .text-center .rule-gold {
+    transform-origin: center;
+  }
+
+  .reveal[data-reveal="in"] .rule-gold {
+    transform: scaleX(1);
+  }
+
+  /* Pointer-depth used by the hero visual. Movement is capped to a few pixels. */
+  .hero-parallax {
+    --hero-x: 0px;
+    --hero-y: 0px;
+  }
+
+  /* Headline lines are masked and raised by GSAP on first paint. */
+  .hero-line-inner {
+    transform-origin: left top;
+    will-change: transform;
+  }
+
+  html[dir="rtl"] .hero-line-inner {
+    transform-origin: right top;
+  }
+
+  .hero-parallax-image {
+    transform: translate3d(var(--hero-x), var(--hero-y), 0) scale(1.02);
+    transition: transform 0.45s var(--ease-out-soft);
+  }
+
+  .hero-parallax-float {
+    transform: translate3d(
+      calc(var(--hero-x) * -0.75),
+      calc(var(--hero-y) * -0.75),
+      0
+    );
+    transition: transform 0.45s var(--ease-out-soft);
+  }
+
+  /* Thin reading-progress line mounted above the header. */
+  .scroll-progress {
+    transform: scaleX(var(--scroll-progress, 0));
+    transform-origin: left;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--gold)) 0%,
+      hsl(var(--primary)) 55%,
+      hsl(var(--gold)) 100%
+    );
+    box-shadow: 0 0 12px hsl(var(--gold) / 0.45);
+    will-change: transform;
+  }
+
+  html[dir="rtl"] .scroll-progress {
+    transform-origin: right;
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--brand-deep)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* SplitWords nests each word in .split-words__word > span, so the parent
+     gradient + background-clip:text never paints the nested text (invisible).
+     Give every nested word its own gradient background so "عملاؤنا" and
+     every other highlight word actually shows. */
+  .text-gradient-brand > .split-words__word,
+  .text-gradient-brand > .split-words__word > span {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--brand-deep)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* On dark surfaces the deep end would disappear, so lighten the ramp. */
+  .dark .text-gradient-brand,
+  .dark .text-gradient-brand > .split-words__word,
+  .dark .text-gradient-brand > .split-words__word > span {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--primary)) 0%,
+      hsl(226 92% 80%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .divider-gold {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--gold) / 0) 0%,
+      hsl(var(--gold) / 0.5) 50%,
+      hsl(var(--gold) / 0) 100%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    transition: none !important;
+  }
+
+  .reveal .rule-gold {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero-parallax-image,
+  .hero-parallax-float {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero-arch,
+  .hero-halo,
+  .hero-line-inner {
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================== Marquee ================================== */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+[dir="rtl"] .animate-marquee {
+  animation: marquee-rtl 32s linear infinite;
+}
+
+@keyframes marquee-rtl {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+.animate-marquee:hover,
+[dir="rtl"] .animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ============================ Magnetic buttons =========================== */
+/* Wrap any control in .magnetic to let it lean toward the cursor. The JS sets
+   --mx/--my (px) and --ms (scale); see hooks/useMagnetic.ts. */
+
+.magnetic {
+  display: inline-flex;
+  will-change: transform;
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+  transition: transform 0.4s var(--ease-bezier);
+}
+
+.magnetic__inner {
+  display: inline-flex;
+  align-items: center;
+  will-change: transform;
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+  transition: transform 0.4s var(--ease-bezier);
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .magnetic,
+  .magnetic__inner {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ====================== Image / card hover reveals ======================= */
+/* A calm zoom paired with a directional sheen, echoing the reference site. */
+
+.hover-zoom {
+  overflow: hidden;
+}
+
+.hover-zoom img,
+.hover-zoom > .hover-zoom__target {
+  transition:
+    transform 0.7s cubic-bezier(0.33, 1, 0.68, 1),
+    filter 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+  will-change: transform;
+}
+
+.hover-zoom:hover img,
+.hover-zoom:hover > .hover-zoom__target {
+  transform: scale(1.06);
+}
+
+/* ====================== Reference motion primitives ====================== */
+/* Shared easing + behaviours distilled from the bold-xp motion language. */
+
+/* Any interactive control gets the reference's 0.4s bezier transition. */
+.btn-motion {
+  transition:
+    background-color 0.4s var(--ease-bezier),
+    color 0.4s var(--ease-bezier),
+    border-color 0.4s var(--ease-bezier),
+    box-shadow 0.4s var(--ease-bezier),
+    transform 0.4s var(--ease-bezier),
+    opacity 0.4s var(--ease-bezier);
+}
+
+/* Pill button with a background that grows to fill on hover — the exact
+   pattern used by the reference's .link-arrow / .play-video controls. */
+.pill-fill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  z-index: 0;
+}
+
+.pill-fill::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  width: 2.6rem;
+  border-radius: 9999px;
+  background: hsl(var(--gold));
+  z-index: -1;
+  transition: width 0.45s var(--ease-bezier);
+}
+
+.pill-fill:hover::before {
+  width: calc(100% + 0.5rem);
+}
+
+.pill-fill > * {
+  position: relative;
+  z-index: 1;
+  transition: color 0.4s var(--ease-bezier);
+}
+
+.pill-fill:hover > * {
+  color: hsl(var(--ink));
+}
+
+/* Masked line reveal — the reference's hero text mechanic. Wrap each line in
+   .line (overflow hidden) with a .line__inner child; GSAP lifts the inner. */
+.line-mask {
+  overflow: hidden;
+  display: block;
+}
+
+.line-mask__inner {
+  display: block;
+  will-change: transform;
+}
+
+/* Media reveal via clip-path + scale, matching the reference's Media entrance. */
+.media-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.media-reveal img,
+.media-reveal video {
+  will-change: transform, clip-path;
+}
+
+/* Directional sheen that sweeps across a card on hover. */
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    hsl(0 0% 100% / 0.14) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.9s var(--ease-bezier);
+  pointer-events: none;
+}
+
+.sheen:hover::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-fill::before,
+  .pill-fill > *,
+  .sheen::after {
+    transition: none !important;
+  }
+  .sheen::after {
+    display: none;
+  }
+}
+
+/* ======================= Typographic word reveal ========================= */
+/* Reference-inspired: a headline can rise word-by-word instead of as a block.
+   Each word is wrapped in a masked span; `--i` sets its place in the cascade.
+   Applied by the SplitWords helper; the plain text stays in the DOM for SEO
+   and is revealed instantly under reduced motion. */
+@keyframes word-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(110%) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.split-words__word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Visible word gap: the trailing space inside overflow:hidden was being
+     clipped, gluing heading words together (e.g. "اختبارات تحديد المستوى").
+     A moderate inline-end margin restores the gap without breaking Arabic joining. */
+  margin-inline-end: 0.28em;
+  word-spacing: normal;
+  /* Arabic descenders (ي، ج، ح...) sit below the baseline and touch the
+     bottom edge of the inline-block, so overflow:hidden clipped them
+     (e.g. "في" in "أحدث ما لدينا في رواسخ"). Padding inside the mask
+     leaves room for the descender; negative margin keeps line rhythm. */
+  padding-top: 0.12em;
+  padding-bottom: 0.22em;
+  margin-top: -0.12em;
+  margin-bottom: -0.22em;
+}
+
+.split-words__word:last-child {
+  margin-inline-end: 0;
+}
+
+.split-words__word > span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.reveal-ready .split-words__word > span,
+.split-words--play .split-words__word > span {
+  animation: word-rise 1.1s var(--ease-settle) both;
+  animation-delay: calc(var(--i, 0) * var(--word-stagger, 70ms) + 0.12s);
+}
+
+/* ===================== Edge fade for horizontal rails ==================== */
+/* Softens the left/right edges of marquees and scroll rails so content
+   dissolves into the surface rather than cutting off hard. */
+.edge-fade-x {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+.edge-fade-b {
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 82%);
+  mask-image: linear-gradient(to bottom, #000, transparent 82%);
+}
+
+/* ============================= Glass surface ============================= */
+/* Frosted panel for overlays and floating chrome. Falls back to a solid
+   tint where backdrop-filter is unsupported. */
+.glass {
+  background: hsl(0 0% 100% / 0.72);
+  -webkit-backdrop-filter: saturate(1.5) blur(18px);
+  backdrop-filter: saturate(1.5) blur(18px);
+  border: 1px solid hsl(var(--border) / 0.7);
+}
+
+.dark .glass {
+  background: hsl(215 49% 12% / 0.68);
+  border-color: hsl(0 0% 100% / 0.08);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: hsl(0 0% 100% / 0.96);
+  }
+  .dark .glass {
+    background: hsl(215 49% 13% / 0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .split-words__word > span,
+  .reveal-ready .split-words__word > span,
+  .split-words--play .split-words__word > span {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

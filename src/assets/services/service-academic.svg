@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-labelledby="t3">
+  <title id="t3">خدمات أكاديمية: مخطوطة بعدة نسخ موثّقة بخاتم اعتماد وعدسة تدقيق وقلم، وعلامات تدقيق بالهامش</title>
+  <defs>
+    <linearGradient id="a-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FDFAF4"/>
+      <stop offset=".58" stop-color="#F8F2E6"/>
+      <stop offset="1" stop-color="#EEE2CB"/>
+    </linearGradient>
+    <linearGradient id="a-sand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8F2E4"/>
+      <stop offset="1" stop-color="#E0CFAF"/>
+    </linearGradient>
+    <linearGradient id="a-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EBCD91"/>
+      <stop offset="1" stop-color="#B8862C"/>
+    </linearGradient>
+    <linearGradient id="a-navy" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#33568F"/>
+      <stop offset=".55" stop-color="#183365"/>
+      <stop offset="1" stop-color="#0D1E40"/>
+    </linearGradient>
+    <linearGradient id="a-page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EFE4CE"/>
+    </linearGradient>
+    <radialGradient id="a-glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#2B5BC4" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#2B5BC4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="a-lat" width="56" height="56" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#0B1B33" stroke-width="1" opacity=".05">
+        <path d="M28 4 52 28 28 52 4 28Z"/>
+        <path d="M0 28h56M28 0v56"/>
+      </g>
+    </pattern>
+    <filter id="a-sh" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#0B1B33" flood-opacity=".16"/>
+    </filter>
+    <filter id="a-shs" x="-45%" y="-45%" width="190%" height="190%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#0B1B33" flood-opacity=".13"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="480" fill="url(#a-bg)"/>
+  <rect width="1200" height="480" fill="url(#a-lat)"/>
+  <ellipse cx="600" cy="170" rx="450" ry="250" fill="url(#a-glow)"/>
+
+  <!-- stage -->
+  <path d="M410 404V300a190 190 0 0 1 380 0v104Z" fill="url(#a-sand)" opacity=".9" filter="url(#a-sh)"/>
+  <path d="M410 404V300a190 190 0 0 1 380 0v104" fill="none" stroke="url(#a-gold)" stroke-width="2.5" opacity=".55"/>
+  <path d="M940 404v-44a72 72 0 0 1 144 0v44Z" fill="url(#a-sand)" opacity=".5"/>
+
+  <path d="M96 404h1008" stroke="#B8862C" stroke-width="2" opacity=".28"/>
+  <ellipse cx="600" cy="410" rx="230" ry="14" fill="#0B1B33" opacity=".08"/>
+
+  <!-- brand chevrons, quiet watermark -->
+  <g fill="none" stroke="#0B1B33" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M92 182l58 56-58 56" stroke-width="13" opacity=".055"/>
+    <path d="M166 182l58 56-58 56" stroke-width="13" opacity=".04"/>
+  </g>
+
+  <!-- focal: the manuscript with its sibling copies -->
+  <g filter="url(#a-sh)">
+    <g transform="rotate(3 610 300)">
+      <rect x="488" y="206" width="246" height="192" rx="12" fill="url(#a-sand)" stroke="#E3D3B4" stroke-width="2"/>
+    </g>
+    <g transform="rotate(-5 600 308)">
+      <rect x="462" y="204" width="240" height="190" rx="12" fill="#FDFAF4" stroke="#E3D3B4" stroke-width="2"/>
+    </g>
+    <g transform="rotate(-2.5 600 310)">
+      <rect x="470" y="196" width="260" height="200" rx="12" fill="url(#a-page)"/>
+      <rect x="470" y="196" width="260" height="18" rx="9" fill="url(#a-gold)" opacity=".75"/>
+      <g stroke="#C7B294" stroke-width="4.5" stroke-linecap="round" opacity=".85">
+        <path d="M502 246h156"/>
+        <path d="M502 274h194"/>
+        <path d="M502 302h138"/>
+        <path d="M502 330h172"/>
+        <path d="M502 358h104"/>
+      </g>
+      <!-- proofing marks in the margin -->
+      <g fill="none" stroke="#33568F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
+        <path d="M484 262l6 8 11-13"/>
+        <path d="M484 318l6 8 11-13"/>
+      </g>
+      <circle cx="704" cy="262" r="4" fill="#B8862C" opacity=".8"/>
+    </g>
+  </g>
+
+  <!-- seal, stamped on the manuscript corner -->
+  <g filter="url(#a-shs)">
+    <circle cx="686" cy="356" r="50" fill="url(#a-navy)"/>
+    <circle cx="686" cy="356" r="37" fill="none" stroke="url(#a-gold)" stroke-width="3" opacity=".85"/>
+    <g stroke="url(#a-gold)" stroke-width="3" stroke-linecap="round" opacity=".9">
+      <path d="M686 312v-11"/><path d="M686 400v11"/>
+      <path d="M642 356h-11"/><path d="M730 356h11"/>
+      <path d="M655 325l-8-8"/><path d="M717 387l8 8"/>
+      <path d="M717 325l8-8"/><path d="M655 387l-8 8"/>
+    </g>
+    <path d="M668 356l12 13 22-25" fill="none" stroke="#F6E7C4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M662 400l-7 38 20-11 15 13-5-40Z" fill="url(#a-gold)" opacity=".95"/>
+  </g>
+
+  <!-- supporting: the magnifier that audits it -->
+  <g filter="url(#a-shs)">
+    <circle cx="392" cy="286" r="62" fill="#FFFFFF" opacity=".55"/>
+    <circle cx="392" cy="286" r="62" fill="none" stroke="url(#a-navy)" stroke-width="10"/>
+    <circle cx="392" cy="286" r="46" fill="#EDF1FB" opacity=".92"/>
+    <g stroke="#93A9DF" stroke-width="4" stroke-linecap="round" opacity=".95">
+      <path d="M366 274h52"/>
+      <path d="M366 294h36"/>
+    </g>
+    <path d="M440 334l44 44" stroke="url(#a-navy)" stroke-width="15" stroke-linecap="round"/>
+    <!-- the eye drawn to the fine print -->
+    <path d="M350 246l-22-12" stroke="url(#a-gold)" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 7" opacity=".8"/>
+  </g>
+
+  <!-- supporting: the gold pen -->
+  <g filter="url(#a-shs)" transform="rotate(22 872 300)">
+    <rect x="852" y="188" width="28" height="158" rx="13" fill="url(#a-gold)"/>
+    <path d="M852 346h28l-14 34Z" fill="#0D1E40"/>
+    <path d="M866 372v13" stroke="#F6E7C4" stroke-width="3.5" stroke-linecap="round"/>
+    <rect x="852" y="188" width="28" height="22" rx="10" fill="#0D1E40" opacity=".82"/>
+  </g>
+
+  <g fill="#C79A3F">
+    <path d="M800 170l6 17 17 6-17 6-6 17-6-17-17-6 17-6Z" opacity=".42"/>
+    <path d="M268 214l5 14 14 5-14 5-5 14-5-14-14-5 14-5Z" opacity=".34"/>
+  </g>
+</svg>

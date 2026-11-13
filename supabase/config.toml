@@ -1,0 +1,20 @@
+project_id = "modjallmgsapfxbkdrpo"
+
+[functions.import-blog-posts]
+verify_jwt = false
+
+[functions.paymob-webhook]
+verify_jwt = false
+
+[functions.blog-og]
+verify_jwt = false
+
+[functions.course-og]
+verify_jwt = false
+
+[functions.send-zoom-reminders]
+verify_jwt = false
+
+[functions.sync-youtube-videos]
+verify_jwt = true
+

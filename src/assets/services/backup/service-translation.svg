@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-labelledby="t4">
+  <title id="t4">ترجمة: فقاعتان بلغتين يتبادل بينهما المعنى</title>
+  <defs>
+    <linearGradient id="r-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FDFAF4"/>
+      <stop offset=".58" stop-color="#F8F2E6"/>
+      <stop offset="1" stop-color="#EEE2CB"/>
+    </linearGradient>
+    <linearGradient id="r-sand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8F2E4"/>
+      <stop offset="1" stop-color="#E0CFAF"/>
+    </linearGradient>
+    <linearGradient id="r-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EBCD91"/>
+      <stop offset="1" stop-color="#B8862C"/>
+    </linearGradient>
+    <linearGradient id="r-navy" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#33568F"/>
+      <stop offset=".55" stop-color="#183365"/>
+      <stop offset="1" stop-color="#0D1E40"/>
+    </linearGradient>
+    <radialGradient id="r-glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#2B5BC4" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#2B5BC4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="r-lat" width="56" height="56" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#0B1B33" stroke-width="1" opacity=".05">
+        <path d="M28 4 52 28 28 52 4 28Z"/>
+        <path d="M0 28h56M28 0v56"/>
+      </g>
+    </pattern>
+    <filter id="r-sh" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#0B1B33" flood-opacity=".16"/>
+    </filter>
+    <filter id="r-shs" x="-45%" y="-45%" width="190%" height="190%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#0B1B33" flood-opacity=".13"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="480" fill="url(#r-bg)"/>
+  <rect width="1200" height="480" fill="url(#r-lat)"/>
+  <ellipse cx="600" cy="170" rx="450" ry="250" fill="url(#r-glow)"/>
+
+  <!-- stage -->
+  <path d="M410 404V300a190 190 0 0 1 380 0v104Z" fill="url(#r-sand)" opacity=".85" filter="url(#r-sh)"/>
+  <path d="M410 404V300a190 190 0 0 1 380 0v104" fill="none" stroke="url(#r-gold)" stroke-width="2.5" opacity=".5"/>
+
+  <path d="M96 404h1008" stroke="#B8862C" stroke-width="2" opacity=".28"/>
+  <ellipse cx="600" cy="410" rx="240" ry="14" fill="#0B1B33" opacity=".07"/>
+
+  <!-- focal: navy bubble, the source language -->
+  <g filter="url(#r-sh)">
+    <path d="M566 168h224a28 28 0 0 1 28 28v104a28 28 0 0 1-28 28h-176l-46 34 8-34h-10a28 28 0 0 1-28-28V196a28 28 0 0 1 28-28Z" fill="url(#r-navy)"/>
+    <g stroke="#F6E7C4" stroke-width="6" stroke-linecap="round" opacity=".6">
+      <path d="M598 210h164"/>
+      <path d="M598 238h128"/>
+      <path d="M598 266h84"/>
+    </g>
+    <circle cx="734" cy="290" r="6" fill="#EBCD91"/>
+    <circle cx="758" cy="290" r="6" fill="#EBCD91" opacity=".6"/>
+  </g>
+
+  <!-- the answer: paper bubble, the target language -->
+  <g filter="url(#r-shs)">
+    <path d="M392 280h172a26 26 0 0 1 26 26v86a26 26 0 0 1-26 26h-64l-38 28v-28h-70a26 26 0 0 1-26-26v-86a26 26 0 0 1 26-26Z" fill="#FFFDF7" stroke="url(#r-gold)" stroke-width="3.5"/>
+    <g stroke="#9AA6BC" stroke-width="6" stroke-linecap="round" opacity=".85">
+      <path d="M420 318h128"/>
+      <path d="M420 344h96"/>
+      <path d="M420 370h62"/>
+    </g>
+  </g>
+
+  <!-- meaning travels both ways -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M560 262c-18-32-46-46-82-44" stroke="url(#r-gold)" stroke-width="5" stroke-dasharray="10 9" opacity=".95"/>
+    <path d="M492 210l-16 6 12 13" stroke="url(#r-gold)" stroke-width="5"/>
+
+    <path d="M636 296c20 34 50 48 86 46" stroke="#8FA6DE" stroke-width="5" stroke-dasharray="10 9" opacity=".65"/>
+    <path d="M708 350l16-6-12-13" stroke="#8FA6DE" stroke-width="5"/>
+  </g>
+
+  <circle cx="512" cy="232" r="6" fill="#B8862C"/>
+  <circle cx="700" cy="330" r="5.5" fill="#8FA6DE" opacity=".8"/>
+
+  <g fill="#C79A3F">
+    <path d="M836 200l6 17 17 6-17 6-6 17-6-17-17-6 17-6Z" opacity=".42"/>
+    <path d="M300 240l5 14 14 5-14 5-5 14-5-14-14-5 14-5Z" opacity=".34"/>
+  </g>
+</svg>
