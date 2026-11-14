@@ -144,7 +144,7 @@ const DigitalSolutionsPage = () => {
               <Code2 className="h-3.5 w-3.5 text-gold" aria-hidden />
               {t("digitalSolutionsPage.badge")}
             </span>
-            <h1 className="mt-4 mb-4 text-balance text-3xl font-bold leading-[1.35] text-foreground md:text-5xl">
+            <h1 className="mt-4 mb-4 text-balance text-3xl font-bold leading-[1.45] text-foreground md:text-5xl">
               {t("digitalSolutionsPage.title1")}{" "}
               <span className="text-primary">{t("digitalSolutionsPage.title2")}</span>
             </h1>
@@ -424,7 +424,7 @@ const DigitalSolutionsPage = () => {
               aria-hidden
             />
             <div className="relative mx-auto max-w-2xl">
-              <h2 className="text-[26px] font-bold leading-tight text-white sm:text-[34px]">
+              <h2 className="text-[26px] font-bold leading-[1.4] text-white sm:text-[34px]">
                 {t("digitalSolutionsPage.ctaFinalTitle")}
               </h2>
               <div className="divider-gold mx-auto mt-4 h-px w-40" aria-hidden />

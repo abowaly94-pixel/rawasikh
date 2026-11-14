@@ -565,7 +565,7 @@ const CourseDetailsPage = () => {
                 </div>
 
                 <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <h1 className="order-2 flex-1 text-[26px] font-bold leading-[1.3] text-foreground sm:order-1 sm:text-[32px] lg:text-[36px]">
+                  <h1 className="order-2 flex-1 text-[26px] font-bold leading-[1.45] text-foreground sm:order-1 sm:text-[32px] lg:text-[36px]">
                     {courseTitle}
                   </h1>
                   <div className="order-1 self-end sm:order-2 sm:self-auto">

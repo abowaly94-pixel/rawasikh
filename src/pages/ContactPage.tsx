@@ -206,7 +206,7 @@ const ContactPage = () => {
               </Reveal>
 
               <Reveal delay={80}>
-                <h1 className="mt-4 text-balance text-3xl font-bold leading-[1.35] text-foreground md:text-5xl">
+                <h1 className="mt-4 text-balance text-3xl font-bold leading-[1.45] text-foreground md:text-5xl">
                   {t("contactPage.title")}
                 </h1>
               </Reveal>
@@ -487,7 +487,7 @@ const ContactPage = () => {
                 <div className="pointer-events-none absolute inset-3 rounded-[20px] border border-white/[0.07]" aria-hidden />
 
                 <div className="relative mx-auto max-w-2xl">
-                  <h2 className="text-[26px] font-bold leading-tight text-white sm:text-[34px]">
+                  <h2 className="text-[26px] font-bold leading-[1.4] text-white sm:text-[34px]">
                     {t("contactExtras.closingTitle")}
                   </h2>
                   <div className="divider-gold mx-auto mt-4 h-px w-40" aria-hidden />

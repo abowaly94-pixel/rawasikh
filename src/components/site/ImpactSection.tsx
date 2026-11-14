@@ -39,7 +39,7 @@ const ImpactSection = () => {
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12">
           <Reveal>
             <div>
-              <h2 className="max-w-md text-[26px] font-bold leading-[1.3] text-foreground sm:text-[32px]">
+              <h2 className="max-w-md text-[26px] font-bold leading-[1.45] text-foreground sm:text-[32px]">
                 {t("impact.title")}
                 <span className="text-gradient-brand"> {t("impact.titleHighlight")}</span>
               </h2>

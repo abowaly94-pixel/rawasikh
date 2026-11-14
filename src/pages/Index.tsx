@@ -492,7 +492,7 @@ const Index = () => {
             {/* Copy */}
             <div className="max-w-xl">
               <Reveal delay={80}>
-                <h1 className="text-[34px] font-bold leading-[1.22] tracking-tight text-foreground sm:text-[44px] lg:text-[52px]">
+                <h1 className="text-[34px] font-bold leading-[1.4] tracking-tight text-foreground sm:text-[44px] lg:text-[52px]">
                   <span className="-mb-[0.1em] block overflow-hidden pb-[0.1em]">
                     <span className="hero-line-inner block">{t("hero.title1")}</span>
                   </span>
@@ -956,7 +956,7 @@ const Index = () => {
 
             <Reveal delay={120}>
               <div>
-                <h2 className="text-[26px] font-bold leading-[1.3] text-foreground sm:text-[32px]">
+                <h2 className="text-[26px] font-bold leading-[1.45] text-foreground sm:text-[32px]">
                   {t("aboutSection.title")}
                   <span className="text-gradient-brand">{t("aboutSection.titleHighlight")}</span>
                 </h2>

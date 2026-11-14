@@ -99,7 +99,7 @@ const Header = () => {
       { label: t("nav.levelShort"), href: "/level-assessment" },
       { label: t("nav.storeShort"), href: "/store" },
       { label: t("nav.blogShort"), href: "/blog" },
-      { label: t("nav.teachersShort"), href: "/teachers" },
+      { label: t("nav.digitalSolutionsShort"), href: "/digital-solutions" },
     ],
     [t],
   );
@@ -159,6 +159,9 @@ const Header = () => {
           <div className="flex items-center gap-1">
             <Link to="/about" className="rounded px-2 py-1 transition-colors hover:text-white">
               {t("nav.about")}
+            </Link>
+            <Link to="/teachers" className="rounded px-2 py-1 transition-colors hover:text-white">
+              {t("nav.teachers")}
             </Link>
             <Link to="/policies" className="rounded px-2 py-1 transition-colors hover:text-white">
               {t("nav.policies")}
@@ -427,6 +430,9 @@ const Header = () => {
                   <div className="my-2 h-px bg-border" aria-hidden />
                   <Link to="/about" className="rounded-xl px-3 py-2.5 text-sm text-muted-foreground">
                     {t("nav.about")}
+                  </Link>
+                  <Link to="/teachers" className="rounded-xl px-3 py-2.5 text-sm text-muted-foreground">
+                    {t("nav.teachers")}
                   </Link>
                   <Link to="/policies" className="rounded-xl px-3 py-2.5 text-sm text-muted-foreground">
                     {t("nav.policies")}

@@ -44,7 +44,7 @@ const NotFound = () => {
               404
             </p>
 
-            <h1 className="mt-4 text-[26px] font-bold leading-tight text-foreground sm:text-[32px]">
+            <h1 className="mt-4 text-[26px] font-bold leading-[1.4] text-foreground sm:text-[32px]">
               {t("common.notFoundMessage")}
             </h1>
             <div className="rule-gold mx-auto mt-5" aria-hidden />

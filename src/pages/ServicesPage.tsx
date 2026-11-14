@@ -76,7 +76,7 @@ const ServicesPage = () => {
         <div className="pattern-lattice pointer-events-none absolute inset-0 opacity-[0.04]" aria-hidden />
         <div className="shell py-6 lg:py-8 relative z-10">
           <div className="text-center max-w-2xl mx-auto">
-            <h1 className="text-balance text-3xl leading-[1.25] md:text-5xl font-bold text-foreground mb-4">
+            <h1 className="text-balance text-3xl leading-[1.4] md:text-5xl font-bold text-foreground mb-4">
               {t("servicesPage.title1")} <span className="text-primary">{t("servicesPage.title2")}</span>
             </h1>
             <p className="mx-auto max-w-xl text-base leading-8 text-foreground/70 font-medium md:text-lg">

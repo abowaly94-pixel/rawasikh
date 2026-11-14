@@ -205,7 +205,7 @@ const CoursesPage = () => {
             </nav>
 
             <div className="max-w-3xl">
-              <h1 className="text-[28px] font-bold leading-[1.25] text-foreground sm:text-[36px] lg:text-[42px]">
+              <h1 className="text-[28px] font-bold leading-[1.4] text-foreground sm:text-[36px] lg:text-[42px]">
                 {categoryName ? (
                   <>
                     {t("nav.courses")}

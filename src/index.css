@@ -272,11 +272,22 @@
   p,
   li,
   td,
+  th,
   label,
-  input,
   textarea,
+  blockquote,
+  figcaption,
+  dd,
+  dt,
+  small {
+    line-height: 1.9;
+  }
+
+  /* Single-line controls stay compact but not cramped */
+  input,
+  select,
   button {
-    line-height: 1.75;
+    line-height: 1.6;
   }
 
   h1,
@@ -284,7 +295,7 @@
   h3,
   h4 {
     @apply font-display text-foreground;
-    line-height: 1.35;
+    line-height: 1.5;
     letter-spacing: 0;
     word-spacing: 0.06em;
     text-wrap: balance;
@@ -293,7 +304,15 @@
   h5,
   h6 {
     @apply font-sans text-foreground font-bold;
-    line-height: 1.45;
+    line-height: 1.6;
+  }
+
+  /* Arabic headings: Cairo's tall ascenders and deep descenders need noticeably
+     more air between wrapped lines than the Latin default. The !important is
+     deliberate: pages set tight leading-* utilities on their own headings, and
+     this keeps one comfortable rhythm across the whole Arabic site. */
+  html[dir="rtl"] :is(h1, h2, h3, h4, h5, h6) {
+    line-height: 1.6 !important;
   }
 
   p {

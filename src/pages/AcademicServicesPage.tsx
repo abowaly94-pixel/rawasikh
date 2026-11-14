@@ -336,7 +336,7 @@ const AcademicServicesPage = () => {
               aria-hidden
             />
             <div className="relative mx-auto max-w-2xl">
-              <h2 className="text-[26px] font-bold leading-tight text-white sm:text-[34px]">
+              <h2 className="text-[26px] font-bold leading-[1.4] text-white sm:text-[34px]">
                 {t("academicServicesPage.ctaFinalTitle")}
               </h2>
               <div className="divider-gold mx-auto mt-4 h-px w-40" aria-hidden />

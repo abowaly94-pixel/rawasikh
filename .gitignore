@@ -32,3 +32,6 @@ dist-ssr
 # Vercel
 .vercel
 
+# Local tooling artifacts (screenshots, audit scripts)
+.commandcode/
+

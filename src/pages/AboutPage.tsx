@@ -126,7 +126,7 @@ const AboutPage = () => {
           <div className="shell relative grid items-center gap-8 py-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-16">
             <div className="max-w-xl">
               <Reveal delay={80}>
-                <h1 className="text-[34px] font-bold leading-[1.2] tracking-tight text-white sm:text-[44px] lg:text-[52px]">
+                <h1 className="text-[34px] font-bold leading-[1.4] tracking-tight text-white sm:text-[44px] lg:text-[52px]">
                   <span className="block">{t("aboutExtras.heroTitle1")}</span>
                   <span className="mt-1 block text-gold">{t("aboutExtras.heroTitle2")}</span>
                 </h1>
@@ -369,7 +369,7 @@ const AboutPage = () => {
 
               <div className="relative grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-12">
                 <div>
-                  <h2 className="text-[26px] font-bold leading-[1.28] text-white sm:text-[32px]">
+                  <h2 className="text-[26px] font-bold leading-[1.45] text-white sm:text-[32px]">
                     {t("metrics.title")}{" "}
                     <span className="text-gold">{t("metrics.titleHighlight")}</span>
                   </h2>
@@ -461,7 +461,7 @@ const AboutPage = () => {
 
             <Reveal delay={120}>
               <div>
-                <h2 className="text-[26px] font-bold leading-[1.3] text-foreground sm:text-[32px]">
+                <h2 className="text-[26px] font-bold leading-[1.45] text-foreground sm:text-[32px]">
                   {t("aboutExtras.videoTitle")}
                 </h2>
                 <div className="rule-gold mt-4" aria-hidden />

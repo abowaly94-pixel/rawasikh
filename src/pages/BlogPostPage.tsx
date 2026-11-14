@@ -189,7 +189,7 @@ const BlogPostPage = () => {
             {translating ? (
               <Skeleton className="h-10 w-3/4 mb-6" />
             ) : (
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight" data-no-auto-translate>
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-[1.4]" data-no-auto-translate>
                 {tTitle}
               </h1>
             )}

@@ -103,7 +103,7 @@ const StorePage = () => {
           <div className="pattern-lattice pointer-events-none absolute inset-0 opacity-[0.04]" aria-hidden />
           <div className="shell relative z-10 py-6 lg:py-8">
             <div className="mx-auto max-w-2xl text-center">
-              <h1 className="text-balance text-3xl leading-[1.25] md:text-5xl font-bold text-foreground mb-4">{t("storePage.title")}</h1>
+              <h1 className="text-balance text-3xl leading-[1.4] md:text-5xl font-bold text-foreground mb-4">{t("storePage.title")}</h1>
               <p className="mx-auto max-w-xl text-base leading-8 text-foreground/70 font-medium md:text-lg mb-5">{t("storePage.subtitle")}</p>
               <div className="flex items-center justify-center gap-4">
               <div className="max-w-md w-full relative">
