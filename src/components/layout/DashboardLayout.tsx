@@ -667,7 +667,7 @@ const DashboardLayout = ({
           <div className="mb-8 hidden items-center justify-between md:flex">
             <div>
               <h2 className="text-2xl font-bold">مرحباً، {userName}</h2>
-              <div className="rule-gold mt-3" aria-hidden />
+              <div className="rule-gold" aria-hidden />
               <p className="mt-3 text-sm text-muted-foreground">نتمنى لك يوماً سعيداً</p>
             </div>
             <div className="flex items-center gap-4">

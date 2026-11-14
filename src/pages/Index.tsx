@@ -960,7 +960,7 @@ const Index = () => {
                   {t("aboutSection.title")}
                   <span className="text-gradient-brand">{t("aboutSection.titleHighlight")}</span>
                 </h2>
-                <div className="rule-gold mt-4" aria-hidden />
+                <div className="rule-gold" aria-hidden />
                 <h3 className="mt-5 text-[17px] font-bold text-foreground">
                   {t("aboutSection.heading")}
                 </h3>

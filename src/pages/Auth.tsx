@@ -244,7 +244,7 @@ const Auth = () => {
             </Link>
             <CardTitle className="text-2xl font-bold">{t("authPage.systemTitle")}</CardTitle>
             <CardDescription>{t("authPage.systemDesc")}</CardDescription>
-            <div className="rule-gold mx-auto mt-4" aria-hidden />
+            <div className="rule-gold mx-auto" aria-hidden />
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login" className="w-full">

@@ -103,6 +103,9 @@
     --tracking-normal: 0em;
     --spacing: 0.25rem;
 
+    /* Single source of truth for the gap between a heading and its gold rule */
+    --heading-rule-gap: 0.5rem;
+
     /* Motion */
     --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
     /* Reference-accurate eases (from the bold-xp motion language). */
@@ -480,6 +483,7 @@
      the reading edge in start-aligned ones. */
   .rule-gold {
     @apply block h-[3px] w-12 rounded-full;
+    margin-top: var(--heading-rule-gap);
     background: linear-gradient(
       90deg,
       hsl(var(--gold)) 0%,
@@ -775,6 +779,7 @@
   }
 
   .divider-gold {
+    margin-top: var(--heading-rule-gap);
     background: linear-gradient(
       90deg,
       hsl(var(--gold) / 0) 0%,

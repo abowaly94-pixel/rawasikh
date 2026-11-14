@@ -39,7 +39,7 @@ const SectionHeading = ({
         <div className={cn("max-w-2xl", centered && "mx-auto text-center")}>
           <h2
             className={cn(
-              "pb-2 text-[26px] font-bold leading-[1.6] sm:text-[32px] lg:text-[38px]",
+              "text-[26px] font-bold leading-[1.6] sm:text-[32px] lg:text-[38px]",
               dark ? "text-white" : "text-foreground",
             )}
           >
@@ -60,7 +60,7 @@ const SectionHeading = ({
 
           <div
             className={cn(
-              "rule-gold mt-4",
+              "rule-gold",
               centered && "mx-auto",
               dark && "opacity-90",
             )}

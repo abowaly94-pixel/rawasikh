@@ -47,7 +47,7 @@ const NotFound = () => {
             <h1 className="mt-4 text-[26px] font-bold leading-[1.4] text-foreground sm:text-[32px]">
               {t("common.notFoundMessage")}
             </h1>
-            <div className="rule-gold mx-auto mt-5" aria-hidden />
+            <div className="rule-gold mx-auto" aria-hidden />
 
             <p className="mx-auto mt-5 max-w-lg text-[14.5px] leading-8 text-muted-foreground">
               يبدو أن الرابط الذي فتحته غير صحيح أو أن الصفحة تم نقلها. يمكنك العودة للرئيسية أو

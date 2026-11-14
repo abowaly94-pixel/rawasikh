@@ -290,7 +290,7 @@ const PlatformStatsPage = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-white md:text-3xl">إحصائيات المنصة</h1>
-              <div className="divider-gold mt-3 h-px w-28" aria-hidden />
+              <div className="divider-gold h-px w-28" aria-hidden />
               <p className="mt-3 text-sm text-white/70 md:text-base">نظرة تفاعلية شاملة على أداء المنصة</p>
             </div>
           </div>

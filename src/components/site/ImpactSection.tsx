@@ -44,7 +44,7 @@ const ImpactSection = () => {
                 <span className="text-gradient-brand"> {t("impact.titleHighlight")}</span>
               </h2>
 
-              <div className="rule-gold mt-4" aria-hidden />
+              <div className="rule-gold" aria-hidden />
 
               <p className="mt-4 max-w-md text-[13.5px] leading-8 text-muted-foreground">
                 {t("impact.description")}

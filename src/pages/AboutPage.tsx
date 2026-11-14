@@ -373,7 +373,7 @@ const AboutPage = () => {
                     {t("metrics.title")}{" "}
                     <span className="text-gold">{t("metrics.titleHighlight")}</span>
                   </h2>
-                  <div className="rule-gold mt-4" aria-hidden />
+                  <div className="rule-gold" aria-hidden />
                   <p className="mt-4 max-w-md text-[13.5px] leading-8 text-white/60">
                     {t("metrics.description")}
                   </p>
@@ -464,7 +464,7 @@ const AboutPage = () => {
                 <h2 className="text-[26px] font-bold leading-[1.45] text-foreground sm:text-[32px]">
                   {t("aboutExtras.videoTitle")}
                 </h2>
-                <div className="rule-gold mt-4" aria-hidden />
+                <div className="rule-gold" aria-hidden />
                 <p className="mt-4 text-[14px] leading-8 text-muted-foreground">
                   {t("aboutExtras.videoDesc")}
                 </p>

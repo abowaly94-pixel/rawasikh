@@ -217,7 +217,7 @@ const CoursesPage = () => {
                   </>
                 )}
               </h1>
-              <div className="rule-gold mt-2" aria-hidden />
+              <div className="rule-gold" aria-hidden />
               <p className="mt-2 max-w-2xl text-[14px] leading-8 text-muted-foreground sm:text-[15px]">
                 {t("coursesPage.subtitle")}
               </p>

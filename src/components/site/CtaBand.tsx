@@ -33,7 +33,7 @@ const CtaBand = () => {
               <h2 className="text-[26px] font-bold leading-[1.4] text-white sm:text-[34px]">
                 {t("cta.bandTitle")}
               </h2>
-              <div className="divider-gold mx-auto mt-4 h-px w-40" aria-hidden />
+              <div className="divider-gold mx-auto h-px w-40" aria-hidden />
               <p className="mt-4 text-[14.5px] leading-8 text-white/70">
                 {t("cta.description")}
               </p>
