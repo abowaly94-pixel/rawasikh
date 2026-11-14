@@ -90,7 +90,7 @@ export default {
       },
       fontFamily: {
         sans: [
-          "Tajawal",
+          "Cairo",
           "Inter",
           "ui-sans-serif",
           "system-ui",
@@ -104,7 +104,7 @@ export default {
           "sans-serif",
         ],
         display: [
-          "Tajawal",
+          "Cairo",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",
