@@ -196,7 +196,17 @@
   html {
     overflow-y: scroll;
     -webkit-text-size-adjust: 100%;
-    scroll-padding-top: 6rem;
+    /* Matches the fixed site header so anchor targets are never hidden. */
+    scroll-padding-top: var(--site-header-height, 7rem);
+  }
+
+  /* The header is fixed rather than sticky: Radix menus/dialogs lock body
+     scroll, which makes a sticky header jump out of view mid-scroll. A fixed
+     header ignores that. Header.tsx measures its real height, writes it to
+     --site-header-height and adds this class only on public pages, so the
+     dashboard/school layouts (which have their own chrome) are unaffected. */
+  body.has-site-header {
+    padding-top: var(--site-header-height, 7rem);
   }
 
   /* Lenis adds these classes while inertial scrolling is active. The height

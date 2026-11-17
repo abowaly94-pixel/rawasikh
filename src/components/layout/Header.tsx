@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
@@ -49,6 +49,30 @@ const Header = () => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
   const navRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // The header is fixed so it stays put when Radix locks body scroll for
+  // menus/dialogs. Publish its measured height so the layout can reserve the
+  // exact space and anchor links can offset correctly. Re-measures on resize,
+  // font/language changes and when the news ticker mounts or unmounts.
+  useLayoutEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const sync = () => {
+      const height = header.getBoundingClientRect().height;
+      document.documentElement.style.setProperty("--site-header-height", `${height}px`);
+      document.body.classList.add("has-site-header");
+    };
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(header);
+    window.addEventListener("resize", sync);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", sync);
+      document.body.classList.remove("has-site-header");
+    };
+  }, [i18n.language]);
 
   const { data: courseCategories } = useQuery({
     queryKey: ["header-course-categories"],
@@ -135,7 +159,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full">
+    <header ref={headerRef} className="site-header fixed inset-x-0 top-0 z-50 w-full">
       {/* ---- Utility strip (desktop) ---- */}
       <div className="hidden bg-ink text-white/75 lg:block">
         <div className="shell flex h-9 items-center justify-between text-[12px]">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
@@ -28,16 +28,18 @@ const BlogPage = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(searchParams.get("category"));
 
-  useEffect(() => {
-    setSelectedCategory(searchParams.get("category"));
-  }, [searchParams]);
+  // The URL is the single source of truth for the active category. Deriving it
+  // directly (instead of mirroring it into local state + a syncing useEffect)
+  // means the chip highlight, the filtered posts and the URL can never drift
+  // apart — even on rapid clicks or back/forward navigation.
+  const selectedCategory = searchParams.get("category");
 
   const updateCategory = (catId: string | null) => {
-    setSelectedCategory(catId);
-    if (catId) setSearchParams({ category: catId });
-    else setSearchParams({});
+    setSearchParams(
+      catId ? { category: catId } : {},
+      { replace: true },
+    );
   };
 
   const { data: categories } = useQuery({
@@ -49,6 +51,13 @@ const BlogPage = () => {
     },
   });
 
+  // Ignore stale/invalid category ids in the URL so an old shared link can't
+  // leave the UI showing a "selected" chip with no matching posts.
+  const activeCategory =
+    selectedCategory && categories?.some((c) => c.id === selectedCategory)
+      ? selectedCategory
+      : null;
+
   const { data: posts, isLoading } = useQuery({
     queryKey: ["blog-posts-public"],
     queryFn: async () => {
@@ -58,7 +67,10 @@ const BlogPage = () => {
     },
   });
 
-  const filteredPosts = selectedCategory ? posts?.filter((p) => p.category_id === selectedCategory) : posts;
+  const filteredPosts = useMemo(
+    () => (activeCategory ? posts?.filter((p) => p.category_id === activeCategory) : posts),
+    [posts, activeCategory],
+  );
 
   // Auto-translate post title/excerpt/author_bio to current language
   const { map: tMap } = useBlogListTranslation(
@@ -116,7 +128,7 @@ const BlogPage = () => {
         <section className="py-4 border-b border-border">
           <div className="shell">
             <div className="md:hidden">
-              <Select value={selectedCategory || "all"} onValueChange={(v) => updateCategory(v === "all" ? null : v)}>
+              <Select value={activeCategory || "all"} onValueChange={(v) => updateCategory(v === "all" ? null : v)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={t("blogPage.selectCategory")} />
                 </SelectTrigger>
@@ -136,7 +148,7 @@ const BlogPage = () => {
                 type="button"
                 onClick={() => updateCategory(null)}
                 className="chip"
-                data-active={!selectedCategory}
+                data-active={!activeCategory}
               >
                 {t("blogPage.all")}
               </button>
@@ -144,9 +156,9 @@ const BlogPage = () => {
                 <button
                   key={cat.id}
                   type="button"
-                  onClick={() => updateCategory(selectedCategory === cat.id ? null : cat.id)}
+                  onClick={() => updateCategory(activeCategory === cat.id ? null : cat.id)}
                   className="chip"
-                  data-active={selectedCategory === cat.id}
+                  data-active={activeCategory === cat.id}
                 >
                   <span data-no-auto-translate>{tt(cat.name)}</span>
                 </button>
@@ -257,7 +269,7 @@ const BlogPage = () => {
             <div className="text-center py-16 animate-fade-in">
               <Newspaper className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
               <p className="text-muted-foreground text-lg">
-                {selectedCategory ? t("blogPage.noResultsCategory") : t("blogPage.noResults")}
+                {activeCategory ? t("blogPage.noResultsCategory") : t("blogPage.noResults")}
               </p>
             </div>
           )}
