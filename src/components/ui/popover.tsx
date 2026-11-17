@@ -3,7 +3,12 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 
 import { cn } from "@/lib/utils";
 
-const Popover = PopoverPrimitive.Root;
+const Popover = (props: React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>) => (
+  // See dropdown-menu.tsx: non-modal keeps body scroll (and therefore page
+  // chrome such as the fixed header) intact while the popover is open.
+  <PopoverPrimitive.Root modal={false} {...props} />
+);
+Popover.displayName = "Popover";
 
 const PopoverTrigger = PopoverPrimitive.Trigger;
 

@@ -4,7 +4,15 @@ import { Check, ChevronRight, Circle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-const DropdownMenu = DropdownMenuPrimitive.Root;
+const DropdownMenu = (props: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>) => (
+  // modal={false} is deliberate: a modal Radix menu locks body scroll
+  // (react-remove-scroll), which breaks position:sticky/fixed page chrome —
+  // the site header visibly jumps out of view when a menu opens. Menus here
+  // are lightweight nav affordances, not focus traps, so non-modal is both
+  // correct and safer for layout.
+  <DropdownMenuPrimitive.Root modal={false} {...props} />
+);
+DropdownMenu.displayName = "DropdownMenu";
 
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 
