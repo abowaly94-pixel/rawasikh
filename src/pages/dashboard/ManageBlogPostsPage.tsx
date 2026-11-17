@@ -28,6 +28,11 @@ interface BlogPost {
   read_time: string | null;
   image_url: string | null;
   is_published: boolean;
+  table_data: ArticleTableData | null;
+  is_table_visible: boolean;
+  author_name: string | null;
+  author_bio: string | null;
+  author_avatar_url: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -44,18 +49,48 @@ interface BlogCategory {
   created_at: string;
 }
 
-const emptyForm = {
-  title: "",
-  excerpt: "",
-  content: "",
-  category: "",
-  category_id: "",
-  read_time: "",
-  image_url: "",
-  is_published: false,
-  author_name: "",
-  author_bio: "",
-  author_avatar_url: "",
+type ArticleTableData = {
+  headers: string[];
+  rows: string[][];
+};
+
+// The table editor starts with a 3×3 grid (matching the common article-table
+// layout) and both dimensions can grow or shrink from there.
+const DEFAULT_TABLE_COLUMNS = 3;
+const DEFAULT_TABLE_ROWS = 3;
+
+const createTableDraft = (data?: ArticleTableData | null) => {
+  const storedHeaders = Array.isArray(data?.headers) ? data.headers : [];
+  const headers = storedHeaders.length
+    ? storedHeaders.map((header) => String(header ?? ""))
+    : Array.from({ length: DEFAULT_TABLE_COLUMNS }, () => "");
+
+  const storedRows = Array.isArray(data?.rows) ? data.rows : [];
+  const rows = storedRows.length
+    ? storedRows.map((row) => headers.map((_, col) => String(row?.[col] ?? "")))
+    : Array.from({ length: DEFAULT_TABLE_ROWS }, () => headers.map(() => ""));
+
+  return { headers, rows };
+};
+
+const createEmptyForm = () => {
+  const table = createTableDraft(null);
+  return {
+    title: "",
+    excerpt: "",
+    content: "",
+    category: "",
+    category_id: "",
+    read_time: "",
+    image_url: "",
+    is_published: false,
+    author_name: "",
+    author_bio: "",
+    author_avatar_url: "",
+    is_table_visible: false,
+    table_headers: table.headers,
+    table_rows: table.rows,
+  };
 };
 
 const emptyCategoryForm = {
@@ -85,7 +120,7 @@ const ManageBlogPostsPage = () => {
   const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [editingCategory, setEditingCategory] = useState<BlogCategory | null>(null);
-  const [formData, setFormData] = useState(emptyForm);
+  const [formData, setFormData] = useState(createEmptyForm);
   const [categoryFormData, setCategoryFormData] = useState(emptyCategoryForm);
   const [activeTab, setActiveTab] = useState("posts");
   const contentRef = useRef<HTMLTextAreaElement>(null);
@@ -140,7 +175,7 @@ const ManageBlogPostsPage = () => {
         .select("*")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      setPosts(data || []);
+      setPosts((data || []) as unknown as BlogPost[]);
     } catch (error) {
       console.error("Error fetching posts:", error);
     } finally {
@@ -180,11 +215,12 @@ const ManageBlogPostsPage = () => {
   // Post CRUD
   const openCreate = () => {
     setEditingPost(null);
-    setFormData(emptyForm);
+    setFormData(createEmptyForm());
     setDialogOpen(true);
   };
 
   const openEdit = (post: BlogPost) => {
+    const table = createTableDraft(post.table_data);
     setEditingPost(post);
     setFormData({
       title: post.title,
@@ -195,16 +231,90 @@ const ManageBlogPostsPage = () => {
       read_time: post.read_time || "",
       image_url: post.image_url || "",
       is_published: post.is_published,
-      author_name: (post as any).author_name || "",
-      author_bio: (post as any).author_bio || "",
-      author_avatar_url: (post as any).author_avatar_url || "",
+      author_name: post.author_name || "",
+      author_bio: post.author_bio || "",
+      author_avatar_url: post.author_avatar_url || "",
+      is_table_visible: post.is_table_visible ?? false,
+      table_headers: table.headers,
+      table_rows: table.rows,
     });
     setDialogOpen(true);
+  };
+
+  // --- Article table editor -------------------------------------------------
+  const updateTableHeader = (col: number, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      table_headers: prev.table_headers.map((header, index) =>
+        index === col ? value : header,
+      ),
+    }));
+  };
+
+  const updateTableCell = (row: number, col: number, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      table_rows: prev.table_rows.map((cells, rowIndex) =>
+        rowIndex === row
+          ? cells.map((cell, colIndex) => (colIndex === col ? value : cell))
+          : cells,
+      ),
+    }));
+  };
+
+  const addTableRow = () => {
+    setFormData((prev) => ({
+      ...prev,
+      table_rows: [...prev.table_rows, prev.table_headers.map(() => "")],
+    }));
+  };
+
+  const addTableColumn = () => {
+    setFormData((prev) => ({
+      ...prev,
+      table_headers: [...prev.table_headers, ""],
+      table_rows: prev.table_rows.map((cells) => [...cells, ""]),
+    }));
+  };
+
+  const removeTableRow = () => {
+    setFormData((prev) =>
+      prev.table_rows.length <= 1
+        ? prev
+        : { ...prev, table_rows: prev.table_rows.slice(0, -1) },
+    );
+  };
+
+  const removeTableColumn = () => {
+    setFormData((prev) =>
+      prev.table_headers.length <= 1
+        ? prev
+        : {
+            ...prev,
+            table_headers: prev.table_headers.slice(0, -1),
+            table_rows: prev.table_rows.map((cells) => cells.slice(0, -1)),
+          },
+    );
   };
 
   const handleSubmit = async () => {
     if (!formData.title.trim()) {
       toast({ title: "يرجى إدخال عنوان المقال", variant: "destructive" });
+      return;
+    }
+
+    // Trim every cell and only persist the table when it actually has content.
+    const tableHeaders = formData.table_headers.map((header) => header.trim());
+    const tableRows = formData.table_rows.map((row) => row.map((cell) => cell.trim()));
+    const hasTableContent =
+      tableHeaders.some(Boolean) || tableRows.some((row) => row.some(Boolean));
+
+    if (formData.is_table_visible && !hasTableContent) {
+      toast({
+        title: "الجدول مفعّل لكنه فارغ",
+        description: "املأ خلايا الجدول أو أوقف عرضه قبل الحفظ.",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -223,6 +333,8 @@ const ManageBlogPostsPage = () => {
         author_name: formData.author_name || null,
         author_bio: formData.author_bio || null,
         author_avatar_url: formData.author_avatar_url || null,
+        table_data: hasTableContent ? { headers: tableHeaders, rows: tableRows } : null,
+        is_table_visible: formData.is_table_visible,
       };
 
       if (editingPost) {
@@ -553,6 +665,97 @@ const ManageBlogPostsPage = () => {
                   rows={8}
                 />
               </div>
+
+              <div className="border-t pt-4 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-bold text-foreground">جدول داخل المقال (اختياري)</p>
+                    <p className="text-xs text-muted-foreground">
+                      يظهر الجدول أسفل محتوى المقال. المفتاح يتحكم في ظهوره دون حذف بياناته.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      checked={formData.is_table_visible}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, is_table_visible: checked })
+                      }
+                    />
+                    <Label>{formData.is_table_visible ? "الجدول ظاهر" : "الجدول مخفي"}</Label>
+                  </div>
+                </div>
+
+                <div className="space-y-2 rounded-xl border border-border bg-muted/20 p-3">
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[560px] table-fixed border-collapse">
+                      <thead>
+                        <tr>
+                          {formData.table_headers.map((header, col) => (
+                            <th key={col} className="border border-border bg-muted p-1.5 align-top">
+                              <Input
+                                value={header}
+                                onChange={(e) => updateTableHeader(col, e.target.value)}
+                                placeholder={`عنوان العمود ${col + 1}`}
+                                className="h-8 bg-background text-xs font-bold"
+                              />
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {formData.table_rows.map((row, rowIndex) => (
+                          <tr key={rowIndex}>
+                            {row.map((cell, col) => (
+                              <td key={col} className="border border-border p-1.5 align-top">
+                                <Textarea
+                                  value={cell}
+                                  onChange={(e) => updateTableCell(rowIndex, col, e.target.value)}
+                                  placeholder="نص الخلية"
+                                  rows={2}
+                                  className="min-h-[58px] resize-y bg-background text-xs"
+                                />
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button type="button" size="sm" variant="outline" onClick={addTableRow}>
+                      <Plus className="h-3.5 w-3.5" />
+                      إضافة صف
+                    </Button>
+                    <Button type="button" size="sm" variant="outline" onClick={addTableColumn}>
+                      <Plus className="h-3.5 w-3.5" />
+                      إضافة عمود
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      className="text-destructive"
+                      onClick={removeTableRow}
+                      disabled={formData.table_rows.length <= 1}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                      حذف آخر صف
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      className="text-destructive"
+                      onClick={removeTableColumn}
+                      disabled={formData.table_headers.length <= 1}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                      حذف آخر عمود
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label>التصنيف</Label>

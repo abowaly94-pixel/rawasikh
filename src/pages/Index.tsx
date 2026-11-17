@@ -490,9 +490,9 @@ const Index = () => {
 
           <div className="shell relative grid items-center gap-8 py-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-16">
             {/* Copy */}
-            <div className="max-w-xl">
+            <div className="max-w-none lg:max-w-xl">
               <Reveal delay={80}>
-                <h1 className="text-[34px] font-bold leading-[1.4] tracking-tight text-foreground sm:text-[44px] lg:text-[52px]">
+                <h1 className="text-center text-[34px] font-bold leading-[1.4] tracking-tight text-foreground sm:text-[44px] lg:text-start lg:text-[52px]">
                   <span className="-mb-[0.1em] block overflow-hidden pb-[0.1em]">
                     <span className="hero-line-inner block">{t("hero.title1")}</span>
                   </span>
@@ -510,13 +510,13 @@ const Index = () => {
               </Reveal>
 
               <Reveal delay={160}>
-                <p className="mt-5 max-w-lg text-[15px] leading-9 text-muted-foreground">
+                <p className="mx-auto mt-5 max-w-lg text-center text-[15px] leading-9 text-muted-foreground lg:mx-0 lg:text-start">
                   {t("hero.description")}
                 </p>
               </Reveal>
 
               <Reveal delay={240}>
-                <div className="mt-7">
+                <div className="mx-auto mt-7 max-w-lg lg:mx-0">
                   <SearchField
                     value={searchQuery}
                     onChange={setSearchQuery}
@@ -539,11 +539,24 @@ const Index = () => {
               </Reveal>
 
               <Reveal delay={300}>
-                <div className="mt-5 flex flex-wrap items-center gap-3">
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
                   <Magnetic>
                     <Button asChild size="lg" className="gap-2 rounded-xl px-7">
                       <Link to="/courses">
                         {t("hero.browseCourses")}
+                        <ArrowIcon className="h-4 w-4" aria-hidden />
+                      </Link>
+                    </Button>
+                  </Magnetic>
+                  <Magnetic pull={0.12}>
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className="gap-2 rounded-xl border-gold/50 bg-gold-soft/40 px-6 text-primary hover:border-gold hover:bg-gold-soft/70 hover:text-primary"
+                    >
+                      <Link to="/academic-services">
+                        {t("hero.browseAcademicServices")}
                         <ArrowIcon className="h-4 w-4" aria-hidden />
                       </Link>
                     </Button>
@@ -557,7 +570,7 @@ const Index = () => {
               </Reveal>
 
               <Reveal delay={360}>
-                <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border/80 pt-6 text-[12.5px] font-medium text-muted-foreground">
+                <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-t border-border/80 pt-6 text-center text-[12.5px] font-medium text-muted-foreground lg:justify-start lg:text-start">
                   {[
                     { icon: Award, label: t("courseDetails.completionCertificate") },
                     { icon: Clock, label: t("courseDetails.lifetimeAccess") },

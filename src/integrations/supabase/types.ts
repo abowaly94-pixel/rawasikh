@@ -311,7 +311,9 @@ export type Database = {
           id: string
           image_url: string | null
           is_published: boolean
+          is_table_visible: boolean
           read_time: string | null
+          table_data: Json | null
           title: string
           updated_at: string
           view_count: number
@@ -329,7 +331,9 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_published?: boolean
+          is_table_visible?: boolean
           read_time?: string | null
+          table_data?: Json | null
           title: string
           updated_at?: string
           view_count?: number
@@ -347,7 +351,9 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_published?: boolean
+          is_table_visible?: boolean
           read_time?: string | null
+          table_data?: Json | null
           title?: string
           updated_at?: string
           view_count?: number

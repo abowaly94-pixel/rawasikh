@@ -617,7 +617,9 @@
       opacity 0.85s var(--ease-settle),
       translate 0.85s var(--ease-settle),
       scale 0.85s var(--ease-settle);
-    will-change: opacity, translate, scale;
+    /* No permanent `will-change`: dozens of always-promoted layers exhaust the
+       compositor on mobile GPUs and can leave whole sections unpainted. The
+       opacity/translate transition is composited on its own when it runs. */
   }
 
   .reveal[data-reveal="in"] {
@@ -1048,7 +1050,7 @@
 
 .split-words__word > span {
   display: inline-block;
-  will-change: transform, opacity;
+  /* Promoted only while the one-shot word animation runs, not forever. */
 }
 
 .reveal-ready .split-words__word > span,

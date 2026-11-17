@@ -9,7 +9,15 @@ self.addEventListener("install", () => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    // Drop caches left behind by earlier worker versions. Those stale entries
+    // are what kept serving an old build (and its blank sections) after a
+    // deploy; this worker never creates caches of its own.
+    caches
+      .keys()
+      .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+      .then(() => self.clients.claim()),
+  );
 });
 
 self.addEventListener("fetch", () => {

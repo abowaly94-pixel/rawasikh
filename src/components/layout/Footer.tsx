@@ -101,6 +101,7 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2.5 text-[13.5px]">
               {[
+                { to: "/", label: t("nav.home"), onClick: () => window.scrollTo({ top: 0, behavior: 'auto' }) },
                 { to: "/courses", label: t("nav.courses") },
                 { to: "/teachers", label: t("nav.teachers") },
                 { to: "/level-assessment", label: t("nav.levelAssessment") },

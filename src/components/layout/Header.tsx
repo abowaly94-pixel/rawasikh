@@ -94,6 +94,7 @@ const Header = () => {
 
   const navItems: NavItem[] = useMemo(
     () => [
+      { label: t("nav.home"), href: "/" },
       { label: t("nav.coursesShort"), href: "/courses", dropdown: "courses" },
       { label: t("nav.servicesShort"), href: "/services", dropdown: "services" },
       { label: t("nav.levelShort"), href: "/level-assessment" },
@@ -360,7 +361,7 @@ const Header = () => {
                   />
                 </div>
 
-                <nav className="flex flex-col px-2 pb-4" aria-label="التنقل">
+                <nav className="flex flex-col px-2 pb-4 text-center" aria-label="التنقل">
                   {navItems.map((item) =>
                     item.dropdown &&
                     (item.dropdown === "services" || (courseCategories || []).length > 0) ? (

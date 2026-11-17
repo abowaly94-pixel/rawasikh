@@ -18,6 +18,7 @@ import { useBlogTranslation } from "@/hooks/useBlogTranslation";
 import BlogShareButtons from "@/components/blog/BlogShareButtons";
 import BlogLikeButton from "@/components/blog/BlogLikeButton";
 import BlogComments from "@/components/blog/BlogComments";
+import ArticleTable from "@/components/blog/ArticleTable";
 
 
 const BlogPostPage = () => {
@@ -246,6 +247,9 @@ const BlogPostPage = () => {
                 dangerouslySetInnerHTML={{ __html: tContent || "" }}
               />
             )}
+
+            {/* Optional article table — visibility is controlled from the editor */}
+            {post.is_table_visible && <ArticleTable data={post.table_data} />}
 
             {/* Author info */}
             {post.author_name && (
