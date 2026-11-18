@@ -365,15 +365,29 @@ const ManageBlogPostsPage = () => {
 
     const selectedCategory = categories.find(c => c.id === formData.category_id);
 
+    // Only touch `article_blocks` when the payload actually needs it. This
+    // keeps classic posts saveable on databases where the block migration has
+    // not been applied yet, and still clears the column when every block is
+    // removed from a post that used to have them.
+    const hadStructuredBlocks = editingPost
+      ? parseArticleBlocks(editingPost.article_blocks).length > 0
+      : false;
+    const blocksPayload =
+      usesBlocks || hadStructuredBlocks
+        ? {
+            article_blocks: usesBlocks
+              ? (formData.article_blocks as unknown as Json)
+              : null,
+          }
+        : {};
+
     try {
       const payload = {
         title: formData.title,
         excerpt: formData.excerpt || null,
         // Keep the legacy/translated HTML in sync with the structured blocks.
         content: usesBlocks ? blocksToHtml(formData.article_blocks) : formData.content || null,
-        article_blocks: usesBlocks
-          ? (formData.article_blocks as unknown as Json)
-          : null,
+        ...blocksPayload,
         category: selectedCategory?.name || formData.category || null,
         category_id: formData.category_id || null,
         read_time: formData.read_time || null,
