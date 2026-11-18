@@ -23,6 +23,7 @@ import {
   blocksToHtml,
   convertHtmlToArticleBlocks,
   hasArticleBlockContent,
+  orderArticleBlocks,
   parseArticleBlocks,
   type ArticleBlock,
 } from "@/lib/articleBlocks";
@@ -339,7 +340,8 @@ const ManageBlogPostsPage = () => {
     }
 
     const usesBlocks = formData.article_blocks.length > 0;
-    if (usesBlocks && !hasArticleBlockContent(formData.article_blocks)) {
+    const orderedBlocks = orderArticleBlocks(formData.article_blocks);
+    if (usesBlocks && !hasArticleBlockContent(orderedBlocks)) {
       toast({
         title: "عناصر المقال فارغة",
         description: "أضف نصًا أو عنوانًا داخل العناصر، أو احذف العناصر الفارغة قبل الحفظ.",
@@ -376,7 +378,7 @@ const ManageBlogPostsPage = () => {
       usesBlocks || hadStructuredBlocks
         ? {
             article_blocks: usesBlocks
-              ? (formData.article_blocks as unknown as Json)
+              ? (orderedBlocks as unknown as Json)
               : null,
           }
         : {};
@@ -386,7 +388,7 @@ const ManageBlogPostsPage = () => {
         title: formData.title,
         excerpt: formData.excerpt || null,
         // Keep the legacy/translated HTML in sync with the structured blocks.
-        content: usesBlocks ? blocksToHtml(formData.article_blocks) : formData.content || null,
+        content: usesBlocks ? blocksToHtml(orderedBlocks) : formData.content || null,
         ...blocksPayload,
         category: selectedCategory?.name || formData.category || null,
         category_id: formData.category_id || null,

@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, DEFAULT_IMAGE } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Calendar, Clock, Eye } from "lucide-react";
@@ -20,7 +20,8 @@ import BlogLikeButton from "@/components/blog/BlogLikeButton";
 import BlogComments from "@/components/blog/BlogComments";
 import ArticleTable from "@/components/blog/ArticleTable";
 import ArticleBlocks from "@/components/blog/ArticleBlocks";
-import { parseArticleBlocks } from "@/lib/articleBlocks";
+import { firstArticleImage, parseArticleBlocks } from "@/lib/articleBlocks";
+import { orderLegacyArticleSections } from "@/lib/articleLayout";
 
 
 const BlogPostPage = () => {
@@ -76,18 +77,20 @@ const BlogPostPage = () => {
   const imageSrc = post ? getBlogImageUrl(post) : null;
   const fallbackImageSrc = post ? getBlogImageFallback(post) : null;
   
-  // Extract poster from article blocks for share preview
+  const articleBlocks = useMemo(
+    () => parseArticleBlocks(post?.article_blocks),
+    [post?.article_blocks],
+  );
+
+  // Resolve the poster for share previews: featured image first, then an
+  // image inside the article, then the site social card.
   const posterImage = useMemo(() => {
-    if (imageSrc) return imageSrc;
-    const firstImageBlock = articleBlocks.find(block => 
-      block.type === "paragraph" && block.text.includes("<img")
-    );
-    if (firstImageBlock?.text) {
-      const match = firstImageBlock.text.match(/<img[^>]*src=["']([^"'>]*)["'][^>]*>/i);
-      if (match?.[1]) return match[1];
+    const explicitImage = (post?.image_url || "").trim();
+    if (explicitImage && imageSrc && !explicitImage.includes("/wp-content/uploads/")) {
+      return imageSrc;
     }
-    return fallbackImageSrc;
-  }, [imageSrc, fallbackImageSrc, articleBlocks]);
+    return firstArticleImage(articleBlocks, post?.content) || imageSrc || fallbackImageSrc || DEFAULT_IMAGE;
+  }, [articleBlocks, fallbackImageSrc, imageSrc, post?.content, post?.image_url]);
 
   // Auto-translate ONLY genuine prose content: [title, content, author_bio, excerpt].
   // Proper names (author_name) and category names are deliberately excluded —
@@ -101,16 +104,15 @@ const BlogPostPage = () => {
   const tTitle = translated[0] || post?.title || "";
   const tContent = translated[1] || post?.content || "";
   const tAuthorBio = translated[2] || post?.author_bio || "";
+  // Legacy (pre-blocks) HTML can end with its summary after the references.
+  // Normalise the reading order at display time without rewriting storage.
+  const legacyContent = useMemo(() => orderLegacyArticleSections(tContent), [tContent]);
   // A person's name is an atomic value, never machine-translated — it always
   // renders exactly as stored, in every language, for every author.
   const tAuthorName = post?.author_name || "";
   // The structured blocks are authored in Arabic. Other languages keep
   // reading the translated HTML content that is generated when the post is
   // saved from the block editor.
-  const articleBlocks = useMemo(
-    () => parseArticleBlocks(post?.article_blocks),
-    [post?.article_blocks],
-  );
   const showArticleBlocks = articleBlocks.length > 0 && (i18n.language || "").startsWith("ar");
   // Same shared, cached term-translation path the article list uses for
   // categories, so the category name is always worded identically in both
@@ -131,9 +133,14 @@ const BlogPostPage = () => {
           <meta property="og:url" content={`https://rawasikheg.com/blog/${post.id}`} />
           {posterImage && <meta property="og:image" content={absoluteUrl(posterImage)} />}
           {posterImage && <meta property="og:image:secure_url" content={absoluteUrl(posterImage)} />}
+          {posterImage && <meta property="og:image:width" content="1200" />}
+          {posterImage && <meta property="og:image:height" content="630" />}
+          {posterImage && <meta property="og:image:alt" content={post.title} />}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={post.title} />
+          <meta name="twitter:description" content={((post.excerpt || post.content || "") as string).replace(/<[^>]+>/g, " ").slice(0, 200)} />
           {posterImage && <meta name="twitter:image" content={absoluteUrl(posterImage)} />}
+          {posterImage && <meta name="twitter:image:alt" content={post.title} />}
           <meta name="robots" content="index, follow, max-image-preview:large" />
           <script type="application/ld+json">
             {JSON.stringify({
@@ -143,7 +150,7 @@ const BlogPostPage = () => {
               description: ((post.excerpt || post.content || "") as string)
                 .replace(/<[^>]+>/g, " ")
                 .slice(0, 200),
-              image: imageSrc ? [absoluteUrl(imageSrc)] : undefined,
+              image: posterImage ? [absoluteUrl(posterImage)] : undefined,
               datePublished: post.created_at,
               dateModified: post.updated_at || post.created_at,
               author: {
@@ -265,14 +272,14 @@ const BlogPostPage = () => {
               <ArticleBlocks blocks={articleBlocks} className="mb-6" />
             ) : (
               <div
-                className="prose prose-lg dark:prose-invert max-w-none text-foreground leading-relaxed whitespace-pre-line
+                className="article-rich prose prose-lg dark:prose-invert max-w-none text-foreground leading-relaxed whitespace-pre-line
                   prose-headings:text-foreground prose-p:text-muted-foreground
                   prose-a:text-primary prose-a:underline prose-a:cursor-pointer hover:prose-a:text-primary/80
                   prose-strong:text-foreground
                   prose-img:rounded-lg prose-img:mx-auto
                   [&_a]:pointer-events-auto [&_a]:text-primary [&_a]:underline [&_a]:cursor-pointer"
                 data-no-auto-translate
-                dangerouslySetInnerHTML={{ __html: tContent || "" }}
+                dangerouslySetInnerHTML={{ __html: legacyContent || "" }}
               />
             )}
 

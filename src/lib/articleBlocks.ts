@@ -304,6 +304,35 @@ export function duplicateArticleBlock(block: ArticleBlock): ArticleBlock {
 }
 
 /**
+ * Summary/conclusion sections belong before the bibliography apparatus, and
+ * footnotes/references are always the closing sections of an article. New
+ * blocks are appended by the editor, so an author who adds a summary at the
+ * end would otherwise publish it *after* the references. This produces the
+ * canonical reading order everywhere: body, summary, conclusion, footnotes,
+ * references.
+ */
+const TRAILING_BLOCK_RANK: Partial<Record<ArticleBlockType, number>> = {
+  summary: 0,
+  conclusion: 1,
+  footnotes: 2,
+  references: 3,
+};
+
+export function orderArticleBlocks(blocks: ArticleBlock[]): ArticleBlock[] {
+  if (!blocks.some((block) => TRAILING_BLOCK_RANK[block.type] !== undefined)) return blocks;
+
+  const rank = (block: ArticleBlock) => TRAILING_BLOCK_RANK[block.type]!;
+  const trailing = blocks
+    .map((block, index) => ({ block, index }))
+    .filter(({ block }) => TRAILING_BLOCK_RANK[block.type] !== undefined)
+    .sort((a, b) => rank(a.block) - rank(b.block) || a.index - b.index)
+    .map(({ block }) => block);
+  const body = blocks.filter((block) => TRAILING_BLOCK_RANK[block.type] === undefined);
+
+  return [...body, ...trailing];
+}
+
+/**
  * Normalise whatever is stored in the `article_blocks` jsonb column. Invalid
  * blocks are dropped instead of crashing the public article page.
  */
@@ -318,7 +347,7 @@ export function parseArticleBlocks(raw: unknown): ArticleBlock[] {
   }
   if (!Array.isArray(value)) return [];
 
-  return value
+  const parsed = value
     .map((entry): ArticleBlock | null => {
       if (!entry || typeof entry !== "object") return null;
       const item = entry as Record<string, unknown>;
@@ -440,6 +469,23 @@ export function parseArticleBlocks(raw: unknown): ArticleBlock[] {
       }
     })
     .filter((block): block is ArticleBlock => block !== null);
+
+  return orderArticleBlocks(parsed);
+}
+
+/** First image URL found in the article blocks, or in the legacy HTML. */
+export function firstArticleImage(
+  blocks: ArticleBlock[],
+  legacyHtml?: string | null,
+): string | null {
+  for (const block of orderArticleBlocks(blocks)) {
+    if (!("text" in block) || typeof block.text !== "string") continue;
+    const match = block.text.match(/<img[^>]*src=["']([^"'>]+)["']/i);
+    if (match?.[1]) return match[1];
+  }
+
+  const legacy = String(legacyHtml || "").match(/<img[^>]*src=["']([^"'>]+)["']/i);
+  return legacy?.[1] || null;
 }
 
 export function hasArticleBlockContent(blocks: ArticleBlock[]): boolean {
@@ -650,8 +696,9 @@ function decorationHtml(block: ArticleDecorationBlock): string {
 
 /** Serialise blocks to the legacy HTML `content` column. */
 export function blocksToHtml(blocks: ArticleBlock[]): string {
-  const context = createInlineContext(blocks);
-  return blocks
+  const ordered = orderArticleBlocks(blocks);
+  const context = createInlineContext(ordered);
+  return ordered
     .map((block) => {
       switch (block.type) {
         case "heading": {
@@ -673,18 +720,19 @@ export function blocksToHtml(blocks: ArticleBlock[]): string {
         case "table":
           return tableHtml(block, context);
         case "footnotes": {
-          const notes = collectFootnotes(blocks).filter((note) => note.blockId === block.id);
+          const notes = collectFootnotes(ordered).filter((note) => note.blockId === block.id);
           if (!notes.length) return "";
           const items = notes
             .map((note) => {
               const anchor = articleAnchorId(note.id);
-              return `<li id="fn-${anchor}" class="scroll-mt-28">${renderArticleInline(note.text, context)} <a href="#fnref-${anchor}" class="text-primary no-underline" title="العودة إلى موضع الهامش">↩</a></li>`;
+              const number = formatArticleNumber(note.number, note.numbering);
+              return `<li id="fn-${anchor}" class="flex scroll-mt-28 items-start gap-2.5"><span class="mt-1.5 inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-gold/15 px-1.5 text-[11px] font-bold leading-none text-gold-strong">${escapeArticleHtml(number)}</span><span class="flex-1">${renderArticleInline(note.text, context)} <a href="#fnref-${anchor}" class="text-primary no-underline" title="العودة إلى موضع الهامش">↩</a></span></li>`;
             })
             .join("");
-          return `<section class="mt-12 rounded-2xl border border-border bg-muted/30 p-5 md:p-6"><h3 class="mb-4 text-lg font-bold text-ink" style="${alignStyle("right")}">${renderArticleInline(block.title || "الهوامش", context)}</h3><ol start="${notes[0].number}" class="space-y-3 text-[14px] leading-8 text-muted-foreground" style="list-style-type:${block.numbering === "arabic" ? "arabic-indic" : "decimal"}">${items}</ol></section>`;
+          return `<section class="mt-12 rounded-2xl border border-border bg-muted/30 p-5 md:p-6"><h3 class="mb-4 text-lg font-bold text-ink" style="${alignStyle("right")}">${renderArticleInline(block.title || "الهوامش", context)}</h3><ol class="m-0 list-none space-y-3 p-0 text-[14px] leading-8 text-muted-foreground">${items}</ol></section>`;
         }
         case "references": {
-          const refs = collectReferences(blocks).filter((ref) => ref.blockId === block.id);
+          const refs = collectReferences(ordered).filter((ref) => ref.blockId === block.id);
           if (!refs.length) return "";
           const groups = block.groups
             .map((group) => {
@@ -696,7 +744,7 @@ export function blocksToHtml(blocks: ArticleBlock[]): string {
                   return `<li id="ref-${anchor}" class="mb-2.5 scroll-mt-28">${escapeArticleHtml(referenceDisplayKey(ref))} — ${renderArticleInline(ref.text, context)}</li>`;
                 })
                 .join("");
-              return `<div class="mt-5">${group.title.trim() ? `<h4 class="mb-2 text-sm font-bold text-gold-strong">${renderArticleInline(group.title, context)}</h4>` : ""}<ol start="${groupRefs[0].number}" class="space-y-1 text-[14px] leading-8 text-muted-foreground" style="list-style-type:${block.numbering === "arabic" ? "arabic-indic" : "decimal"}">${items}</ol></div>`;
+              return `<div class="mt-5">${group.title.trim() ? `<h4 class="mb-2 text-sm font-bold text-gold-strong">${renderArticleInline(group.title, context)}</h4>` : ""}<ol start="${groupRefs[0].number}" class="space-y-1 ps-6 text-[14px] leading-8 text-muted-foreground" style="list-style-type:${block.numbering === "arabic" ? "arabic-indic" : "decimal"}">${items}</ol></div>`;
             })
             .join("");
           return `<section class="mt-12 border-t border-border pt-8"><h3 class="mb-4 text-lg font-bold text-ink">${renderArticleInline(block.title || "المراجع", context)}</h3>${block.intro?.trim() ? `<p class="mb-3 text-[13.5px] leading-7 text-muted-foreground">${renderArticleInline(block.intro, context)}</p>` : ""}${groups}</section>`;

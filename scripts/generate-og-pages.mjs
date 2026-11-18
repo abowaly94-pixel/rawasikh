@@ -3,6 +3,7 @@ import path from "node:path";
 
 const CANONICAL_BASE = "https://rawasikheg.com";
 const FALLBACK_DESCRIPTION = "رواسخ - للخدمات التعليمية وتنمية المهارات";
+const DEFAULT_IMAGE = `${CANONICAL_BASE}/social-share.webp`;
 const OUT_DIR = path.resolve("public/og");
 
 function parseEnv(content = "") {
@@ -44,6 +45,30 @@ function stripHtml(value) {
   return String(value || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
+function firstImageFromHtml(value) {
+  const match = String(value || "").match(/<img[^>]*src=["']([^"'>]+)["']/i);
+  return match?.[1] || "";
+}
+
+function firstImageFromBlocks(value) {
+  let blocks = value;
+  if (typeof blocks === "string") {
+    try {
+      blocks = JSON.parse(blocks);
+    } catch {
+      return "";
+    }
+  }
+  if (!Array.isArray(blocks)) return "";
+
+  for (const block of blocks) {
+    if (!block || typeof block !== "object") continue;
+    const image = firstImageFromHtml(block.text);
+    if (image) return image;
+  }
+  return "";
+}
+
 function decodeBasicEntities(value) {
   return String(value || "")
     .replace(/&amp;/g, "&")
@@ -69,7 +94,7 @@ function toPreviewImageUrl(value, version) {
   let previewUrl = imageUrl;
   const storageMatch = imageUrl.match(/^(https:\/\/[^/]+\/storage\/v1)\/object\/public\/(.+)$/);
   if (storageMatch) {
-    previewUrl = `${storageMatch[1]}/render/image/public/${storageMatch[2].split("?")[0]}?width=600&height=315&resize=cover&quality=60&format=webp`;
+    previewUrl = `${storageMatch[1]}/render/image/public/${storageMatch[2].split("?")[0]}?width=1200&height=630&resize=cover&quality=80&format=webp`;
   }
 
   if (!version) return previewUrl;
@@ -109,8 +134,8 @@ function pageHtml({ type, title, description, canonical, image }) {
 ${safeImage ? `<meta property="og:image" content="${safeImage}" />` : ""}
 ${safeImage ? `<meta property="og:image:secure_url" content="${safeImage}" />` : ""}
 ${safeImageType ? `<meta property="og:image:type" content="${safeImageType}" />` : ""}
-${safeImage ? `<meta property="og:image:width" content="600" />` : ""}
-${safeImage ? `<meta property="og:image:height" content="315" />` : ""}
+${safeImage ? `<meta property="og:image:width" content="1200" />` : ""}
+${safeImage ? `<meta property="og:image:height" content="630" />` : ""}
 ${safeImage ? `<meta property="og:image:alt" content="${safeTitle}" />` : ""}
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="${safeTitle}" />
@@ -160,7 +185,7 @@ async function main() {
   await fs.mkdir(path.join(OUT_DIR, "courses"), { recursive: true });
 
   const [posts, courses] = await Promise.all([
-    fetchAllRows(supabaseUrl, supabaseKey, "blog_posts", "id,title,excerpt,content,image_url,updated_at"),
+    fetchAllRows(supabaseUrl, supabaseKey, "blog_posts", "id,title,excerpt,content,image_url,article_blocks,updated_at"),
     fetchAllRows(supabaseUrl, supabaseKey, "courses", "id,title,description,thumbnail_url,updated_at,is_published", "&is_published=eq.true"),
   ]);
 
@@ -168,7 +193,11 @@ async function main() {
     posts.map((post) => {
       const canonical = `${CANONICAL_BASE}/blog/${post.id}`;
       const description = stripHtml(post.excerpt || post.content || "") || FALLBACK_DESCRIPTION;
-      const image = toPreviewImageUrl(post.image_url || "", post.updated_at || "");
+      const explicitImage = String(post.image_url || "").trim();
+      const imageValue = explicitImage && !explicitImage.includes("/wp-content/uploads/")
+        ? explicitImage
+        : firstImageFromHtml(post.content) || firstImageFromBlocks(post.article_blocks) || explicitImage;
+      const image = toPreviewImageUrl(imageValue, post.updated_at || "") || DEFAULT_IMAGE;
       return fs.writeFile(
         path.join(OUT_DIR, "blog", `${post.id}.html`),
         pageHtml({ type: "article", title: post.title, description, canonical, image }),
@@ -181,7 +210,7 @@ async function main() {
     courses.map((course) => {
       const canonical = `${CANONICAL_BASE}/courses/${course.id}`;
       const description = stripHtml(course.description || "") || FALLBACK_DESCRIPTION;
-      const image = toPreviewImageUrl(course.thumbnail_url || "", course.updated_at || "");
+      const image = toPreviewImageUrl(course.thumbnail_url || "", course.updated_at || "") || DEFAULT_IMAGE;
       return fs.writeFile(
         path.join(OUT_DIR, "courses", `${course.id}.html`),
         pageHtml({ type: "website", title: course.title, description, canonical, image }),

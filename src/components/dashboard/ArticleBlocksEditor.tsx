@@ -53,6 +53,7 @@ import {
   duplicateArticleBlock,
   formatArticleNumber,
   makeArticleId,
+  orderArticleBlocks,
   type ArticleAlign,
   type ArticleBlock,
   type ArticleConclusionBlock,
@@ -1514,7 +1515,7 @@ const ArticleBlocksEditor = ({ value, onChange, title = "", onTitleChange }: Pro
   };
 
   const addBlock = (block: ArticleBlock) => {
-    onChange([...value, block]);
+    onChange(orderArticleBlocks([...value, block]));
   };
 
   const removeBlock = (index: number) => {
@@ -1524,7 +1525,7 @@ const ArticleBlocksEditor = ({ value, onChange, title = "", onTitleChange }: Pro
   const duplicateBlock = (index: number) => {
     const next = [...value];
     next.splice(index + 1, 0, duplicateArticleBlock(value[index]));
-    onChange(next);
+    onChange(orderArticleBlocks(next));
   };
 
   const moveBlock = (index: number, direction: -1 | 1) => {
@@ -1532,7 +1533,7 @@ const ArticleBlocksEditor = ({ value, onChange, title = "", onTitleChange }: Pro
     if (target < 0 || target >= value.length) return;
     const next = [...value];
     [next[index], next[target]] = [next[target], next[index]];
-    onChange(next);
+    onChange(orderArticleBlocks(next));
   };
 
   const handleDrop = (event: DragEvent<HTMLDivElement>, targetIndex: number) => {
@@ -1544,21 +1545,12 @@ const ArticleBlocksEditor = ({ value, onChange, title = "", onTitleChange }: Pro
     const next = [...value];
     const [moved] = next.splice(sourceIndex, 1);
     next.splice(targetIndex, 0, moved);
-    onChange(next);
+    onChange(orderArticleBlocks(next));
   };
 
-  // Reorder blocks: summary, conclusion, then footnotes, then references
-  const orderedBlocks = useMemo(() => {
-    const summaryAndConclusionBlocks = value.filter(
-      (block) => block.type === "summary" || block.type === "conclusion"
-    );
-    const footnoteBlocks = value.filter((block) => block.type === "footnotes");
-    const referenceBlocks = value.filter((block) => block.type === "references");
-    const otherBlocks = value.filter(
-      (block) => !["summary", "conclusion", "footnotes", "references"].includes(block.type)
-    );
-    return [...summaryAndConclusionBlocks, ...footnoteBlocks, ...referenceBlocks, ...otherBlocks];
-  }, [value]);
+  // Summary and conclusion always sit before the footnotes/references, and
+  // those two sections always close the article.
+  const orderedBlocks = useMemo(() => orderArticleBlocks(value), [value]);
 
   return (
     <div className="space-y-4" dir="rtl">
@@ -1654,7 +1646,7 @@ const ArticleBlocksEditor = ({ value, onChange, title = "", onTitleChange }: Pro
         currentTitle={title}
         hasBlocks={value.length > 0}
         onImport={({ blocks, mode, title: importedTitle }) => {
-          onChange(mode === "replace" ? blocks : [...value, ...blocks]);
+          onChange(orderArticleBlocks(mode === "replace" ? blocks : [...value, ...blocks]));
           if (importedTitle && onTitleChange) onTitleChange(importedTitle);
         }}
       />

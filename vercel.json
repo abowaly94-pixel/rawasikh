@@ -11,10 +11,10 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(facebookexternalhit|Facebot|Twitterbot|WhatsApp|TelegramBot|LinkedInBot|Slackbot|Discordbot|SkypeUriPreview|Google-Structured-Data-Testing-Tool).*"
+          "value": ".*(facebookexternalhit|Facebot|Twitterbot|WhatsApp|TelegramBot|LinkedInBot|Slackbot|Discordbot|SkypeUriPreview|Google-Structured-Data-Testing-Tool|Pinterest|redditbot|Embedly|Quora Link Preview|Showyoubot|outbrain|vkShare).*"
         }
       ],
-      "destination": "/og/blog/:slug.html"
+      "destination": "/api/og?type=blog&id=:slug"
     },
     {
       "source": "/courses/:slug",
@@ -22,10 +22,10 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(facebookexternalhit|Facebot|Twitterbot|WhatsApp|TelegramBot|LinkedInBot|Slackbot|Discordbot|SkypeUriPreview|Google-Structured-Data-Testing-Tool).*"
+          "value": ".*(facebookexternalhit|Facebot|Twitterbot|WhatsApp|TelegramBot|LinkedInBot|Slackbot|Discordbot|SkypeUriPreview|Google-Structured-Data-Testing-Tool|Pinterest|redditbot|Embedly|Quora Link Preview|Showyoubot|outbrain|vkShare).*"
         }
       ],
-      "destination": "/og/courses/:slug.html"
+      "destination": "/api/og?type=courses&id=:slug"
     },
     {
       "source": "/(.*)",

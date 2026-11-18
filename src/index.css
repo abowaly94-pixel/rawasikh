@@ -1127,3 +1127,26 @@
     transform: none !important;
   }
 }
+
+/* ======================= Article body list markers ======================= */
+/* Tailwind's preflight removes native list markers. Legacy article HTML keeps
+   footnotes and references in plain <ol> elements, so restore the numbering
+   and a readable indent inside the article body only. */
+.article-rich ol:not(.list-none) {
+  list-style-type: decimal;
+  padding-inline-start: 1.75em;
+}
+
+.article-rich ul:not(.list-none) {
+  list-style-type: disc;
+  padding-inline-start: 1.5em;
+}
+
+.article-rich ol:not(.list-none) ol:not(.list-none) {
+  list-style-type: lower-alpha;
+}
+
+.article-rich li::marker {
+  color: hsl(var(--gold-strong));
+  font-weight: 700;
+}
