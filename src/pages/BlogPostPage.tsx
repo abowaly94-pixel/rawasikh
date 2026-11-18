@@ -212,7 +212,7 @@ const BlogPostPage = () => {
                 alt={post.title}
                 width={1280}
                 height={720}
-                className="w-full rounded-xl mb-8 object-cover max-h-[400px]"
+                className="mb-8 aspect-video w-full rounded-2xl bg-muted/30 object-cover object-center shadow-sm ring-1 ring-border/60"
                 onError={(e) => {
                   const target = e.currentTarget;
                   if (fallbackImageSrc && target.src !== fallbackImageSrc) {

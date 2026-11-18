@@ -6,6 +6,7 @@ import {
   AlignRight,
   BookOpen,
   CheckCircle2,
+  FileUp,
   Heading2,
   Heading3,
   LayoutList,
@@ -38,6 +39,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import ArticleImportDialog from "@/components/dashboard/ArticleImportDialog";
 import { DecorationView } from "@/components/blog/ArticleBlocks";
 import { cn } from "@/lib/utils";
 import {
@@ -70,6 +72,8 @@ import {
 interface Props {
   value: ArticleBlock[];
   onChange: (blocks: ArticleBlock[]) => void;
+  title?: string;
+  onTitleChange?: (title: string) => void;
 }
 
 const alignOptions: { value: ArticleAlign; label: string; icon: typeof AlignRight }[] = [
@@ -909,6 +913,19 @@ const ReferencesEditor = ({
         </div>
       </div>
 
+      <div>
+        <Label className="text-[11px] text-muted-foreground">
+          تمهيد قسم المراجع (اختياري)
+        </Label>
+        <Textarea
+          value={block.intro || ""}
+          onChange={(event) => onChange({ ...block, intro: event.target.value })}
+          className="mt-1 min-h-[52px] text-sm leading-6"
+          placeholder="مثال: وُثّقت المراجع وفق نظام APA، ورُتّبت العربية أولًا ثم الأجنبية."
+          dir="rtl"
+        />
+      </div>
+
       <p className="rounded-lg bg-primary/5 px-3 py-2 text-[11px] leading-5 text-muted-foreground">
         صنّف المراجع في مجموعات (مثل: مصادر عربية، مصادر أجنبية، تقارير). لكل مرجع «مفتاح
         إحالة» قصير يظهر داخل النص عند ربطه.
@@ -1322,6 +1339,7 @@ const BlockCard = ({
   block,
   index,
   total,
+  defaultOpen,
   onChange,
   onRemove,
   onDuplicate,
@@ -1337,6 +1355,7 @@ const BlockCard = ({
   block: ArticleBlock;
   index: number;
   total: number;
+  defaultOpen: boolean;
   onChange: (block: ArticleBlock) => void;
   onRemove: () => void;
   onDuplicate: () => void;
@@ -1349,7 +1368,7 @@ const BlockCard = ({
   footnotes: CollectedFootnote[];
   references: CollectedReference[];
 }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(defaultOpen);
   const Icon = blockIcon(block);
   const preview = blockPreview(block);
 
@@ -1484,8 +1503,9 @@ const BlockCard = ({
  * The structured article editor. Every block is independent: drag the grip
  * (or use the arrow buttons) to reorder it, duplicate it, or delete it.
  */
-const ArticleBlocksEditor = ({ value, onChange }: Props) => {
+const ArticleBlocksEditor = ({ value, onChange, title = "", onTitleChange }: Props) => {
   const [dragOver, setDragOver] = useState<number | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
   const footnotes = useMemo(() => collectFootnotes(value), [value]);
   const references = useMemo(() => collectReferences(value), [value]);
 
@@ -1539,12 +1559,28 @@ const ArticleBlocksEditor = ({ value, onChange }: Props) => {
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex flex-wrap items-center justify-end gap-1.5">
           <Badge variant="outline">{value.length} عنصر</Badge>
           <Badge variant="outline">{footnotes.length} هامش</Badge>
           <Badge variant="outline">{references.length} مرجع</Badge>
+          <Button
+            type="button"
+            variant="outline"
+            className="gap-2"
+            onClick={() => setImportOpen(true)}
+          >
+            <FileUp className="h-4 w-4" />
+            استيراد Word/PDF
+          </Button>
+          <AddBlockMenu onAdd={addBlock} />
         </div>
       </div>
+
+      <p className="text-[10px] leading-5 text-muted-foreground">
+        يمكنك كتابة <code>**عريض**</code> و<code>*مائل*</code> و<code>[رابط](https://…)</code>{" "}
+        داخل الفقرات، واستخدام <code>[[note:…]]</code> أو <code>[[ref:…]]</code> لربط
+        الهوامش والمراجع.
+      </p>
 
       {value.length === 0 ? (
         <div className="rounded-xl border border-dashed border-border bg-muted/10 px-6 py-10 text-center">
@@ -1552,9 +1588,19 @@ const ArticleBlocksEditor = ({ value, onChange }: Props) => {
           <p className="font-semibold text-foreground">لا توجد عناصر بعد</p>
           <p className="mx-auto mt-1 max-w-md text-[12px] leading-6 text-muted-foreground">
             ابدأ بعنوان رئيسي ثم أضف الفقرات والقوائم والجداول. يمكنك إضافة الهوامش والمراجع
-            والخلاصة والخاتمة في أي وقت، ثم سحب العناصر لإعادة ترتيبها.
+            والخلاصة والخاتمة في أي وقت، ثم سحب العناصر لإعادة ترتيبها. أو استورد مقالًا
+            كاملًا من Word/PDF.
           </p>
-          <div className="mt-4 flex justify-center">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="gap-2"
+              onClick={() => setImportOpen(true)}
+            >
+              <FileUp className="h-4 w-4" />
+              استيراد من ملف
+            </Button>
             <AddBlockMenu onAdd={addBlock} />
           </div>
         </div>
@@ -1566,6 +1612,7 @@ const ArticleBlocksEditor = ({ value, onChange }: Props) => {
               block={block}
               index={index}
               total={value.length}
+              defaultOpen={value.length <= 20}
               onChange={(next) => updateBlock(index, next)}
               onRemove={() => removeBlock(index)}
               onDuplicate={() => duplicateBlock(index)}
@@ -1587,6 +1634,17 @@ const ArticleBlocksEditor = ({ value, onChange }: Props) => {
           </div>
         </div>
       )}
+
+      <ArticleImportDialog
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        currentTitle={title}
+        hasBlocks={value.length > 0}
+        onImport={({ blocks, mode, title: importedTitle }) => {
+          onChange(mode === "replace" ? blocks : [...value, ...blocks]);
+          if (importedTitle && onTitleChange) onTitleChange(importedTitle);
+        }}
+      />
     </div>
   );
 };
