@@ -299,6 +299,7 @@ export type Database = {
       }
       blog_posts: {
         Row: {
+          article_blocks: Json | null
           author_avatar_url: string | null
           author_bio: string | null
           author_id: string | null
@@ -319,6 +320,7 @@ export type Database = {
           view_count: number
         }
         Insert: {
+          article_blocks?: Json | null
           author_avatar_url?: string | null
           author_bio?: string | null
           author_id?: string | null
@@ -339,6 +341,7 @@ export type Database = {
           view_count?: number
         }
         Update: {
+          article_blocks?: Json | null
           author_avatar_url?: string | null
           author_bio?: string | null
           author_id?: string | null

@@ -14,9 +14,18 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, Palette, AlignRight, AlignCenter, AlignLeft } from "lucide-react";
+import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, Palette, AlignRight, AlignCenter, AlignLeft, FileDown } from "lucide-react";
 import HostingerImageUpload from "@/components/HostingerImageUpload";
+import ArticleBlocksEditor from "@/components/dashboard/ArticleBlocksEditor";
+import {
+  blocksToHtml,
+  convertHtmlToArticleBlocks,
+  hasArticleBlockContent,
+  parseArticleBlocks,
+  type ArticleBlock,
+} from "@/lib/articleBlocks";
 
 interface BlogPost {
   id: string;
@@ -28,6 +37,7 @@ interface BlogPost {
   read_time: string | null;
   image_url: string | null;
   is_published: boolean;
+  article_blocks: unknown;
   table_data: ArticleTableData | null;
   is_table_visible: boolean;
   author_name: string | null;
@@ -90,6 +100,7 @@ const createEmptyForm = () => {
     is_table_visible: false,
     table_headers: table.headers,
     table_rows: table.rows,
+    article_blocks: [] as ArticleBlock[],
   };
 };
 
@@ -237,8 +248,32 @@ const ManageBlogPostsPage = () => {
       is_table_visible: post.is_table_visible ?? false,
       table_headers: table.headers,
       table_rows: table.rows,
+      article_blocks: parseArticleBlocks(post.article_blocks),
     });
     setDialogOpen(true);
+  };
+
+  const handleImportLegacyContent = () => {
+    const converted = convertHtmlToArticleBlocks(formData.content || "");
+    if (!converted.length) {
+      toast({
+        title: "لا يوجد محتوى قابل للتحويل",
+        description: "اكتب المحتوى القديم أولًا أو أضف العناصر يدويًا.",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (
+      formData.article_blocks.length > 0 &&
+      !confirm("سيتم استبدال العناصر الحالية بالمحتوى القديم. هل تريد المتابعة؟")
+    ) {
+      return;
+    }
+    setFormData((prev) => ({ ...prev, article_blocks: converted }));
+    toast({
+      title: "تم تحويل المحتوى إلى عناصر",
+      description: "راجع العناصر ثم أعد ترتيبها أو عدّلها قبل الحفظ.",
+    });
   };
 
   // --- Article table editor -------------------------------------------------
@@ -303,6 +338,16 @@ const ManageBlogPostsPage = () => {
       return;
     }
 
+    const usesBlocks = formData.article_blocks.length > 0;
+    if (usesBlocks && !hasArticleBlockContent(formData.article_blocks)) {
+      toast({
+        title: "عناصر المقال فارغة",
+        description: "أضف نصًا أو عنوانًا داخل العناصر، أو احذف العناصر الفارغة قبل الحفظ.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     // Trim every cell and only persist the table when it actually has content.
     const tableHeaders = formData.table_headers.map((header) => header.trim());
     const tableRows = formData.table_rows.map((row) => row.map((cell) => cell.trim()));
@@ -324,7 +369,11 @@ const ManageBlogPostsPage = () => {
       const payload = {
         title: formData.title,
         excerpt: formData.excerpt || null,
-        content: formData.content || null,
+        // Keep the legacy/translated HTML in sync with the structured blocks.
+        content: usesBlocks ? blocksToHtml(formData.article_blocks) : formData.content || null,
+        article_blocks: usesBlocks
+          ? (formData.article_blocks as unknown as Json)
+          : null,
         category: selectedCategory?.name || formData.category || null,
         category_id: formData.category_id || null,
         read_time: formData.read_time || null,
@@ -350,7 +399,22 @@ const ManageBlogPostsPage = () => {
       fetchPosts();
     } catch (error) {
       console.error("Error saving post:", error);
-      toast({ title: "حدث خطأ أثناء الحفظ", variant: "destructive" });
+      const message =
+        error instanceof Error
+          ? error.message
+          : typeof (error as { message?: unknown })?.message === "string"
+            ? String((error as { message: string }).message)
+            : "";
+      if (/article_blocks/i.test(message)) {
+        toast({
+          title: "قاعدة البيانات تحتاج تحديثًا",
+          description:
+            "طبّق ملف الهجرة supabase/migrations/20261118000000_blog_post_article_blocks.sql ثم أعد المحاولة.",
+          variant: "destructive",
+        });
+      } else {
+        toast({ title: "حدث خطأ أثناء الحفظ", variant: "destructive" });
+      }
     }
   };
 
@@ -619,7 +683,7 @@ const ManageBlogPostsPage = () => {
 
         {/* Post Dialog */}
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-6xl max-h-[92vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingPost ? "تعديل المقال" : "إضافة مقال جديد"}</DialogTitle>
             </DialogHeader>
@@ -641,37 +705,103 @@ const ManageBlogPostsPage = () => {
                   rows={2}
                 />
               </div>
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <Label>المحتوى</Label>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-muted-foreground ml-1">محاذاة السطر المحدد:</span>
-                    <Button type="button" variant="outline" size="sm" className="h-8 w-8 p-0" onClick={() => applyAlign("right")} title="يمين">
-                      <AlignRight className="h-4 w-4" />
-                    </Button>
-                    <Button type="button" variant="outline" size="sm" className="h-8 w-8 p-0" onClick={() => applyAlign("center")} title="وسط">
-                      <AlignCenter className="h-4 w-4" />
-                    </Button>
-                    <Button type="button" variant="outline" size="sm" className="h-8 w-8 p-0" onClick={() => applyAlign("left")} title="يسار">
-                      <AlignLeft className="h-4 w-4" />
-                    </Button>
+              <ArticleBlocksEditor
+                value={formData.article_blocks}
+                onChange={(article_blocks) =>
+                  setFormData((prev) => ({ ...prev, article_blocks }))
+                }
+              />
+
+              <div className="space-y-2 rounded-xl border border-border bg-muted/20 p-3">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div>
+                    <p className="text-sm font-bold text-foreground">
+                      المحتوى القديم / HTML (اختياري)
+                    </p>
+                    <p className="text-xs leading-5 text-muted-foreground">
+                      {formData.article_blocks.length > 0
+                        ? "المحرر يستخدم العناصر أعلاه، وسيُولَّد HTML جديد تلقائيًا عند الحفظ."
+                        : "يُستخدم هذا المحتوى عندما لا توجد عناصر في المحرر."}
+                    </p>
                   </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="gap-1"
+                    onClick={handleImportLegacyContent}
+                    disabled={
+                      !formData.content.trim() || formData.article_blocks.length > 0
+                    }
+                    title={
+                      formData.article_blocks.length > 0
+                        ? "احذف العناصر أولًا إن أردت التحويل من جديد"
+                        : "تحويل المحتوى الحالي إلى عناصر قابلة لإعادة الترتيب"
+                    }
+                  >
+                    <FileDown className="h-3.5 w-3.5" />
+                    تحويل المحتوى إلى عناصر
+                  </Button>
                 </div>
+
+                <div className="flex flex-wrap items-center justify-end gap-1">
+                  <span className="text-xs text-muted-foreground ml-1">
+                    محاذاة السطر المحدد:
+                  </span>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => applyAlign("right")}
+                    disabled={formData.article_blocks.length > 0}
+                    title="يمين"
+                  >
+                    <AlignRight className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => applyAlign("center")}
+                    disabled={formData.article_blocks.length > 0}
+                    title="وسط"
+                  >
+                    <AlignCenter className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => applyAlign("left")}
+                    disabled={formData.article_blocks.length > 0}
+                    title="يسار"
+                  >
+                    <AlignLeft className="h-4 w-4" />
+                  </Button>
+                </div>
+
                 <Textarea
                   ref={contentRef}
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  placeholder="محتوى المقال الكامل — حدد سطراً ثم اضغط زر المحاذاة"
-                  rows={8}
+                  placeholder="محتوى المقال القديم…"
+                  rows={6}
+                  disabled={formData.article_blocks.length > 0}
                 />
               </div>
 
               <div className="border-t pt-4 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <p className="text-sm font-bold text-foreground">جدول داخل المقال (اختياري)</p>
+                    <p className="text-sm font-bold text-foreground">
+                      جدول إضافي قديم (اختياري)
+                    </p>
                     <p className="text-xs text-muted-foreground">
-                      يظهر الجدول أسفل محتوى المقال. المفتاح يتحكم في ظهوره دون حذف بياناته.
+                      يظهر أسفل المقال فقط عند عدم استخدام محرر العناصر. لإضافة جدول داخل
+                      المحتوى استخدم عنصر «جدول» في المحرر أعلاه.
                     </p>
                   </div>
                   <div className="flex items-center gap-2">

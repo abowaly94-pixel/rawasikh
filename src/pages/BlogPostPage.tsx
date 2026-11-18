@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
@@ -19,6 +19,8 @@ import BlogShareButtons from "@/components/blog/BlogShareButtons";
 import BlogLikeButton from "@/components/blog/BlogLikeButton";
 import BlogComments from "@/components/blog/BlogComments";
 import ArticleTable from "@/components/blog/ArticleTable";
+import ArticleBlocks from "@/components/blog/ArticleBlocks";
+import { parseArticleBlocks } from "@/lib/articleBlocks";
 
 
 const BlogPostPage = () => {
@@ -89,6 +91,14 @@ const BlogPostPage = () => {
   // A person's name is an atomic value, never machine-translated — it always
   // renders exactly as stored, in every language, for every author.
   const tAuthorName = post?.author_name || "";
+  // The structured blocks are authored in Arabic. Other languages keep
+  // reading the translated HTML content that is generated when the post is
+  // saved from the block editor.
+  const articleBlocks = useMemo(
+    () => parseArticleBlocks(post?.article_blocks),
+    [post?.article_blocks],
+  );
+  const showArticleBlocks = articleBlocks.length > 0 && (i18n.language || "").startsWith("ar");
   // Same shared, cached term-translation path the article list uses for
   // categories, so the category name is always worded identically in both
   // places instead of being translated twice, independently, by two systems.
@@ -226,7 +236,10 @@ const BlogPostPage = () => {
               )}
             </div>
 
-            {/* Content — whitespace-pre-line preserves manual line breaks from the editor */}
+            {/* Content
+                Arabic readers get the structured blocks (footnote/reference
+                links included). Other languages keep the translated HTML
+                that is generated from those blocks on save. */}
             {translating ? (
               <div className="space-y-3">
                 <Skeleton className="h-5 w-full" />
@@ -235,6 +248,8 @@ const BlogPostPage = () => {
                 <Skeleton className="h-5 w-full" />
                 <Skeleton className="h-5 w-2/3" />
               </div>
+            ) : showArticleBlocks ? (
+              <ArticleBlocks blocks={articleBlocks} className="mb-6" />
             ) : (
               <div
                 className="prose prose-lg dark:prose-invert max-w-none text-foreground leading-relaxed whitespace-pre-line
@@ -248,8 +263,12 @@ const BlogPostPage = () => {
               />
             )}
 
-            {/* Optional article table — visibility is controlled from the editor */}
-            {post.is_table_visible && <ArticleTable data={post.table_data} />}
+            {/* Optional legacy article table. Hidden when the structured
+                editor is in use, because its own table blocks are already
+                rendered above. */}
+            {!showArticleBlocks && post.is_table_visible && (
+              <ArticleTable data={post.table_data} />
+            )}
 
             {/* Author info */}
             {post.author_name && (
