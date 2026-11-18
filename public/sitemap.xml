@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://rawasikheg.com/blog</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -125,6 +125,12 @@
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rawasikheg.com/blog/b159b716-5f46-4223-aea5-cadb7961c0c1</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://rawasikheg.com/blog/68f24998-85b9-46a0-b429-b8b0fc45ba08</loc>
