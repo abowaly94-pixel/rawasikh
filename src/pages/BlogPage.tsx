@@ -191,7 +191,7 @@ const BlogPage = () => {
                   style={{ animationDelay: `${0.15 * (index + 1)}s`, animationFillMode: "both" }}
                 >
 
-                  <div className="h-48 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center group-hover:from-primary/15 group-hover:to-primary/10 transition-all duration-500 overflow-hidden">
+                  <div className="relative aspect-video w-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center group-hover:from-primary/15 group-hover:to-primary/10 transition-all duration-500 overflow-hidden">
                     {imageSrc ? (
                       <SmartImage
                         src={imageSrc}
@@ -202,7 +202,7 @@ const BlogPage = () => {
                         widths={[320, 480, 640, 800, 1024]}
                         sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 92vw"
                         quality={72}
-                        className="transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <Newspaper className="h-16 w-16 text-primary/40 group-hover:scale-110 transition-transform duration-500" />

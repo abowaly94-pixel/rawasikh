@@ -299,6 +299,12 @@ const ArticleBlocks = ({ blocks, className }: Props) => {
                   className="mb-4 text-lg font-bold text-ink"
                   dangerouslySetInnerHTML={{ __html: renderArticleInline(block.title || "المراجع", context) }}
                 />
+                {block.intro?.trim() && (
+                  <p
+                    className="mb-3 text-[13.5px] leading-7 text-muted-foreground"
+                    dangerouslySetInnerHTML={{ __html: renderArticleInline(block.intro, context) }}
+                  />
+                )}
                 {block.groups.map((group) => {
                   const groupRefs = blockRefs.filter((ref) => ref.groupId === group.id);
                   if (!groupRefs.length) return null;

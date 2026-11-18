@@ -75,6 +75,19 @@ const BlogPostPage = () => {
 
   const imageSrc = post ? getBlogImageUrl(post) : null;
   const fallbackImageSrc = post ? getBlogImageFallback(post) : null;
+  
+  // Extract poster from article blocks for share preview
+  const posterImage = useMemo(() => {
+    if (imageSrc) return imageSrc;
+    const firstImageBlock = articleBlocks.find(block => 
+      block.type === "paragraph" && block.text.includes("<img")
+    );
+    if (firstImageBlock?.text) {
+      const match = firstImageBlock.text.match(/<img[^>]*src=["']([^"'>]*)["'][^>]*>/i);
+      if (match?.[1]) return match[1];
+    }
+    return fallbackImageSrc;
+  }, [imageSrc, fallbackImageSrc, articleBlocks]);
 
   // Auto-translate ONLY genuine prose content: [title, content, author_bio, excerpt].
   // Proper names (author_name) and category names are deliberately excluded —
@@ -116,11 +129,11 @@ const BlogPostPage = () => {
           <meta property="og:title" content={post.title} />
           <meta property="og:description" content={((post.excerpt || post.content || "") as string).replace(/<[^>]+>/g, " ").slice(0, 200)} />
           <meta property="og:url" content={`https://rawasikheg.com/blog/${post.id}`} />
-          {imageSrc && <meta property="og:image" content={absoluteUrl(imageSrc)} />}
-          {imageSrc && <meta property="og:image:secure_url" content={absoluteUrl(imageSrc)} />}
+          {posterImage && <meta property="og:image" content={absoluteUrl(posterImage)} />}
+          {posterImage && <meta property="og:image:secure_url" content={absoluteUrl(posterImage)} />}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={post.title} />
-          {imageSrc && <meta name="twitter:image" content={absoluteUrl(imageSrc)} />}
+          {posterImage && <meta name="twitter:image" content={absoluteUrl(posterImage)} />}
           <meta name="robots" content="index, follow, max-image-preview:large" />
           <script type="application/ld+json">
             {JSON.stringify({
@@ -212,7 +225,7 @@ const BlogPostPage = () => {
                 alt={post.title}
                 width={1280}
                 height={720}
-                className="w-full rounded-xl mb-8 object-cover max-h-[400px]"
+                className="mb-8 aspect-video w-full rounded-2xl bg-muted/30 object-cover object-center shadow-sm ring-1 ring-border/60"
                 onError={(e) => {
                   const target = e.currentTarget;
                   if (fallbackImageSrc && target.src !== fallbackImageSrc) {

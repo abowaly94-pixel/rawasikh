@@ -724,6 +724,8 @@ const ManageBlogPostsPage = () => {
                 onChange={(article_blocks) =>
                   setFormData((prev) => ({ ...prev, article_blocks }))
                 }
+                title={formData.title}
+                onTitleChange={(title) => setFormData((prev) => ({ ...prev, title }))}
               />
 
               <div className="space-y-2 rounded-xl border border-border bg-muted/20 p-3">

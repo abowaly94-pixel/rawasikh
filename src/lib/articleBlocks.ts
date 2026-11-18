@@ -90,6 +90,8 @@ export interface ArticleFootnotesBlock extends ArticleBlockBase {
 export interface ArticleReferencesBlock extends ArticleBlockBase {
   type: "references";
   title: string;
+  /** Optional lead-in sentence shown under the section title (not numbered). */
+  intro?: string;
   numbering: ArticleNumbering;
   groups: ArticleReferenceGroup[];
 }
@@ -591,6 +593,15 @@ export function renderArticleInline(text: string, context: InlineContext): strin
     const ref = context.referencesById.get(key) || context.referencesByKey.get(key);
     return renderReferenceMarker(ref, key);
   });
+  // Lightweight inline formatting used by the file importer (and available to
+  // authors typing in the editor): **bold**, *italic*, [label](https://url).
+  // The text was escaped above, so only these generated tags reach the DOM.
+  html = html.replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>");
+  html = html.replace(
+    /\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary">$1</a>',
+  );
   return html.replace(/\n/g, "<br />");
 }
 
@@ -688,7 +699,7 @@ export function blocksToHtml(blocks: ArticleBlock[]): string {
               return `<div class="mt-5">${group.title.trim() ? `<h4 class="mb-2 text-sm font-bold text-gold-strong">${renderArticleInline(group.title, context)}</h4>` : ""}<ol start="${groupRefs[0].number}" class="space-y-1 text-[14px] leading-8 text-muted-foreground" style="list-style-type:${block.numbering === "arabic" ? "arabic-indic" : "decimal"}">${items}</ol></div>`;
             })
             .join("");
-          return `<section class="mt-12 border-t border-border pt-8"><h3 class="mb-4 text-lg font-bold text-ink">${renderArticleInline(block.title || "المراجع", context)}</h3>${groups}</section>`;
+          return `<section class="mt-12 border-t border-border pt-8"><h3 class="mb-4 text-lg font-bold text-ink">${renderArticleInline(block.title || "المراجع", context)}</h3>${block.intro?.trim() ? `<p class="mb-3 text-[13.5px] leading-7 text-muted-foreground">${renderArticleInline(block.intro, context)}</p>` : ""}${groups}</section>`;
         }
         case "summary":
           return `<aside class="my-8 rounded-2xl border border-gold/30 bg-gold-soft/30 p-6"><h2 class="mb-3 text-lg font-bold text-gold-strong">${renderArticleInline(block.title || "الخلاصة", context)}</h2><div class="text-[16px] leading-8 text-foreground/85">${renderArticleInline(block.text, context)}</div></aside>`;
