@@ -16,6 +16,7 @@ import { useTermsTranslation } from "@/hooks/useTermsTranslation";
 import { getBlogImageFallback, getBlogImageUrl } from "@/lib/blogImageFallbacks";
 import { useBlogTranslation } from "@/hooks/useBlogTranslation";
 import BlogShareButtons from "@/components/blog/BlogShareButtons";
+import BasmalaHeader from "@/components/blog/BasmalaHeader";
 import BlogLikeButton from "@/components/blog/BlogLikeButton";
 import BlogComments from "@/components/blog/BlogComments";
 import ArticleTable from "@/components/blog/ArticleTable";
@@ -113,7 +114,8 @@ const BlogPostPage = () => {
   // The structured blocks are authored in Arabic. Other languages keep
   // reading the translated HTML content that is generated when the post is
   // saved from the block editor.
-  const showArticleBlocks = articleBlocks.length > 0 && (i18n.language || "").startsWith("ar");
+  const isArabic = (i18n.language || "").startsWith("ar");
+  const showArticleBlocks = articleBlocks.length > 0 && isArabic;
   // Same shared, cached term-translation path the article list uses for
   // categories, so the category name is always worded identically in both
   // places instead of being translated twice, independently, by two systems.
@@ -255,6 +257,9 @@ const BlogPostPage = () => {
                 </span>
               )}
             </div>
+
+            {/* The Basmala opens the Arabic article, before the introduction. */}
+            {isArabic && <BasmalaHeader />}
 
             {/* Content
                 Arabic readers get the structured blocks (footnote/reference
