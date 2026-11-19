@@ -64,6 +64,7 @@ import assessmentLevel from "@/assets/assessment/assessment-level.jpg";
 import assessmentResults from "@/assets/assessment/assessment-results.jpg";
 import assessmentRecommendation from "@/assets/assessment/assessment-recommendation.jpg";
 import blogFallbackImage from "@/assets/blog-fallback-library.jpg";
+import { getBlogImageFallback, getBlogImageUrl } from "@/lib/blogImageFallbacks";
 import { cn } from "@/lib/utils";
 
 const testimonialRatings = [5, 5, 5, 5, 4, 5];
@@ -1049,29 +1050,20 @@ const Index = () => {
                         <article className="surface-card group flex h-full flex-col overflow-hidden">
                           <Link to={`/blog/${post.id}`} className="block">
                             <div className="relative aspect-[16/9] overflow-hidden bg-brand-soft">
-                              {post.image_url ? (
-                                <SmartImage
-                                  src={post.image_url}
-                                  alt={post.title}
-                                  width={400}
-                                  height={225}
-                                  widths={[320, 480, 640, 800]}
-                                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
-                                  quality={72}
-                                  referrerPolicy="no-referrer"
-                                  className="transition-transform duration-700 group-hover:scale-[1.04]"
-                                />
-                              ) : (
-                                <img
-                                  src={blogFallbackImage}
-                                  alt={post.title}
-                                  width={400}
-                                  height={225}
-                                  loading="lazy"
-                                  decoding="async"
-                                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                                />
-                              )}
+                              {/* Resolve the image exactly like the article page does,
+                                  so the card and the post always show the same cover. */}
+                              <SmartImage
+                                src={getBlogImageUrl(post)}
+                                fallbackSrc={getBlogImageFallback(post)}
+                                alt={post.title}
+                                width={400}
+                                height={225}
+                                widths={[320, 480, 640, 800]}
+                                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
+                                quality={72}
+                                referrerPolicy="no-referrer"
+                                className="transition-transform duration-700 group-hover:scale-[1.04]"
+                              />
                             </div>
                           </Link>
 

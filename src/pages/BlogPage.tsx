@@ -212,7 +212,7 @@ const BlogPage = () => {
                     <div className="flex items-center justify-between mb-4">
                       {getCategoryName(post) && (
                         <Badge variant="outline" className="text-xs border-primary/25 bg-primary/5 text-primary">
-                          <span className="w-2 h-2 rounded-full inline-block ml-1 bg-primary" />
+                          <span className="w-2 h-2 rounded-full inline-block me-2 bg-primary" />
                           <span data-no-auto-translate>{getCategoryName(post)}</span>
                         </Badge>
                       )}
