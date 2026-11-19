@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import {
   ArrowLeft,
   ArrowRight,
@@ -278,6 +279,18 @@ const Index = () => {
   const reducedMotion = usePrefersReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
   const heroVisualRef = useRef<HTMLDivElement>(null);
+
+  // One stable autoplay instance so the blog carousel advances on its own.
+  // It pauses while the visitor hovers or focuses inside the carousel, and
+  // stays off completely when reduced motion is requested.
+  const blogAutoplay = useRef(
+    Autoplay({
+      delay: 4500,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+      stopOnFocusIn: true,
+    }),
+  );
 
   // Hero choreography: the headline lines rise out of a mask, then the arch
   // and its halo drift at different speeds as the hero leaves the viewport.
@@ -1039,6 +1052,7 @@ const Index = () => {
                     direction: i18n.dir() === "rtl" ? "rtl" : "ltr",
                     loop: blogPosts.length > 3,
                   }}
+                  plugins={reducedMotion ? [] : [blogAutoplay.current]}
                   className="w-full"
                 >
                   <CarouselContent className="-ms-4">
