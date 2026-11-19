@@ -258,8 +258,8 @@ const BlogPostPage = () => {
               )}
             </div>
 
-            {/* The Basmala opens the Arabic article, before the introduction. */}
-            {isArabic && <BasmalaHeader />}
+            {/* The Basmala opens every article, before the introduction. */}
+            <BasmalaHeader />
 
             {/* Content
                 Arabic readers get the structured blocks (footnote/reference
