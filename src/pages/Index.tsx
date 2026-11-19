@@ -48,8 +48,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { resolvePrice, formatPrice, perLevelLabel, type PricesMap } from "@/lib/coursePrice";
 import { getLocalizedCourseDescription, getLocalizedCourseTitle } from "@/lib/courseTranslations";
@@ -1121,8 +1119,6 @@ const Index = () => {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious className="hidden md:flex" />
-                  <CarouselNext className="hidden md:flex" />
                 </Carousel>
               ) : (
                 <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
