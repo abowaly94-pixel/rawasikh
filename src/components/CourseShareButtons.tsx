@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Share2, Copy, Check, Facebook, Twitter, Send } from "lucide-react";
+import { useState, type ComponentType } from "react";
+import { Share2, Copy, Check, Facebook, Send } from "lucide-react";
+import XLogo from "@/components/icons/XLogo";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -26,10 +27,10 @@ const CourseShareButtons = ({ title, courseId }: CourseShareButtonsProps) => {
   const encodedTitle = encodeURIComponent(title);
 
   const labels = {
-    ar: { share: "مشاركة", copy: "نسخ الرابط", copied: "تم النسخ!", wa: "واتساب", fb: "فيسبوك", tw: "تويتر", tg: "تيليجرام" },
-    en: { share: "Share", copy: "Copy link", copied: "Copied!", wa: "WhatsApp", fb: "Facebook", tw: "Twitter", tg: "Telegram" },
-    fr: { share: "Partager", copy: "Copier le lien", copied: "Copié!", wa: "WhatsApp", fb: "Facebook", tw: "Twitter", tg: "Telegram" },
-    ur: { share: "شیئر کریں", copy: "لنک کاپی کریں", copied: "کاپی ہو گیا!", wa: "واٹس ایپ", fb: "فیس بک", tw: "ٹویٹر", tg: "ٹیلیگرام" },
+    ar: { share: "مشاركة", copy: "نسخ الرابط", copied: "تم النسخ!", wa: "واتساب", fb: "فيسبوك", tw: "X", tg: "تيليجرام" },
+    en: { share: "Share", copy: "Copy link", copied: "Copied!", wa: "WhatsApp", fb: "Facebook", tw: "X", tg: "Telegram" },
+    fr: { share: "Partager", copy: "Copier le lien", copied: "Copié!", wa: "WhatsApp", fb: "Facebook", tw: "X", tg: "Telegram" },
+    ur: { share: "شیئر کریں", copy: "لنک کاپی کریں", copied: "کاپی ہو گیا!", wa: "واٹس ایپ", fb: "فیس بک", tw: "X", tg: "ٹیلیگرام" },
   } as const;
   const L = (labels as any)[i18n.language] || labels.ar;
 
@@ -56,10 +57,10 @@ const CourseShareButtons = ({ title, courseId }: CourseShareButtonsProps) => {
     return false;
   };
 
-  const links = [
+  const links: Array<{ name: string; icon: ComponentType<{ className?: string }>; href: string }> = [
     { name: L.wa, icon: Send, href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}` },
     { name: L.fb, icon: Facebook, href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}` },
-    { name: L.tw, icon: Twitter, href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}` },
+    { name: L.tw, icon: XLogo, href: `https://x.com/intent/post?text=${encodedTitle}&url=${encodedUrl}` },
     { name: L.tg, icon: Send, href: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}` },
   ];
 

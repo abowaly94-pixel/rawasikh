@@ -1,4 +1,5 @@
-import { Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
+import XLogo from "@/components/icons/XLogo";
 
 const socialLinks = [
   {
@@ -17,9 +18,9 @@ const socialLinks = [
     icon: Youtube,
   },
   {
-    name: "X (Twitter)",
+    name: "X",
     url: "https://x.com/rawasikheg",
-    icon: Twitter,
+    icon: XLogo,
   },
   {
     name: "TikTok",

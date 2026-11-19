@@ -1,10 +1,11 @@
-import { Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
+import XLogo from "@/components/icons/XLogo";
 
 const socialLinks = [
   { name: "Facebook", url: "https://www.facebook.com/rawasikheg/", icon: Facebook },
   { name: "Instagram", url: "https://www.instagram.com/rawasikheg/", icon: Instagram },
   { name: "YouTube", url: "https://youtube.com/@rawasikheg?si=8GK2lB4vUuJ-Y76o", icon: Youtube },
-  { name: "X (Twitter)", url: "https://x.com/rawasikheg", icon: Twitter },
+  { name: "X", url: "https://x.com/rawasikheg", icon: XLogo },
   {
     name: "TikTok",
     url: "https://www.tiktok.com/@rawasikheg",
