@@ -1111,7 +1111,6 @@ const Index = () => {
                                 className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-primary"
                               >
                                 {t("blogSection.readMore")}
-                                <ArrowIcon className="h-3.5 w-3.5" aria-hidden />
                               </Link>
                             </div>
                           </div>
