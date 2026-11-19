@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { copyToClipboard } from "@/lib/clipboard";
 
 interface CourseShareButtonsProps {
   title: string;
@@ -33,14 +34,14 @@ const CourseShareButtons = ({ title, courseId }: CourseShareButtonsProps) => {
   const L = (labels as any)[i18n.language] || labels.ar;
 
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      toast.success(L.copied);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
+    const copiedOk = await copyToClipboard(shareUrl);
+    if (!copiedOk) {
       toast.error("Error");
+      return;
     }
+    setCopied(true);
+    toast.success(L.copied);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleNativeShare = async () => {

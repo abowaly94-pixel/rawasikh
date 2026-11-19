@@ -15,6 +15,20 @@ const brokenImageFileFallbacks: Record<string, string> = {
   OL1V2K0: blogArabicIdentityImage,
 };
 
+// Hotlinks that no longer resolve. igtsservice.com was the old site's upload
+// host and now times out, so those posters must never reach the page.
+const brokenImageUrlMarkers = [
+  "/wp-content/uploads/",
+  "igtsservice.com",
+  ...Object.keys(brokenImageFileFallbacks),
+];
+
+const isBrokenImageUrl = (url?: string | null) => {
+  const imageUrl = getNormalizedUrl(url);
+  if (!imageUrl) return true;
+  return brokenImageUrlMarkers.some((marker) => imageUrl.includes(marker));
+};
+
 const titleFallbacks: Array<[string, string]> = [
   ["هندسة السلوك النفسي", individualLearningImage],
   ["ألفاظ الوقف", blogWaqfImage],
@@ -68,6 +82,6 @@ export const getBlogImageUrl = (post: BlogImageSource) => {
   const fallback = getBlogImageFallback(post);
 
   if (!imageUrl) return fallback;
-  if (imageUrl.includes("/wp-content/uploads/")) return fallback;
+  if (isBrokenImageUrl(imageUrl)) return fallback;
   return imageUrl;
 };

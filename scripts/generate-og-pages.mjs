@@ -1,9 +1,15 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const CANONICAL_BASE = "https://rawasikheg.com";
-const FALLBACK_DESCRIPTION = "رواسخ - للخدمات التعليمية وتنمية المهارات";
-const DEFAULT_IMAGE = `${CANONICAL_BASE}/social-share.webp`;
+import {
+  CANONICAL_BASE,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_IMAGE,
+  imageType,
+  resolveBlogPoster,
+  resolveCoursePoster,
+} from "../api/_og-shared.js";
+
 const OUT_DIR = path.resolve("public/og");
 
 function parseEnv(content = "") {
@@ -45,74 +51,9 @@ function stripHtml(value) {
   return String(value || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
-function firstImageFromHtml(value) {
-  const match = String(value || "").match(/<img[^>]*src=["']([^"'>]+)["']/i);
-  return match?.[1] || "";
-}
-
-function firstImageFromBlocks(value) {
-  let blocks = value;
-  if (typeof blocks === "string") {
-    try {
-      blocks = JSON.parse(blocks);
-    } catch {
-      return "";
-    }
-  }
-  if (!Array.isArray(blocks)) return "";
-
-  for (const block of blocks) {
-    if (!block || typeof block !== "object") continue;
-    const image = firstImageFromHtml(block.text);
-    if (image) return image;
-  }
-  return "";
-}
-
-function decodeBasicEntities(value) {
-  return String(value || "")
-    .replace(/&amp;/g, "&")
-    .replace(/&#38;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&#34;/g, '"')
-    .replace(/&#39;/g, "'");
-}
-
-function normalizeImageUrl(value) {
-  const imageUrl = decodeBasicEntities(value).trim();
-  if (!imageUrl) return "";
-  if (imageUrl.startsWith("https://")) return imageUrl;
-  if (imageUrl.startsWith("http://")) return `https://${imageUrl.slice("http://".length)}`;
-  if (imageUrl.startsWith("/")) return `${CANONICAL_BASE}${imageUrl}`;
-  return "";
-}
-
-function toPreviewImageUrl(value, version) {
-  const imageUrl = normalizeImageUrl(value);
-  if (!imageUrl) return "";
-
-  let previewUrl = imageUrl;
-  const storageMatch = imageUrl.match(/^(https:\/\/[^/]+\/storage\/v1)\/object\/public\/(.+)$/);
-  if (storageMatch) {
-    previewUrl = `${storageMatch[1]}/render/image/public/${storageMatch[2].split("?")[0]}?width=1200&height=630&resize=cover&quality=80&format=webp`;
-  }
-
-  if (!version) return previewUrl;
-  return `${previewUrl}${previewUrl.includes("?") ? "&" : "?"}v=${encodeURIComponent(version)}`;
-}
-
-function imageType(value) {
-  if (/([?&])format=webp(&|$)/i.test(value)) return "image/webp";
-  const clean = value.split("?")[0].toLowerCase();
-  if (clean.endsWith(".png")) return "image/png";
-  if (clean.endsWith(".webp")) return "image/webp";
-  if (clean.endsWith(".jpg") || clean.endsWith(".jpeg")) return "image/jpeg";
-  return "image/jpeg";
-}
-
 function pageHtml({ type, title, description, canonical, image }) {
   const safeTitle = esc(title || "رواسخ");
-  const safeDescription = esc((description || FALLBACK_DESCRIPTION).slice(0, 220));
+  const safeDescription = esc((description || DEFAULT_DESCRIPTION).slice(0, 220));
   const safeCanonical = esc(canonical);
   const safeImage = esc(image);
   const safeImageType = safeImage ? esc(imageType(image)) : "";
@@ -170,6 +111,19 @@ async function fetchAllRows(url, key, table, select, extra = "") {
   return rows;
 }
 
+const BLOG_FIELDS =
+  "id,title,excerpt,content,image_url,article_blocks,updated_at,blog_categories(name)";
+const BLOG_FIELDS_LEGACY = "id,title,excerpt,content,image_url,updated_at";
+
+async function fetchBlogPosts(url, key) {
+  try {
+    return await fetchAllRows(url, key, "blog_posts", BLOG_FIELDS);
+  } catch {
+    // Older databases may not have article_blocks / the category relation.
+    return fetchAllRows(url, key, "blog_posts", BLOG_FIELDS_LEGACY);
+  }
+}
+
 async function main() {
   await loadEnv();
   const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -185,22 +139,29 @@ async function main() {
   await fs.mkdir(path.join(OUT_DIR, "courses"), { recursive: true });
 
   const [posts, courses] = await Promise.all([
-    fetchAllRows(supabaseUrl, supabaseKey, "blog_posts", "id,title,excerpt,content,image_url,article_blocks,updated_at"),
-    fetchAllRows(supabaseUrl, supabaseKey, "courses", "id,title,description,thumbnail_url,updated_at,is_published", "&is_published=eq.true"),
+    fetchBlogPosts(supabaseUrl, supabaseKey),
+    fetchAllRows(
+      supabaseUrl,
+      supabaseKey,
+      "courses",
+      "id,title,description,thumbnail_url,updated_at,is_published",
+      "&is_published=eq.true",
+    ),
   ]);
 
   await Promise.all(
     posts.map((post) => {
       const canonical = `${CANONICAL_BASE}/blog/${post.id}`;
-      const description = stripHtml(post.excerpt || post.content || "") || FALLBACK_DESCRIPTION;
-      const explicitImage = String(post.image_url || "").trim();
-      const imageValue = explicitImage && !explicitImage.includes("/wp-content/uploads/")
-        ? explicitImage
-        : firstImageFromHtml(post.content) || firstImageFromBlocks(post.article_blocks) || explicitImage;
-      const image = toPreviewImageUrl(imageValue, post.updated_at || "") || DEFAULT_IMAGE;
+      const description = stripHtml(post.excerpt || post.content || "") || DEFAULT_DESCRIPTION;
       return fs.writeFile(
         path.join(OUT_DIR, "blog", `${post.id}.html`),
-        pageHtml({ type: "article", title: post.title, description, canonical, image }),
+        pageHtml({
+          type: "article",
+          title: post.title,
+          description,
+          canonical,
+          image: resolveBlogPoster(post) || DEFAULT_IMAGE,
+        }),
         "utf8",
       );
     }),
@@ -209,11 +170,16 @@ async function main() {
   await Promise.all(
     courses.map((course) => {
       const canonical = `${CANONICAL_BASE}/courses/${course.id}`;
-      const description = stripHtml(course.description || "") || FALLBACK_DESCRIPTION;
-      const image = toPreviewImageUrl(course.thumbnail_url || "", course.updated_at || "") || DEFAULT_IMAGE;
+      const description = stripHtml(course.description || "") || DEFAULT_DESCRIPTION;
       return fs.writeFile(
         path.join(OUT_DIR, "courses", `${course.id}.html`),
-        pageHtml({ type: "website", title: course.title, description, canonical, image }),
+        pageHtml({
+          type: "website",
+          title: course.title,
+          description,
+          canonical,
+          image: resolveCoursePoster(course) || DEFAULT_IMAGE,
+        }),
         "utf8",
       );
     }),

@@ -6,9 +6,16 @@
 // own poster image, title and description — including posts created after the
 // last deployment.
 
-const CANONICAL_BASE = "https://rawasikheg.com";
-const DEFAULT_IMAGE = `${CANONICAL_BASE}/social-share.webp`;
-const DEFAULT_DESCRIPTION = "رواسخ - للخدمات التعليمية وتنمية المهارات";
+import {
+  CANONICAL_BASE,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_IMAGE,
+  SUPABASE_FALLBACK_KEY,
+  SUPABASE_FALLBACK_URL,
+  imageType,
+  resolveBlogPoster,
+  resolveCoursePoster,
+} from "./_og-shared.js";
 
 const SOCIAL_BOT_PATTERN =
   /(facebookexternalhit|Facebot|Twitterbot|WhatsApp|TelegramBot|LinkedInBot|Slackbot|Discordbot|SkypeUriPreview|Google-Structured-Data-Testing-Tool|Pinterest|redditbot|Embedly|Quora Link Preview|Showyoubot|outbrain|vkShare|W3C_Validator)/i;
@@ -26,75 +33,13 @@ const stripHtml = (value) =>
     .replace(/\s+/g, " ")
     .trim();
 
-const decodeBasicEntities = (value) =>
-  String(value || "")
-    .replace(/&amp;/g, "&")
-    .replace(/&#38;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&#34;/g, '"')
-    .replace(/&#39;/g, "'");
-
-const firstImageFromHtml = (html) => {
-  const match = String(html || "").match(/<img[^>]*src=["']([^"'>]+)["']/i);
-  return match?.[1] || "";
-};
-
-const firstImageFromBlocks = (raw) => {
-  let blocks = raw;
-  if (typeof blocks === "string") {
-    try {
-      blocks = JSON.parse(blocks);
-    } catch {
-      return "";
-    }
-  }
-  if (!Array.isArray(blocks)) return "";
-
-  for (const block of blocks) {
-    if (!block || typeof block !== "object") continue;
-    const text = typeof block.text === "string" ? block.text : "";
-    const image = firstImageFromHtml(text);
-    if (image) return image;
-  }
-  return "";
-};
-
-const normalizeImageUrl = (value) => {
-  const image = decodeBasicEntities(value).trim();
-  if (!image) return "";
-  if (image.startsWith("https://")) return image;
-  if (image.startsWith("http://")) return `https://${image.slice("http://".length)}`;
-  if (image.startsWith("//")) return `https:${image}`;
-  if (image.startsWith("/")) return `${CANONICAL_BASE}${image}`;
-  return `${CANONICAL_BASE}/${image}`;
-};
-
-const toPreviewImage = (value) => {
-  const image = normalizeImageUrl(value);
-  if (!image) return DEFAULT_IMAGE;
-
-  const storageMatch = image.match(/^(https:\/\/[^/]+\/storage\/v1)\/object\/public\/(.+)$/);
-  if (storageMatch) {
-    return `${storageMatch[1]}/render/image/public/${storageMatch[2].split("?")[0]}?width=1200&height=630&resize=cover&quality=80&format=webp`;
-  }
-  return image;
-};
-
-const imageType = (value) => {
-  if (/([?&])format=webp(&|$)/i.test(value)) return "image/webp";
-  const clean = value.split("?")[0].toLowerCase();
-  if (clean.endsWith(".png")) return "image/png";
-  if (clean.endsWith(".webp")) return "image/webp";
-  if (clean.endsWith(".jpg") || clean.endsWith(".jpeg")) return "image/jpeg";
-  return "";
-};
-
 const pageHtml = ({ title, description, canonical, image }) => {
   const safeTitle = escapeHtml(title || "رواسخ");
   const safeDescription = escapeHtml((description || DEFAULT_DESCRIPTION).slice(0, 220));
   const safeCanonical = escapeHtml(canonical);
-  const safeImage = escapeHtml(image || DEFAULT_IMAGE);
-  const type = imageType(safeImage);
+  const rawImage = image || DEFAULT_IMAGE;
+  const safeImage = escapeHtml(rawImage);
+  const type = imageType(rawImage);
 
   return `<!doctype html>
 <html lang="ar" dir="rtl">
@@ -128,12 +73,16 @@ ${type ? `<meta property="og:image:type" content="${type}" />` : ""}
 };
 
 const supabaseSettings = () => {
-  const url = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "").replace(/\/$/, "");
+  const url = (
+    process.env.SUPABASE_URL ||
+    process.env.VITE_SUPABASE_URL ||
+    SUPABASE_FALLBACK_URL
+  ).replace(/\/$/, "");
   const key =
     process.env.SUPABASE_ANON_KEY ||
     process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
     process.env.VITE_SUPABASE_ANON_KEY ||
-    "";
+    SUPABASE_FALLBACK_KEY;
   return { url, key };
 };
 
@@ -145,7 +94,7 @@ const fetchEntry = async (type, id) => {
   const select =
     type === "courses"
       ? "id,title,description,thumbnail_url,updated_at"
-      : "id,title,excerpt,content,image_url,article_blocks,updated_at";
+      : "id,title,excerpt,content,image_url,article_blocks,updated_at,blog_categories(name)";
 
   const query = async (fields) => {
     const endpoint = `${url}/rest/v1/${table}?select=${encodeURIComponent(fields)}&id=eq.${encodeURIComponent(id)}&limit=1`;
@@ -161,23 +110,7 @@ const fetchEntry = async (type, id) => {
   if (entry || type === "courses") return entry;
 
   // Older databases may not have the structured blocks column yet.
-  return query("id,title,excerpt,content,image_url,updated_at");
-};
-
-const pickImage = (entry, type) => {
-  const explicit = type === "courses" ? entry?.thumbnail_url : entry?.image_url;
-  const explicitValue = String(explicit || "").trim();
-  // WordPress hotlinks in the old data are frequently broken; prefer the
-  // article's own media instead of showing a dead preview.
-  if (explicitValue && !explicitValue.includes("/wp-content/uploads/")) {
-    return toPreviewImage(explicitValue);
-  }
-
-  const embedded =
-    firstImageFromHtml(entry?.content) ||
-    firstImageFromBlocks(entry?.article_blocks) ||
-    explicitValue;
-  return toPreviewImage(embedded);
+  return query("id,title,excerpt,content,image_url,updated_at,blog_categories(name)");
 };
 
 export default async function handler(req, res) {
@@ -221,7 +154,7 @@ export default async function handler(req, res) {
         title,
         description,
         canonical,
-        image: pickImage(entry, type),
+        image: type === "courses" ? resolveCoursePoster(entry) : resolveBlogPoster(entry),
       }),
     );
   } catch {
