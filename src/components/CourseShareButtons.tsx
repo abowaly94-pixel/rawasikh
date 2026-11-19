@@ -27,7 +27,7 @@ const CourseShareButtons = ({ title, courseId }: CourseShareButtonsProps) => {
   const encodedTitle = encodeURIComponent(title);
 
   const labels = {
-    ar: { share: "مشاركة", copy: "نسخ الرابط", copied: "تم النسخ!", wa: "واتساب", fb: "فيسبوك", tw: "X", tg: "تيليجرام" },
+    ar: { share: "مشاركة", copy: "نسخ الرابط", copied: "تم النسخ!", wa: "واتساب", fb: "فيسبوك", tw: "إكس", tg: "تيليجرام" },
     en: { share: "Share", copy: "Copy link", copied: "Copied!", wa: "WhatsApp", fb: "Facebook", tw: "X", tg: "Telegram" },
     fr: { share: "Partager", copy: "Copier le lien", copied: "Copié!", wa: "WhatsApp", fb: "Facebook", tw: "X", tg: "Telegram" },
     ur: { share: "شیئر کریں", copy: "لنک کاپی کریں", copied: "کاپی ہو گیا!", wa: "واٹس ایپ", fb: "فیس بک", tw: "X", tg: "ٹیلیگرام" },
