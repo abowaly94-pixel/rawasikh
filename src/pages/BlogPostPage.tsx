@@ -200,7 +200,7 @@ const BlogPostPage = () => {
                   className="border-primary/25 bg-primary/5 text-primary"
                 >
                   <span
-                    className="w-2 h-2 rounded-full inline-block ml-1 bg-primary"
+                    className="w-2 h-2 rounded-full inline-block me-2 bg-primary"
                   />
                   <span data-no-auto-translate>{tCategoryName}</span>
                 </Badge>
