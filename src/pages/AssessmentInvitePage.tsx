@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Progress } from "@/components/ui/progress";
@@ -679,9 +680,8 @@ const AssessmentInvitePage = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="password">كلمة المرور *</Label>
-                  <Input
+                  <PasswordInput
                     id="password"
-                    type="password"
                     placeholder="6 أحرف على الأقل"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}

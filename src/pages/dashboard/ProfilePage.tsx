@@ -5,6 +5,7 @@ import SchoolLayout from "@/components/layout/SchoolLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -200,6 +201,7 @@ const ProfilePage = () => {
     student: "طالب",
     parent: "ولي أمر",
     school: "مدرسة",
+    staff: "مشرف",
   };
 
   const profileContent = (
@@ -232,7 +234,7 @@ const ProfilePage = () => {
               <h2 className="text-xl font-bold">{formData.full_name || "مستخدم"}</h2>
               <p className="text-muted-foreground">{formData.email}</p>
               <p className="text-sm text-primary mt-1">
-                {roleLabels[userRole || "student"]}
+                {userRole ? roleLabels[userRole] : "مستخدم عام"}
               </p>
             </div>
           </div>
@@ -363,9 +365,8 @@ const ProfilePage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="currentPassword">كلمة المرور الحالية</Label>
-              <Input
+              <PasswordInput
                 id="currentPassword"
-                type="password"
                 value={passwordData.currentPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
                 placeholder="••••••••"
@@ -375,9 +376,8 @@ const ProfilePage = () => {
             <div></div>
             <div className="space-y-2">
               <Label htmlFor="newPassword">كلمة المرور الجديدة</Label>
-              <Input
+              <PasswordInput
                 id="newPassword"
-                type="password"
                 value={passwordData.newPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
                 placeholder="••••••••"
@@ -386,9 +386,8 @@ const ProfilePage = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">تأكيد كلمة المرور</Label>
-              <Input
+              <PasswordInput
                 id="confirmPassword"
-                type="password"
                 value={passwordData.confirmPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
                 placeholder="••••••••"
@@ -455,7 +454,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <DashboardLayout userRole={userRole || "student"} userName={profile?.full_name || "مستخدم"}>
+    <DashboardLayout userRole={userRole} userName={profile?.full_name || "مستخدم"}>
       {profileContent}
     </DashboardLayout>
   );

@@ -641,21 +641,6 @@ const Index = () => {
                   />
                 </div>
 
-                {/* Floating: certified */}
-                <div className="hero-parallax-float absolute -start-4 top-16 hidden items-center gap-2.5 rounded-2xl border border-border bg-card/95 px-3.5 py-2.5 shadow-lg backdrop-blur sm:flex">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gold-soft text-gold">
-                    <Award className="h-5 w-5" aria-hidden />
-                  </span>
-                  <span className="text-[12px] leading-tight">
-                    <span className="block font-bold text-foreground">
-                      {t("courseDetails.completionCertificate")}
-                    </span>
-                    <span className="block text-muted-foreground">
-                      {t("whyUs.highQuality")}
-                    </span>
-                  </span>
-                </div>
-
                 {/* Floating: rating */}
                 <div className="hero-parallax-float absolute -end-3 bottom-10 hidden items-center gap-2.5 rounded-2xl border border-border bg-card/95 px-3.5 py-2.5 shadow-lg backdrop-blur sm:flex">
                   <span className="flex items-center gap-0.5">

@@ -4,6 +4,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -399,7 +400,7 @@ const ManageTeachersPage = () => {
               </div>
               <div className="space-y-2">
                 <Label>كلمة المرور *</Label>
-                <Input dir="ltr" type="password" value={addPassword} onChange={(e) => setAddPassword(e.target.value)} placeholder="••••••••" />
+                <PasswordInput dir="ltr" value={addPassword} onChange={(e) => setAddPassword(e.target.value)} placeholder="••••••••" />
               </div>
               <div className="space-y-2">
                 <Label>رقم الهاتف</Label>

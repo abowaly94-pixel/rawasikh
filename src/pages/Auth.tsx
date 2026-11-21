@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,21 +32,52 @@ function AuthPasswordToggle({ visible, onToggle, label }: { visible: boolean; on
   );
 }
 
+type AuthFieldErrors = Partial<Record<"fullName" | "email" | "password" | "phone" | "whatsapp", string>>;
+
+const mapZodErrors = (error: z.ZodError): AuthFieldErrors => {
+  const errors: AuthFieldErrors = {};
+  for (const issue of error.issues) {
+    const field = issue.path[0] as keyof AuthFieldErrors | undefined;
+    if (field && !errors[field]) errors[field] = issue.message;
+  }
+  return errors;
+};
+
+const normalizePhone = (value: string) => value.trim().replace(/[\s\-()]/g, "").replace(/^\+/, "");
+
 const Auth = () => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
 
   const loginSchema = z.object({
-    email: z.string().email(t("authPage.invalidEmail")),
-    password: z.string().min(6, t("authPage.weakPassword")),
+    email: z
+      .string()
+      .trim()
+      .min(1, t("authPage.emailRequired"))
+      .email(t("authPage.emailInvalidFormat")),
+    password: z.string().min(1, t("authPage.passwordRequired")),
   });
 
   const registerSchema = z.object({
-    fullName: z.string().min(2, t("authPage.dataError")),
-    email: z.string().email(t("authPage.invalidEmail")),
-    password: z.string().min(6, t("authPage.weakPassword")),
-    phone: z.string().optional(),
-    whatsapp: z.string().min(10, t("authPage.dataError")).regex(/^[\d+]+$/, t("authPage.dataError")),
+    fullName: z.string().trim().min(2, t("authPage.nameRequired")),
+    email: z
+      .string()
+      .trim()
+      .min(1, t("authPage.emailRequired"))
+      .email(t("authPage.emailInvalidFormat")),
+    password: z
+      .string()
+      .min(1, t("authPage.passwordRequired"))
+      .min(6, t("authPage.passwordTooShort"))
+      .regex(/\p{L}/u, t("authPage.passwordNeedsLetter"))
+      .regex(/\d/, t("authPage.passwordNeedsNumber")),
+    phone: z
+      .string()
+      .refine((value) => value === "" || /^\d{7,15}$/.test(value), t("authPage.phoneInvalid")),
+    whatsapp: z
+      .string()
+      .min(1, t("authPage.whatsappRequired"))
+      .regex(/^\d{7,15}$/, t("authPage.whatsappInvalid")),
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -62,38 +93,86 @@ const Auth = () => {
   const [regCountryCode, setRegCountryCode] = useState(DEFAULT_COUNTRY_CODE);
   const [loginError, setLoginError] = useState<string | null>(null);
   const [registerError, setRegisterError] = useState<string | null>(null);
+  const [loginFieldErrors, setLoginFieldErrors] = useState<AuthFieldErrors>({});
+  const [registerFieldErrors, setRegisterFieldErrors] = useState<AuthFieldErrors>({});
+
+  const loginEmailRef = useRef<HTMLInputElement>(null);
+  const loginPasswordRef = useRef<HTMLInputElement>(null);
+  const regNameRef = useRef<HTMLInputElement>(null);
+  const regEmailRef = useRef<HTMLInputElement>(null);
+  const regPasswordRef = useRef<HTMLInputElement>(null);
+  const regPhoneRef = useRef<HTMLInputElement>(null);
+  const regWhatsappRef = useRef<HTMLInputElement>(null);
 
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { user, userRole, signIn, signUp, isDemo } = useAuth();
+  const { user, userRole, loading: authLoading, signIn, signUp, isDemo } = useAuth();
+
+  // Set while a registration is in flight/succeeded so the auto-redirect
+  // below does not send the freshly created account to the dashboard.
+  const skipAuthRedirectRef = useRef(false);
 
   useEffect(() => {
-    if (user && userRole) {
-      if (isDemo) {
-        if (userRole === "school") navigate("/school");
-        else navigate("/dashboard");
-        return;
-      }
-      const checkRoleAndRedirect = async () => {
-        const { data: roleData } = await supabase.from("user_roles").select("role").eq("user_id", user.id).maybeSingle();
-        if (roleData?.role === "school") navigate("/school");
-        else navigate("/dashboard");
-      };
-      checkRoleAndRedirect();
+    if (authLoading || !user) return;
+    if (skipAuthRedirectRef.current) return;
+
+    if (isDemo) {
+      if (userRole === "school") navigate("/school");
+      else navigate("/dashboard");
+      return;
     }
-  }, [user, userRole, navigate, isDemo]);
+
+    const checkRoleAndRedirect = async () => {
+      const { data: roleData } = await supabase.from("user_roles").select("role").eq("user_id", user.id).maybeSingle();
+      if (roleData?.role === "school") navigate("/school");
+      else navigate("/dashboard");
+    };
+    checkRoleAndRedirect();
+  }, [user, userRole, authLoading, navigate, isDemo]);
+
+  const focusFirstLoginError = (errors: AuthFieldErrors) => {
+    if (errors.email) loginEmailRef.current?.focus();
+    else if (errors.password) loginPasswordRef.current?.focus();
+  };
+
+  const focusFirstRegisterError = (errors: AuthFieldErrors) => {
+    const field = (["fullName", "email", "password", "phone", "whatsapp"] as const).find(
+      (key) => errors[key],
+    );
+    const refs = {
+      fullName: regNameRef,
+      email: regEmailRef,
+      password: regPasswordRef,
+      phone: regPhoneRef,
+      whatsapp: regWhatsappRef,
+    };
+    if (field) refs[field].current?.focus();
+  };
+
+  const clearLoginFieldError = (field: keyof AuthFieldErrors) => {
+    setLoginFieldErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev));
+  };
+
+  const clearRegisterFieldError = (field: keyof AuthFieldErrors) => {
+    setRegisterFieldErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev));
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError(null);
-    if (!email.trim() || !password.trim()) {
-      setLoginError(t("authPage.dataError"));
+
+    const parsed = loginSchema.safeParse({ email, password });
+    if (!parsed.success) {
+      const fieldErrors = mapZodErrors(parsed.error);
+      setLoginFieldErrors(fieldErrors);
+      focusFirstLoginError(fieldErrors);
       return;
     }
+
+    setLoginFieldErrors({});
     setIsLoading(true);
     try {
-      const validated = loginSchema.parse({ email, password });
-      const { error } = await signIn(validated.email, validated.password);
+      const { error } = await signIn(parsed.data.email, parsed.data.password);
       if (error) {
         let message = t("authPage.loginFailed");
         if (error.message.includes("Invalid login credentials")) message = t("authPage.invalidCreds");
@@ -105,10 +184,9 @@ const Auth = () => {
         logActivity({ actionType: "user_login", description: "تسجيل دخول مستخدم" });
       }
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        setLoginError(error.errors[0].message);
-        toast({ title: t("authPage.dataError"), description: error.errors[0].message, variant: "destructive" });
-      }
+      const message = error instanceof Error ? error.message : t("authPage.loginFailed");
+      setLoginError(message);
+      toast({ title: t("authPage.errorTitle"), description: message, variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
@@ -117,51 +195,77 @@ const Auth = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterError(null);
-    if (!regName.trim() || !regEmail.trim() || !regPassword.trim() || !regWhatsapp.trim()) {
-      setRegisterError(t("authPage.dataError"));
+
+    const parsed = registerSchema.safeParse({
+      fullName: regName,
+      email: regEmail,
+      password: regPassword,
+      phone: normalizePhone(regPhone),
+      whatsapp: normalizePhone(regWhatsapp),
+    });
+    if (!parsed.success) {
+      const fieldErrors = mapZodErrors(parsed.error);
+      setRegisterFieldErrors(fieldErrors);
+      focusFirstRegisterError(fieldErrors);
       return;
     }
+
+    setRegisterFieldErrors({});
     setIsLoading(true);
     try {
-      const validated = registerSchema.parse({
-        fullName: regName,
-        email: regEmail,
-        password: regPassword,
-        phone: regPhone,
-        whatsapp: regWhatsapp,
-      });
       const countryOption = COUNTRY_CODES.find((c) => c.code === regCountryCode);
-      const { error } = await signUp(
-        validated.email,
-        validated.password,
-        validated.fullName,
-        "student",
+      // Prevent the logged-in redirect from racing the homepage navigation.
+      skipAuthRedirectRef.current = true;
+      const { data, error } = await signUp(
+        parsed.data.email,
+        parsed.data.password,
+        parsed.data.fullName,
+        null,
         {
-          phone: validated.phone || "",
-          whatsapp: validated.whatsapp,
+          phone: parsed.data.phone,
+          whatsapp: parsed.data.whatsapp,
           country_code: countryOption?.dial || "",
         }
       );
       if (error) {
+        skipAuthRedirectRef.current = false;
         let message = t("authPage.registerFailed");
         if (error.message.includes("already registered")) message = t("authPage.alreadyRegistered");
         else if (error.message.includes("invalid") || error.message.includes("email_address_invalid")) message = t("authPage.invalidEmail");
         else if (error.message.includes("password")) message = t("authPage.weakPassword");
         setRegisterError(message);
         toast({ title: t("authPage.errorTitle"), description: message, variant: "destructive" });
-      } else {
+      } else if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+        // Supabase intentionally returns an obfuscated user with no identities
+        // when the email is already registered and email confirmation is on.
+        skipAuthRedirectRef.current = false;
+        const message = t("authPage.alreadyRegistered");
+        setRegisterError(message);
+        toast({ title: t("authPage.errorTitle"), description: message, variant: "destructive" });
+      } else if (data?.user) {
+        // With email confirmation disabled Supabase returns a session right away
+        // and the user is already signed in; otherwise they must confirm first.
+        const signedIn = Boolean(data.session);
         toast({
           title: t("authPage.registerSuccess"),
-          description: t("authPage.registerSuccessDesc"),
+          description: signedIn
+            ? t("authPage.registerSuccessLoggedIn")
+            : t("authPage.registerSuccessDesc"),
         });
         setRegName(""); setRegEmail(""); setRegPassword(""); setRegPhone(""); setRegWhatsapp(""); setRegCountryCode(DEFAULT_COUNTRY_CODE);
+        // New accounts land on the public homepage, not the dashboard.
+        navigate("/");
+      } else {
+        skipAuthRedirectRef.current = false;
+        const message = t("authPage.registerFailed");
+        setRegisterError(message);
+        toast({ title: t("authPage.errorTitle"), description: message, variant: "destructive" });
       }
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        const msg = error.errors[0]?.message ?? t("authPage.dataError");
-        setRegisterError(msg);
-        toast({ title: t("authPage.dataError"), description: msg, variant: "destructive" });
-      }
+      skipAuthRedirectRef.current = false;
+      const message = error instanceof Error ? error.message : t("authPage.registerFailed");
+      setRegisterError(message);
+      toast({ title: t("authPage.errorTitle"), description: message, variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
@@ -254,13 +358,37 @@ const Auth = () => {
               </TabsList>
 
               <TabsContent value="login">
-                <form onSubmit={handleLogin} className="space-y-4 mt-4" noValidate={false} aria-label={t("authPage.tabLogin")}>
+                <form onSubmit={handleLogin} className="space-y-4 mt-4" noValidate aria-label={t("authPage.tabLogin")}>
                   <div className="space-y-2">
                     <Label htmlFor="login-email" className={`flex items-center gap-2 ${labelAlign}`}>
                       <Mail className="h-4 w-4" aria-hidden />
                       {t("authPage.email")}
                     </Label>
-                    <Input id="login-email" type="email" placeholder="example@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required dir="ltr" autoComplete="email" aria-describedby={loginError ? "login-error" : undefined} />
+                    <Input
+                      ref={loginEmailRef}
+                      id="login-email"
+                      type="email"
+                      placeholder="example@email.com"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        clearLoginFieldError("email");
+                      }}
+                      required
+                      dir="ltr"
+                      autoComplete="email"
+                      aria-invalid={loginFieldErrors.email ? true : undefined}
+                      aria-describedby={
+                        [loginFieldErrors.email ? "login-email-error" : null, loginError ? "login-error" : null]
+                          .filter(Boolean)
+                          .join(" ") || undefined
+                      }
+                    />
+                    {loginFieldErrors.email && (
+                      <p id="login-email-error" className="text-xs text-destructive" role="alert">
+                        {loginFieldErrors.email}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="login-password" className={`flex items-center gap-2 ${labelAlign}`}>
@@ -269,26 +397,40 @@ const Auth = () => {
                     </Label>
                     <div className="relative">
                       <Input
+                        ref={loginPasswordRef}
                         id="login-password"
                         type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          clearLoginFieldError("password");
+                        }}
                         required
                         dir="ltr"
                         autoComplete="current-password"
                         className="pl-12"
-                        aria-describedby={loginError ? "login-error" : undefined}
+                        aria-invalid={loginFieldErrors.password ? true : undefined}
+                        aria-describedby={
+                          [loginFieldErrors.password ? "login-password-error" : null, loginError ? "login-error" : null]
+                            .filter(Boolean)
+                            .join(" ") || undefined
+                        }
                       />
                       <AuthPasswordToggle visible={showPassword} onToggle={() => setShowPassword((v) => !v)} label={showPassword ? t("authPage.hidePassword") : t("authPage.showPassword")} />
                     </div>
+                    {loginFieldErrors.password && (
+                      <p id="login-password-error" className="text-xs text-destructive" role="alert">
+                        {loginFieldErrors.password}
+                      </p>
+                    )}
                   </div>
                   {loginError && (
                     <p id="login-error" className="rounded-md bg-destructive/10 border border-destructive/20 px-3 py-2 text-sm text-destructive" role="alert">
                       {loginError}
                     </p>
                   )}
-                  <Button type="submit" className="w-full min-h-[44px]" disabled={isLoading || !email.trim() || !password.trim()} aria-busy={isLoading}>
+                  <Button type="submit" className="w-full min-h-[44px]" disabled={isLoading} aria-busy={isLoading}>
                     {isLoading ? (
                       <span className="flex items-center gap-2">
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
@@ -315,20 +457,59 @@ const Auth = () => {
               </TabsContent>
 
               <TabsContent value="register">
-                <form onSubmit={handleRegister} className="space-y-4 mt-4" aria-label={t("authPage.tabRegister")}>
+                <form onSubmit={handleRegister} className="space-y-4 mt-4" noValidate aria-label={t("authPage.tabRegister")}>
                   <div className="space-y-2">
                     <Label htmlFor="reg-name" className={`flex items-center gap-2 ${labelAlign}`}>
                       <User className="h-4 w-4" aria-hidden />
                       {t("authPage.fullName")}
                     </Label>
-                    <Input id="reg-name" type="text" placeholder={t("authPage.fullNamePlaceholder")} value={regName} onChange={(e) => setRegName(e.target.value)} required autoComplete="name" />
+                    <Input
+                      ref={regNameRef}
+                      id="reg-name"
+                      type="text"
+                      placeholder={t("authPage.fullNamePlaceholder")}
+                      value={regName}
+                      onChange={(e) => {
+                        setRegName(e.target.value);
+                        clearRegisterFieldError("fullName");
+                      }}
+                      required
+                      autoComplete="name"
+                      aria-invalid={registerFieldErrors.fullName ? true : undefined}
+                      aria-describedby={registerFieldErrors.fullName ? "reg-name-error" : undefined}
+                    />
+                    {registerFieldErrors.fullName && (
+                      <p id="reg-name-error" className="text-xs text-destructive" role="alert">
+                        {registerFieldErrors.fullName}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="reg-email" className={`flex items-center gap-2 ${labelAlign}`}>
                       <Mail className="h-4 w-4" aria-hidden />
                       {t("authPage.email")}
                     </Label>
-                    <Input id="reg-email" type="email" placeholder="example@email.com" value={regEmail} onChange={(e) => setRegEmail(e.target.value)} required dir="ltr" autoComplete="email" />
+                    <Input
+                      ref={regEmailRef}
+                      id="reg-email"
+                      type="email"
+                      placeholder="example@email.com"
+                      value={regEmail}
+                      onChange={(e) => {
+                        setRegEmail(e.target.value);
+                        clearRegisterFieldError("email");
+                      }}
+                      required
+                      dir="ltr"
+                      autoComplete="email"
+                      aria-invalid={registerFieldErrors.email ? true : undefined}
+                      aria-describedby={registerFieldErrors.email ? "reg-email-error" : undefined}
+                    />
+                    {registerFieldErrors.email && (
+                      <p id="reg-email-error" className="text-xs text-destructive" role="alert">
+                        {registerFieldErrors.email}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="reg-password" className={`flex items-center gap-2 ${labelAlign}`}>
@@ -337,31 +518,66 @@ const Auth = () => {
                     </Label>
                     <div className="relative">
                       <Input
+                        ref={regPasswordRef}
                         id="reg-password"
                         type={showRegPassword ? "text" : "password"}
                         placeholder="••••••••"
                         value={regPassword}
-                        onChange={(e) => setRegPassword(e.target.value)}
+                        onChange={(e) => {
+                          setRegPassword(e.target.value);
+                          clearRegisterFieldError("password");
+                        }}
                         required
                         dir="ltr"
                         autoComplete="new-password"
                         className="pl-12"
+                        aria-invalid={registerFieldErrors.password ? true : undefined}
+                        aria-describedby={
+                          registerFieldErrors.password
+                            ? "reg-password-hint reg-password-error"
+                            : "reg-password-hint"
+                        }
                       />
                       <AuthPasswordToggle visible={showRegPassword} onToggle={() => setShowRegPassword((v) => !v)} label={showRegPassword ? t("authPage.hidePassword") : t("authPage.showPassword")} />
                     </div>
-                    <p className="text-xs text-muted-foreground">استخدم 6 أحرف على الأقل مع أرقام وحروف</p>
+                    <p id="reg-password-hint" className="text-xs text-muted-foreground">{t("authPage.passwordHint")}</p>
+                    {registerFieldErrors.password && (
+                      <p id="reg-password-error" className="text-xs text-destructive" role="alert">
+                        {registerFieldErrors.password}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="reg-phone" className={`flex items-center gap-2 ${labelAlign}`}>
                       <Phone className="h-4 w-4" aria-hidden />
                       {t("authPage.phone")}
                     </Label>
-                    <Input id="reg-phone" type="tel" placeholder="01xxxxxxxxx" value={regPhone} onChange={(e) => setRegPhone(e.target.value)} dir="ltr" autoComplete="tel" />
+                    <Input
+                      ref={regPhoneRef}
+                      id="reg-phone"
+                      type="tel"
+                      inputMode="tel"
+                      placeholder="01xxxxxxxxx"
+                      value={regPhone}
+                      onChange={(e) => {
+                        setRegPhone(e.target.value);
+                        clearRegisterFieldError("phone");
+                      }}
+                      dir="ltr"
+                      autoComplete="tel"
+                      aria-invalid={registerFieldErrors.phone ? true : undefined}
+                      aria-describedby={registerFieldErrors.phone ? "reg-phone-error" : undefined}
+                    />
+                    {registerFieldErrors.phone && (
+                      <p id="reg-phone-error" className="text-xs text-destructive" role="alert">
+                        {registerFieldErrors.phone}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="reg-country" className={`flex items-center gap-2 ${labelAlign}`}>
                       <Phone className="h-4 w-4" aria-hidden />
-                      كود الدولة
+                      {t("authPage.countryCode")}
                     </Label>
                     <Select value={regCountryCode} onValueChange={setRegCountryCode}>
                       <SelectTrigger id="reg-country" dir="ltr">
@@ -381,15 +597,40 @@ const Auth = () => {
                       <MessageCircle className="h-4 w-4" aria-hidden />
                       {t("authPage.whatsapp")}
                     </Label>
-                    <Input id="reg-whatsapp" type="tel" placeholder="01xxxxxxxxx" value={regWhatsapp} onChange={(e) => setRegWhatsapp(e.target.value)} required dir="ltr" autoComplete="tel" />
-                    <p className="text-xs text-muted-foreground">اكتب رقمك المحلي بدون الصفر أو مع الصفر، مع اختيار الدولة الصحيحة بالأعلى.</p>
+                    <Input
+                      ref={regWhatsappRef}
+                      id="reg-whatsapp"
+                      type="tel"
+                      inputMode="tel"
+                      placeholder="01xxxxxxxxx"
+                      value={regWhatsapp}
+                      onChange={(e) => {
+                        setRegWhatsapp(e.target.value);
+                        clearRegisterFieldError("whatsapp");
+                      }}
+                      required
+                      dir="ltr"
+                      autoComplete="tel"
+                      aria-invalid={registerFieldErrors.whatsapp ? true : undefined}
+                      aria-describedby={
+                        registerFieldErrors.whatsapp
+                          ? "reg-whatsapp-hint reg-whatsapp-error"
+                          : "reg-whatsapp-hint"
+                      }
+                    />
+                    <p id="reg-whatsapp-hint" className="text-xs text-muted-foreground">{t("authPage.whatsappHint")}</p>
+                    {registerFieldErrors.whatsapp && (
+                      <p id="reg-whatsapp-error" className="text-xs text-destructive" role="alert">
+                        {registerFieldErrors.whatsapp}
+                      </p>
+                    )}
                   </div>
                   {registerError && (
                     <p className="rounded-md bg-destructive/10 border border-destructive/20 px-3 py-2 text-sm text-destructive" role="alert">
                       {registerError}
                     </p>
                   )}
-                  <Button type="submit" className="w-full min-h-[44px]" disabled={isLoading || !regName.trim() || !regEmail.trim() || !regPassword.trim() || !regWhatsapp.trim()} aria-busy={isLoading}>
+                  <Button type="submit" className="w-full min-h-[44px]" disabled={isLoading} aria-busy={isLoading}>
                     {isLoading ? (
                       <span className="flex items-center gap-2">
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
@@ -399,6 +640,9 @@ const Auth = () => {
                       t("authPage.registerBtn")
                     )}
                   </Button>
+                  <p className="text-center text-xs text-muted-foreground">
+                    {t("authPage.generalAccountNote")}
+                  </p>
                 </form>
               </TabsContent>
             </Tabs>

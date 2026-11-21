@@ -5,6 +5,7 @@ import SchoolLayout from "@/components/layout/SchoolLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -162,7 +163,7 @@ const SchoolStudentsPage = () => {
                 </div>
                 <div className="space-y-2">
                   <Label>كلمة المرور</Label>
-                  <Input required type="password" dir="ltr" minLength={6} value={newStudent.password} onChange={(e) => setNewStudent({ ...newStudent, password: e.target.value })} />
+                  <PasswordInput required dir="ltr" minLength={6} value={newStudent.password} onChange={(e) => setNewStudent({ ...newStudent, password: e.target.value })} />
                 </div>
                 <div className="space-y-2">
                   <Label>رقم الهاتف (اختياري)</Label>

@@ -17,7 +17,7 @@ interface AuthContextType {
   staffPermissions: Set<string>;
   hasPermission: (permissionKey: string) => boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
-  signUp: (email: string, password: string, fullName: string, role: AppRole, extraData?: Record<string, string>) => Promise<{ data: { user: User | null } | null; error: Error | null }>;
+  signUp: (email: string, password: string, fullName: string, role: AppRole | null, extraData?: Record<string, string>) => Promise<{ data: { user: User | null; session: Session | null } | null; error: Error | null }>;
   signOut: () => Promise<void>;
   startDemo: (role: AppRole) => void;
 }
@@ -143,19 +143,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return { error };
   };
 
-  const signUp = async (email: string, password: string, fullName: string, role: AppRole, extraData?: Record<string, string>) => {
+  const signUp = async (email: string, password: string, fullName: string, role: AppRole | null, extraData?: Record<string, string>) => {
     const redirectUrl = `${window.location.origin}/`;
-    
+
+    // A null role means a "general" account: the database trigger creates the
+    // profile only — no user_roles row and no student record. An admin assigns
+    // the real role later from the users page.
+    const metadata: Record<string, string> = {
+      full_name: fullName,
+      ...extraData,
+    };
+    if (role) {
+      metadata.role = role;
+    } else {
+      metadata.account_type = "general";
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: redirectUrl,
-        data: {
-          full_name: fullName,
-          role: role,
-          ...extraData,
-        },
+        data: metadata,
       },
     });
     return { data, error };

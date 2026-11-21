@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -79,9 +79,8 @@ const ResetPassword = () => {
                   <Lock className="h-4 w-4" />
                   كلمة المرور الجديدة
                 </Label>
-                <Input
+                <PasswordInput
                   id="new-password"
-                  type="password"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -95,9 +94,8 @@ const ResetPassword = () => {
                   <Lock className="h-4 w-4" />
                   تأكيد كلمة المرور
                 </Label>
-                <Input
+                <PasswordInput
                   id="confirm-password"
-                  type="password"
                   placeholder="••••••••"
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}

@@ -5,10 +5,12 @@ import PlatformStatsPage from "./dashboard/PlatformStatsPage";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Users, BookOpen, GraduationCap, Calendar, School, ClipboardCheck, Activity } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Users, BookOpen, GraduationCap, Calendar, School, ClipboardCheck, Activity, Bell } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { getActionTypeLabel, getActionTypeIcon } from "@/lib/activityLogger";
+import { cn } from "@/lib/utils";
 
 interface DashboardStats {
   students: number;
@@ -27,6 +29,15 @@ interface RecentLog {
   user_name: string;
 }
 
+interface NotificationItem {
+  id: string;
+  title: string;
+  body: string | null;
+  link: string | null;
+  read_at: string | null;
+  created_at: string;
+}
+
 const Dashboard = () => {
   const { user, userRole, profile, loading, isDemo } = useAuth();
   const navigate = useNavigate();
@@ -35,6 +46,9 @@ const Dashboard = () => {
   });
   const [recentLogs, setRecentLogs] = useState<RecentLog[]>([]);
   const [statsLoading, setStatsLoading] = useState(true);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [notificationsLoading, setNotificationsLoading] = useState(true);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -65,6 +79,80 @@ const Dashboard = () => {
       setStatsLoading(false);
     }
   }, [user, userRole, isDemo]);
+
+  // Latest in-app notifications + unread count, refreshed live.
+  useEffect(() => {
+    if (!user) {
+      setNotifications([]);
+      setUnreadCount(0);
+      setNotificationsLoading(false);
+      return;
+    }
+
+    let active = true;
+
+    const fetchNotifications = async () => {
+      const [listRes, countRes] = await Promise.all([
+        supabase
+          .from("notifications")
+          .select("id, title, body, link, read_at, created_at")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(5),
+        supabase
+          .from("notifications")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", user.id)
+          .is("read_at", null),
+      ]);
+      if (!active) return;
+      setNotifications((listRes.data as NotificationItem[]) || []);
+      setUnreadCount(countRes.count || 0);
+      setNotificationsLoading(false);
+    };
+
+    fetchNotifications();
+
+    const channel = supabase
+      .channel(`dashboard-notifications:${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${user.id}` },
+        () => fetchNotifications(),
+      )
+      .subscribe();
+
+    return () => {
+      active = false;
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
+
+  const markAllNotificationsRead = async () => {
+    if (!user || unreadCount === 0) return;
+    await supabase
+      .from("notifications")
+      .update({ read_at: new Date().toISOString() })
+      .eq("user_id", user.id)
+      .is("read_at", null);
+    setNotifications((prev) => prev.map((n) => ({ ...n, read_at: n.read_at ?? new Date().toISOString() })));
+    setUnreadCount(0);
+  };
+
+  const openNotification = async (notification: NotificationItem) => {
+    if (!notification.read_at) {
+      await supabase
+        .from("notifications")
+        .update({ read_at: new Date().toISOString() })
+        .eq("id", notification.id);
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === notification.id ? { ...n, read_at: n.read_at ?? new Date().toISOString() } : n)),
+      );
+      setUnreadCount((prev) => Math.max(0, prev - 1));
+    }
+    if (notification.link) navigate(notification.link);
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -157,8 +245,18 @@ const Dashboard = () => {
   const roleStats = getStatsForRole();
 
   return (
-    <DashboardLayout userRole={userRole || "student"} userName={profile?.full_name || "مستخدم"}>
+    <DashboardLayout userRole={userRole} userName={profile?.full_name || "مستخدم"}>
       <div className="space-y-6">
+        {!userRole && (
+          <Card className="border-primary/30 bg-primary/5">
+            <CardHeader>
+              <CardTitle>مرحبًا بك في رواسخ</CardTitle>
+              <CardDescription>
+                تم إنشاء حسابك كمستخدم عام. يمكنك تحديث بياناتك من صفحة الملف الشخصي، وسيحدد مدير النظام دورك وصلاحياتك لاحقًا.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        )}
         {roleStats.length > 0 && (
           <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${Math.min(roleStats.length, 5)} gap-4`}>
             {roleStats.map((stat, index) => (
@@ -213,12 +311,59 @@ const Dashboard = () => {
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle>الإشعارات</CardTitle>
-              <CardDescription>لا توجد إشعارات جديدة</CardDescription>
+            <CardHeader className="flex flex-row items-start justify-between gap-2 space-y-0">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <Bell className="h-5 w-5" />
+                  الإشعارات
+                </CardTitle>
+                <CardDescription>
+                  {unreadCount > 0 ? `${unreadCount} إشعار غير مقروء` : "لا توجد إشعارات جديدة"}
+                </CardDescription>
+              </div>
+              {unreadCount > 0 && (
+                <Button variant="ghost" size="sm" className="h-8 shrink-0 text-xs" onClick={markAllNotificationsRead}>
+                  تحديد الكل كمقروء
+                </Button>
+              )}
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground text-center py-8">ستظهر الإشعارات هنا</p>
+              {notificationsLoading ? (
+                <p className="text-muted-foreground text-center py-8">جاري التحميل...</p>
+              ) : notifications.length === 0 ? (
+                <p className="text-muted-foreground text-center py-8">ستظهر الإشعارات هنا</p>
+              ) : (
+                <div className="space-y-1">
+                  {notifications.map((notification) => (
+                    <button
+                      key={notification.id}
+                      type="button"
+                      onClick={() => openNotification(notification)}
+                      className={cn(
+                        "flex w-full items-start gap-3 rounded-lg p-2 text-start transition-colors hover:bg-muted/60",
+                        !notification.read_at && "bg-primary/5",
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "mt-1.5 h-2 w-2 shrink-0 rounded-full",
+                          notification.read_at ? "bg-border" : "bg-primary",
+                        )}
+                        aria-hidden
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-medium">{notification.title}</span>
+                        {notification.body && (
+                          <span className="block truncate text-xs text-muted-foreground">{notification.body}</span>
+                        )}
+                        <span className="mt-1 block text-[11px] text-muted-foreground">
+                          {new Date(notification.created_at).toLocaleString("ar-EG", { dateStyle: "short", timeStyle: "short" })}
+                        </span>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

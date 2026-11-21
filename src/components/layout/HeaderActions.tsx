@@ -49,9 +49,18 @@ const DATE_LOCALES: Record<string, string> = {
 const iconButtonClass =
   "relative h-9 w-9 rounded-xl text-foreground/80 transition-colors hover:bg-brand-soft hover:text-primary data-[state=open]:bg-brand-soft data-[state=open]:text-primary";
 
+const ROLE_LABELS: Record<string, string> = {
+  admin: "مدير النظام",
+  teacher: "معلم",
+  student: "طالب",
+  parent: "ولي أمر",
+  school: "مدرسة",
+  staff: "مشرف",
+};
+
 const HeaderActions = () => {
   const { t, i18n } = useTranslation();
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, userRole, signOut } = useAuth();
   const { totalItems } = useCart();
   const navigate = useNavigate();
 
@@ -61,6 +70,7 @@ const HeaderActions = () => {
   const unread = items.filter((n) => !n.read_at).length;
   const dateLocale = DATE_LOCALES[i18n.language] || "ar-EG";
   const displayName = profile?.full_name?.trim() || "";
+  const roleLabel = userRole ? ROLE_LABELS[userRole] ?? "مستخدم عام" : "مستخدم عام";
   const initial = displayName.charAt(0) || user?.email?.charAt(0).toUpperCase() || "";
 
   const fetchItems = async () => {
@@ -290,6 +300,9 @@ const HeaderActions = () => {
                   {profile.email}
                 </span>
               )}
+              <span className="mt-1.5 inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+                {roleLabel}
+              </span>
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="my-1" />
             <DropdownMenuItem

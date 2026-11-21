@@ -5,6 +5,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -646,9 +647,8 @@ const StudentsPage = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="password">كلمة المرور *</Label>
-                      <Input
+                      <PasswordInput
                         id="password"
-                        type="password"
                         value={newStudentForm.password}
                         onChange={(e) => setNewStudentForm({ ...newStudentForm, password: e.target.value })}
                         placeholder="6 أحرف على الأقل"

@@ -11,7 +11,6 @@ import {
   LogOut,
   GraduationCap,
   UserCircle,
-  Bell,
   Home,
   Menu,
   ClipboardCheck,
@@ -40,6 +39,7 @@ import {
   Wallet,
   Briefcase,
   Star,
+  ArrowUpLeft,
 
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -47,6 +47,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useForwardWheelToScrollable } from "@/hooks/useForwardWheel";
 import ThemeToggle from "@/components/ThemeToggle";
+import NotificationBell from "@/components/NotificationBell";
 
 type UserRole = "admin" | "teacher" | "student" | "parent" | "school" | "staff";
 
@@ -459,7 +460,18 @@ const Sidebar = ({
     >
       <div className="pattern-lattice-light pointer-events-none absolute inset-0 opacity-[0.035]" aria-hidden />
       <div className="relative z-10 flex h-full min-h-0 flex-col">
-        <div className="shrink-0 border-b border-white/10 p-6">
+        <div className={cn("shrink-0 border-b border-white/10 p-6", mobile && "pt-16")}>
+          <Link
+            to="/"
+            onClick={() => mobile && onCloseMobile()}
+            className="mb-5 flex min-h-[44px] items-center justify-between gap-3 rounded-lg border border-gold/30 bg-white/[0.06] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-gold/60 hover:bg-white/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/40"
+          >
+            <span className="flex items-center gap-3">
+              <Home className="h-5 w-5 text-gold" aria-hidden />
+              <span>الصفحة الرئيسية</span>
+            </span>
+            <ArrowUpLeft className="h-4 w-4 text-white/50" aria-hidden />
+          </Link>
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-gold/30 bg-white/[0.06] text-gold" aria-hidden>
               {!userRole && <UserCircle className="h-5 w-5" />}
@@ -522,14 +534,6 @@ const Sidebar = ({
         </nav>
 
         <div className="shrink-0 space-y-1 border-t border-white/10 p-4">
-          <Link
-            to="/"
-            onClick={() => mobile && onCloseMobile()}
-            className="flex min-h-[44px] items-center gap-3 rounded-lg px-4 py-3 text-white/70 transition-colors hover:bg-white/[0.06] hover:text-white"
-          >
-            <Home className="h-5 w-5" aria-hidden />
-            <span>الصفحة الرئيسية</span>
-          </Link>
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
@@ -564,10 +568,14 @@ const DashboardLayout = ({
   const location = useLocation();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { signOut, isDemo, userRole: authUserRole, profile, hasPermission } = useAuth();
+  const { signOut, isDemo, userRole: authUserRole, profile, hasPermission, loading: authLoading } = useAuth();
   const userRole = userRoleProp ?? authUserRole;
   const userName = userNameProp ?? profile?.full_name ?? "مستخدم";
 
+  // Accounts created through the public signup have no role until an admin
+  // assigns one. They still get a minimal, safe navigation (overview + profile)
+  // instead of being treated as students.
+  const GENERAL_NAV_HREFS = ["/dashboard", "/dashboard/profile"];
   const filteredNavItems = userRole
     ? navItems.filter((item) => {
         if (!item.roles.includes(userRole)) return false;
@@ -577,7 +585,7 @@ const DashboardLayout = ({
         }
         return true;
       })
-    : [];
+    : navItems.filter((item) => GENERAL_NAV_HREFS.includes(item.href));
 
   const groupedNavItems = SECTION_ORDER
     .map((section) => ({
@@ -594,7 +602,11 @@ const DashboardLayout = ({
     school: "مدرسة",
     staff: "مشرف",
   };
-  const currentRoleLabel = userRole ? roleLabels[userRole] : "جاري التحميل";
+  const currentRoleLabel = userRole
+    ? roleLabels[userRole]
+    : authLoading
+      ? "جاري التحميل"
+      : "مستخدم عام";
 
   const handleSignOut = async () => {
     await signOut();
@@ -641,9 +653,7 @@ const DashboardLayout = ({
 
           <h1 className="text-lg font-bold">نظام تعليمي</h1>
 
-          <Button variant="ghost" size="icon-lg" aria-label="الإشعارات">
-            <Bell className="h-5 w-5" aria-hidden />
-          </Button>
+          <NotificationBell className="h-11 w-11" />
         </div>
       </header>
 
@@ -671,9 +681,7 @@ const DashboardLayout = ({
               <p className="mt-3 text-sm text-muted-foreground">نتمنى لك يوماً سعيداً</p>
             </div>
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon-lg" aria-label="الإشعارات" className="rounded-xl border border-border bg-card shadow-xs">
-                <Bell className="h-5 w-5" aria-hidden />
-              </Button>
+              <NotificationBell className="h-11 w-11 rounded-xl border border-border bg-card shadow-xs" />
             </div>
           </div>
 

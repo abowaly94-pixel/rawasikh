@@ -5,6 +5,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -17,7 +18,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { z } from "zod";
 import { getFunctionErrorMessage } from "@/lib/functionError";
 
-type AppRole = "admin" | "teacher" | "student" | "parent" | "school";
+type AppRole = "admin" | "teacher" | "student" | "parent" | "school" | "staff";
 
 interface UserWithRole {
   id: string;
@@ -25,7 +26,7 @@ interface UserWithRole {
   email: string;
   phone: string | null;
   created_at: string;
-  role: AppRole;
+  role: AppRole | null;
 }
 
 const roleLabels: Record<AppRole, string> = {
@@ -34,14 +35,16 @@ const roleLabels: Record<AppRole, string> = {
   student: "طالب",
   parent: "ولي أمر",
   school: "مدرسة",
+  staff: "مشرف",
 };
 
 // "مدرسة" (school) is no longer an assignable account type from the UI —
 // kept out of both the "create user" and "change role" pickers, while
 // `roleLabels` above stays complete so any pre-existing school-role account
-// still displays its badge label correctly.
+// still displays its badge label correctly. "staff" is managed from the
+// dedicated staff page, so it is not assignable here either.
 const assignableRoleLabels: Partial<Record<AppRole, string>> = Object.fromEntries(
-  Object.entries(roleLabels).filter(([key]) => key !== "school")
+  Object.entries(roleLabels).filter(([key]) => key !== "school" && key !== "staff")
 );
 
 const roleBadgeVariants: Record<AppRole, "default" | "secondary" | "outline" | "destructive"> = {
@@ -50,6 +53,7 @@ const roleBadgeVariants: Record<AppRole, "default" | "secondary" | "outline" | "
   student: "secondary",
   parent: "outline",
   school: "default",
+  staff: "outline",
 };
 
 const createUserSchema = z.object({
@@ -96,7 +100,8 @@ const UsersPage = () => {
     try {
       const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
-        .select("*");
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (profilesError) throw profilesError;
 
@@ -114,7 +119,7 @@ const UsersPage = () => {
           email: profile.email || "",
           phone: profile.phone,
           created_at: profile.created_at,
-          role: (userRole?.role as AppRole) || "student",
+          role: (userRole?.role as AppRole) ?? null,
         };
       });
 
@@ -215,12 +220,39 @@ const UsersPage = () => {
 
   const handleUpdateRole = async (userId: string, newRole: AppRole) => {
     try {
-      const { error } = await supabase
+      const { data: updatedRoles, error: updateError } = await supabase
         .from("user_roles")
         .update({ role: newRole })
-        .eq("user_id", userId);
+        .eq("user_id", userId)
+        .select("id");
 
-      if (error) throw error;
+      if (updateError) throw updateError;
+
+      // General accounts (public signups) have no user_roles row yet, so the
+      // first role assignment is an insert rather than an update.
+      if (!updatedRoles || updatedRoles.length === 0) {
+        const { error: insertError } = await supabase
+          .from("user_roles")
+          .insert({ user_id: userId, role: newRole });
+        if (insertError) throw insertError;
+      }
+
+      // Assigning the student role to a general account must also create the
+      // students row the student pages rely on.
+      if (newRole === "student") {
+        const { data: existingStudent } = await supabase
+          .from("students")
+          .select("id")
+          .eq("user_id", userId)
+          .maybeSingle();
+
+        if (!existingStudent) {
+          const { error: studentError } = await supabase
+            .from("students")
+            .insert({ user_id: userId, status: "active" });
+          if (studentError) throw studentError;
+        }
+      }
 
       setUsers((prev) =>
         prev.map((u) => (u.id === userId ? { ...u, role: newRole } : u))
@@ -294,7 +326,7 @@ const UsersPage = () => {
   );
 
   return (
-    <DashboardLayout userRole={userRole || "student"} userName={profile?.full_name || "مستخدم"}>
+    <DashboardLayout userRole={userRole} userName={profile?.full_name || "مستخدم"}>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div>
@@ -345,9 +377,8 @@ const UsersPage = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="new-password">كلمة المرور *</Label>
-                  <Input
+                  <PasswordInput
                     id="new-password"
-                    type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="6 أحرف على الأقل"
@@ -436,8 +467,8 @@ const UsersPage = () => {
                         <TableCell dir="ltr" className="text-right">{user.email}</TableCell>
                         <TableCell dir="ltr" className="text-right">{user.phone || "-"}</TableCell>
                         <TableCell>
-                          <Badge variant={roleBadgeVariants[user.role]}>
-                            {roleLabels[user.role]}
+                          <Badge variant={user.role ? roleBadgeVariants[user.role] : "outline"}>
+                            {user.role ? roleLabels[user.role] : "مستخدم عام"}
                           </Badge>
                         </TableCell>
                         <TableCell>
@@ -445,11 +476,11 @@ const UsersPage = () => {
                         </TableCell>
                         <TableCell>
                           <Select
-                            value={user.role}
+                            value={user.role ?? undefined}
                             onValueChange={(value: AppRole) => handleUpdateRole(user.id, value)}
                           >
                             <SelectTrigger className="w-32">
-                              <SelectValue />
+                              <SelectValue placeholder="مستخدم عام" />
                             </SelectTrigger>
                             <SelectContent>
                               {Object.entries(assignableRoleLabels).map(([key, label]) => (
@@ -521,8 +552,7 @@ const UsersPage = () => {
             <div className="space-y-4 py-2">
               <div className="space-y-2">
                 <Label>كلمة المرور الجديدة *</Label>
-                <Input
-                  type="password"
+                <PasswordInput
                   value={newPasswordValue}
                   onChange={(e) => setNewPasswordValue(e.target.value)}
                   placeholder="6 أحرف على الأقل"

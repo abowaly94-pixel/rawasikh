@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bell, Check, Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Notif {
   id: string;
@@ -18,9 +18,18 @@ interface Notif {
   type: string;
 }
 
-const NotificationBell = () => {
+interface NotificationBellProps {
+  /** Extra classes for the trigger button (sizing/borders per header). */
+  className?: string;
+}
+
+const NotificationBell = ({ className }: NotificationBellProps) => {
   const { user } = useAuth();
   const [items, setItems] = useState<Notif[]>([]);
+
+  // Each mounted bell needs its own realtime topic, otherwise two bells on the
+  // same page would try to subscribe to the same channel.
+  const instanceId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
 
   const fetchItems = async () => {
     if (!user) { setItems([]); return; }
@@ -30,14 +39,14 @@ const NotificationBell = () => {
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(30);
-    setItems((data as any) || []);
+    setItems((data as Notif[] | null) || []);
   };
 
   useEffect(() => {
     fetchItems();
     if (!user) return;
     const channel = supabase
-      .channel(`notifications:${user.id}`)
+      .channel(`notifications:${user.id}:${instanceId}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${user.id}` },
@@ -46,7 +55,7 @@ const NotificationBell = () => {
       .subscribe();
     return () => { supabase.removeChannel(channel); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id]);
+  }, [user?.id, instanceId]);
 
   if (!user) return null;
 
@@ -72,16 +81,16 @@ const NotificationBell = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative" aria-label="الإشعارات">
-          <Bell className="h-5 w-5" />
+        <Button variant="ghost" size="icon" className={cn("relative", className)} aria-label="الإشعارات">
+          <Bell className="h-5 w-5" aria-hidden />
           {unread > 0 && (
-            <span className="absolute -top-1 -right-1 h-5 min-w-5 px-1 rounded-full bg-destructive text-destructive-foreground text-[10px] flex items-center justify-center">
+            <span className="absolute -top-1 -end-1 h-5 min-w-5 px-1 rounded-full bg-destructive text-destructive-foreground text-[10px] flex items-center justify-center">
               {unread > 9 ? "9+" : unread}
             </span>
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-0" align="end" dir="rtl">
+      <PopoverContent className="w-80 p-0" align="end" sideOffset={8} dir="rtl">
         <div className="flex items-center justify-between p-3 border-b">
           <span className="font-bold">الإشعارات</span>
           <Button size="sm" variant="ghost" onClick={markAllRead} disabled={unread === 0}>
@@ -110,7 +119,7 @@ const NotificationBell = () => {
                         {new Date(n.created_at).toLocaleString("ar-EG", { dateStyle: "short", timeStyle: "short" })}
                       </p>
                     </div>
-                    <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-destructive" onClick={() => removeOne(n.id)}>
+                    <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-destructive" onClick={() => removeOne(n.id)} aria-label="حذف الإشعار">
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                   </div>

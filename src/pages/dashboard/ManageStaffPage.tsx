@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -370,8 +371,7 @@ const ManageStaffPage = () => {
               </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label>كلمة المرور</Label>
-                <Input
-                  type="text"
+                <PasswordInput
                   dir="ltr"
                   value={newStaff.password}
                   onChange={(e) => setNewStaff({ ...newStaff, password: e.target.value })}
