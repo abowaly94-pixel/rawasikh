@@ -44,8 +44,11 @@ const socials = [
 const Footer = () => {
   const { t } = useTranslation();
 
+  // `sticky bottom-0` pins the footer to the bottom of the viewport while the
+  // page is shorter than the screen. It stays within the page wrapper, so on
+  // long pages it simply flows after the content as usual.
   return (
-    <footer className="relative overflow-hidden bg-ink text-white/70">
+    <footer className="sticky bottom-0 mt-auto overflow-hidden bg-ink text-white/70">
       <div className="pattern-lattice-light pointer-events-none absolute inset-0 opacity-[0.06]" aria-hidden />
       <div
         className="pointer-events-none absolute -top-24 end-0 h-72 w-72 rounded-full blur-3xl"
