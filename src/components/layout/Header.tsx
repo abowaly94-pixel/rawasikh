@@ -147,7 +147,7 @@ const Header = () => {
   const submitSearch = (value: string) => {
     const term = value.trim();
     if (!term) return;
-    navigate(`/courses?search=${encodeURIComponent(term)}`);
+    navigate(`/search?q=${encodeURIComponent(term)}`);
     setSearchQuery("");
     setSearchOpen(false);
     setMenuOpen(false);
@@ -184,9 +184,6 @@ const Header = () => {
           <div className="flex items-center gap-1">
             <Link to="/about" className="rounded px-2 py-1 transition-colors hover:text-white">
               {t("nav.about")}
-            </Link>
-            <Link to="/teachers" className="rounded px-2 py-1 transition-colors hover:text-white">
-              {t("nav.teachers")}
             </Link>
             <Link to="/policies" className="rounded px-2 py-1 transition-colors hover:text-white">
               {t("nav.policies")}
@@ -343,8 +340,8 @@ const Header = () => {
                 value={searchQuery}
                 onChange={setSearchQuery}
                 onSubmit={submitSearch}
-                placeholder={t("common.search")}
-                ariaLabel={t("common.search")}
+                placeholder={t("searchPage.placeholderShort")}
+                ariaLabel={t("searchPage.placeholder")}
                 className="h-10 ps-3.5"
               />
             </div>
@@ -380,8 +377,8 @@ const Header = () => {
                     value={searchQuery}
                     onChange={setSearchQuery}
                     onSubmit={submitSearch}
-                    placeholder={t("coursesPage.searchPlaceholder")}
-                    ariaLabel={t("common.search")}
+                    placeholder={t("searchPage.placeholder")}
+                    ariaLabel={t("searchPage.placeholder")}
                   />
                 </div>
 
@@ -456,9 +453,6 @@ const Header = () => {
                   <Link to="/about" className="rounded-xl px-3 py-2.5 text-sm text-muted-foreground">
                     {t("nav.about")}
                   </Link>
-                  <Link to="/teachers" className="rounded-xl px-3 py-2.5 text-sm text-muted-foreground">
-                    {t("nav.teachers")}
-                  </Link>
                   <Link to="/policies" className="rounded-xl px-3 py-2.5 text-sm text-muted-foreground">
                     {t("nav.policies")}
                   </Link>
@@ -508,8 +502,8 @@ const Header = () => {
               value={searchQuery}
               onChange={setSearchQuery}
               onSubmit={submitSearch}
-              placeholder={t("coursesPage.searchPlaceholder")}
-              ariaLabel={t("common.search")}
+              placeholder={t("searchPage.placeholder")}
+              ariaLabel={t("searchPage.placeholder")}
               size="lg"
             />
           </div>

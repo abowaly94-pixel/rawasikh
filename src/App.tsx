@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -35,6 +35,7 @@ const BackupPage = lazy(() => import("./pages/BackupPage"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
+const SearchPage = lazy(() => import("./pages/SearchPage"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const UsersPage = lazy(() => import("./pages/dashboard/UsersPage"));
 const ManageStaffPage = lazy(() => import("./pages/dashboard/ManageStaffPage"));
@@ -75,8 +76,6 @@ const FormResponsesPage = lazy(() => import("./pages/dashboard/FormResponsesPage
 const AvailableFormsPage = lazy(() => import("./pages/dashboard/AvailableFormsPage"));
 const FormFillPage = lazy(() => import("./pages/dashboard/FormFillPage"));
 const LectureAttendancePage = lazy(() => import("./pages/dashboard/LectureAttendancePage"));
-const TeachersPage = lazy(() => import("./pages/TeachersPage"));
-const TeacherDetailsPage = lazy(() => import("./pages/TeacherDetailsPage"));
 const PerformanceEvaluationPage = lazy(() => import("./pages/dashboard/PerformanceEvaluationPage"));
 const ChildrenPerformancePage = lazy(() => import("./pages/dashboard/ChildrenPerformancePage"));
 const EvaluationTestsPage = lazy(() => import("./pages/EvaluationTestsPage"));
@@ -188,6 +187,7 @@ const App = () => (
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogPostPage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/users" element={<UsersPage />} />
             <Route path="/dashboard/manage-staff" element={<ManageStaffPage />} />
@@ -234,8 +234,9 @@ const App = () => (
             <Route path="/courses/:courseId/lessons/:lessonId" element={<LessonPage />} />
             <Route path="/courses/:courseId/quiz/:quizId" element={<QuizPage />} />
             <Route path="/quiz/:quizId" element={<QuizPage />} />
-            <Route path="/teachers" element={<TeachersPage />} />
-            <Route path="/teachers/:id" element={<TeacherDetailsPage />} />
+            {/* The public teachers directory was removed; keep old links working. */}
+            <Route path="/teachers" element={<Navigate to="/" replace />} />
+            <Route path="/teachers/:id" element={<Navigate to="/" replace />} />
             <Route path="/evaluation-tests" element={<EvaluationTestsPage />} />
             <Route path="/evaluation-tests/:categoryId" element={<EvaluationCategoryPage />} />
             <Route path="/evaluation-tests/:categoryId/exam/:examId" element={<EvaluationExamPage />} />

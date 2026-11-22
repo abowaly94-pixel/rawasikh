@@ -8,7 +8,6 @@
     "courses": "Courses",
     "store": "Store",
     "blog": "Blog",
-    "teachers": "Teachers",
     "policies": "Policies",
     "contact": "Contact Us",
     "cart": "Cart",
@@ -23,7 +22,6 @@
     "levelShort": "Level Test",
     "storeShort": "Store",
     "blogShort": "Articles",
-    "teachersShort": "Teachers",
     "digitalSolutionsShort": "Platforms & Sites",
     "levelAssessment": "Placement Tests"
   },
@@ -892,14 +890,6 @@
     "tryOther": "Try searching with different keywords",
     "comingSoon": "Products coming soon"
   },
-  "teachersPage": {
-    "title": "Our Distinguished Teachers",
-    "subtitle": "Meet our elite teachers across various specializations",
-    "searchPlaceholder": "Search for a teacher...",
-    "noResults": "No teachers found",
-    "noMatch": "No teachers found with this name",
-    "noTeachers": "No teachers added yet"
-  },
   "blogPage": {
     "badge": "Rawasikh Blog",
     "title1": "Latest",
@@ -924,6 +914,54 @@
     "itemsCount": "Number of items",
     "total": "Total",
     "checkout": "Complete Order"
+  },
+  "searchPage": {
+    "badge": "Site search",
+    "title": "Search everything on Rawasikh",
+    "subtitle": "Courses, articles, products, projects, assessments, and site pages — all results in one place.",
+    "placeholder": "Search for a course, article, product, service...",
+    "placeholderShort": "Search the site...",
+    "loading": "Searching...",
+    "resultsFor": "Search results for",
+    "resultsCount": "Results: {{count}}",
+    "noResultsTitle": "No results for “{{query}}”",
+    "noResultsDesc": "Try a shorter or different keyword, or browse the sections directly.",
+    "startTitle": "What are you looking for?",
+    "startDesc": "Type a keyword above or start from one of the sections.",
+    "typeMore": "Type at least two characters to start searching.",
+    "browseTitle": "Browse section",
+    "sections": {
+      "pages": "Site pages",
+      "courses": "Courses",
+      "articles": "Articles",
+      "products": "Store",
+      "portfolio": "Our work",
+      "exams": "Assessment tests"
+    },
+    "pageDescriptions": {
+      "home": "The home page of the Rawasikh learning platform.",
+      "about": "Learn about Rawasikh, its vision, mission, and values.",
+      "courses": "Courses and training programs available on the Rawasikh platform.",
+      "services": "Training, education, translation, and consulting services.",
+      "academicServices": "Support for researchers and postgraduate students with theses and research.",
+      "digitalSolutions": "Design and development of learning platforms, websites, apps, and systems.",
+      "levelAssessment": "Placement tests to find the right starting point.",
+      "evaluationTests": "Free assessment tests to measure skills across different fields.",
+      "store": "Selected books, materials, and educational products.",
+      "blog": "Educational articles and research from the Rawasikh team.",
+      "portfolio": "Projects and work delivered by Rawasikh for its clients.",
+      "contact": "Get in touch for consultations and inquiries.",
+      "policies": "Privacy, usage, and refund policies.",
+      "cart": "Review your purchases and complete your order."
+    },
+    "labels": {
+      "course": "Course",
+      "article": "Article",
+      "product": "Product",
+      "project": "Project",
+      "exam": "Assessment",
+      "page": "Page"
+    }
   },
   "authPage": {
     "systemTitle": "Integrated platform",
