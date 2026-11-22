@@ -12,7 +12,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import { Lock, Mail, Phone, User, MessageCircle, Eye, EyeOff } from "lucide-react";
 import { logActivity } from "@/lib/activityLogger";
-import { Link } from "react-router-dom";
 import rawasikhLogo from "@/assets/rawasikh-logo.png";
 import { useTranslation } from "react-i18next";
 import { COUNTRY_CODES, DEFAULT_COUNTRY_CODE } from "@/lib/phone";
@@ -343,9 +342,15 @@ const Auth = () => {
         <Card className="auth-card overflow-hidden shadow-2xl shadow-black/30">
           <div className="h-1 bg-gradient-to-r from-primary via-gold to-primary" aria-hidden />
           <CardHeader className="text-center">
-            <Link to="/" className="flex justify-center mb-2 mx-auto group">
-              <img src={rawasikhLogo} alt="رواسخ" className="h-20 w-auto transition-transform group-hover:scale-105" />
-            </Link>
+            <div className="group relative z-10 mb-2 mx-auto flex w-full max-w-md items-center justify-center">
+              <div className="flex w-full items-center justify-center rounded-[15px] bg-white px-6 py-8 shadow-sm">
+                <img
+                  src={rawasikhLogo}
+                  alt="رواسخ"
+                  className="h-20 w-auto transition-transform group-hover:scale-105"
+                />
+              </div>
+            </div>
             <CardTitle className="text-2xl font-bold">{t("authPage.systemTitle")}</CardTitle>
             <CardDescription>{t("authPage.systemDesc")}</CardDescription>
             <div className="rule-gold mx-auto" aria-hidden />
