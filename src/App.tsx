@@ -296,7 +296,7 @@ const App = () => (
             <Route path="/school/activity" element={<SchoolActivityPage />} />
             <Route path="/school/student-results" element={<SchoolStudentResultsPage />} />
             <Route path="/level-assessment" element={<LevelAssessmentPage />} />
-            <Route path="/level-assessment/:assessmentId" element={<LevelAssessmentExamPage />} />
+            <Route path="/level-assessment/:skillCode" element={<LevelAssessmentExamPage />} />
             <Route path="/assessment-invite/:assessmentId" element={<AssessmentInvitePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
