@@ -190,7 +190,6 @@ const LevelAssessmentExamPage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg leading-relaxed">{current.stem}</CardTitle>
-                <p className="text-sm text-muted-foreground">{current.question_type}</p>
               </CardHeader>
               <CardContent>
                 <RadioGroup
