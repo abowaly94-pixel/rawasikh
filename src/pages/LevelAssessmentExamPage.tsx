@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, ArrowLeft, CheckCircle, XCircle, Trophy } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle, XCircle, Trophy, Info } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { publicBanks, type PublicQuestion } from "@/lib/level-assessment/banks";
 import { selectForm } from "@/lib/level-assessment/scoring";
@@ -169,6 +169,7 @@ const LevelAssessmentExamPage = () => {
 
   const progress = ((currentIndex + 1) / questions.length) * 100;
   const answeredCount = Object.keys(answers).length;
+  const currentAnswered = current ? Boolean(answers[current.question_id]) : false;
 
   return (
     <div className="min-h-screen bg-background" dir="rtl">
@@ -214,16 +215,38 @@ const LevelAssessmentExamPage = () => {
               </CardContent>
             </Card>
           )}
+          {!currentAnswered && (
+            <div className="mt-5 flex items-center justify-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+              <Info className="h-4 w-4 shrink-0" />
+              <span>
+                {currentIndex < questions.length - 1
+                  ? "اختر إجابة أولاً لتتمكن من الانتقال إلى السؤال التالي."
+                  : "اختر إجابة أولاً لتتمكن من تأكيد الإجابات."}
+              </span>
+            </div>
+          )}
           <div className="flex items-center justify-between mt-6">
-            <Button variant="outline" onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}>
+            <Button
+              variant="outline"
+              onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}
+              disabled={currentIndex === 0}
+            >
               <ArrowRight className="h-4 w-4 ml-2" /> السابق
             </Button>
             {currentIndex < questions.length - 1 ? (
-              <Button onClick={() => setCurrentIndex((i) => Math.min(questions.length - 1, i + 1))}>
+              <Button
+                onClick={() => setCurrentIndex((i) => Math.min(questions.length - 1, i + 1))}
+                disabled={!currentAnswered}
+                title={!currentAnswered ? "اختر إجابة أولاً" : undefined}
+              >
                 التالي <ArrowLeft className="h-4 w-4 mr-2" />
               </Button>
             ) : (
-              <Button onClick={submit} disabled={isSubmitting}>
+              <Button
+                onClick={submit}
+                disabled={isSubmitting || !currentAnswered}
+                title={!currentAnswered ? "اختر إجابة أولاً" : undefined}
+              >
                 {isSubmitting ? "جاري التصحيح..." : "تأكيد الإجابات"}
               </Button>
             )}
